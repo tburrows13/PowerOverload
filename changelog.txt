@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 4 February 2020
+  Features:
+    - Initial release
+    - Tier 4 power poles with very long range and high maximum power but no supply area
+    - Transformers which can separate electrical networks
+    - All power poles have a maximum consumption, above which they may explode

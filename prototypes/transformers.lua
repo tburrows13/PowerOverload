@@ -1,0 +1,112 @@
+local big_pole = data.raw["electric-pole"]["big-electric-pole"]
+
+
+local transformer = table.deepcopy(data.raw["power-switch"]["power-switch"])
+transformer.name = "po-transformer"
+transformer.wire_max_distance = 0
+
+local transformer_item = table.deepcopy(data.raw.item["power-switch"])
+transformer_item.name = "po-transformer"
+transformer_item.place_result = "po-transformer"
+transformer_item.subgroup = "energy-pipe-distribution"
+transformer_item.order = "a[energy]-f[transformer]"
+
+
+local transformer_recipe = table.deepcopy(data.raw.recipe["power-switch"])
+transformer_recipe.name = "po-transformer"
+transformer_recipe.result = "po-transformer"
+
+local hidden_pole_in = {
+  type = "electric-pole",
+  name = "hidden-electric-pole-in",
+  icon = transformer.icon,
+  icon_size = 64, icon_mipmaps = 4,
+  flags = {"not-on-map",
+           "not-blueprintable",
+           "not-deconstructable",
+           "hidden",
+           "hide-alt-info",
+           "not-flammable",
+           "not-repairable",
+           "not-upgradable",
+           "no-copy-paste",
+           "placeable-off-grid"},
+  minable = nil,
+  max_health = 50,
+  --corpse = "small-electric-pole-remnants",
+  --collision_box = {{-0.15, -0.15}, {0.15, 0.15}},
+  selection_box = {{-0.4, -1}, {0.4, 1}},
+  maximum_wire_distance = 8,
+  supply_area_distance = 0.2,
+  placeable_by = {item = "po-transformer", count = 1},
+  open_sound = big_pole.open_sound,
+  close_sound = big_pole.close_sound,
+  pictures = util.empty_sprite(),
+  connection_points =
+  {
+    {
+      shadow =
+      {
+        copper = util.by_pixel(6, -5+3), --(-8, -5+3),
+      },
+      wire =
+      {
+        copper = util.by_pixel(-7, -33+3), --(-26, -33+3),
+      }
+    },
+  }
+}
+
+local hidden_pole_out = table.deepcopy(hidden_pole_in)
+hidden_pole_out.name = "hidden-electric-pole-out"
+hidden_pole_out.connection_points = {
+  {
+    shadow =
+    {
+      copper = util.by_pixel(28, -3+3), --(45, -3+3),
+    },
+    wire =
+    {
+      copper = util.by_pixel(8, -32+3), --(29, -32+3),
+    }
+  },
+}
+
+local hidden_pole_alt = table.deepcopy(hidden_pole_in)
+hidden_pole_alt.name = "hidden-electric-pole-alt"
+hidden_pole_alt.maximum_wire_distance = 0.1
+
+local hidden_eei_in = {
+  type = "electric-energy-interface",
+  name = "transformer-interface-hidden-in",
+  localised_name = {"entity-name.transformer"},
+  energy_source = {
+      type = "electric",
+      -- For reference, steam engines produce 15kJ/tick
+      buffer_capacity = "20kJ",  -- Gets doubled every tick until it is no longer limiting
+      usage_priority = "secondary-input",
+      input_flow_limit = "1YJ",
+      output_flow_limit = "1YJ"
+    },
+  icon = transformer.icon,
+  icon_size = 64, icon_mipmaps = 4,
+  flags = {
+    "not-on-map",
+    "not-blueprintable",
+    "not-deconstructable",
+    "hidden",
+    "hide-alt-info",
+    "not-flammable",
+    "not-repairable",
+    "not-upgradable",
+    "no-copy-paste",
+    "placeable-off-grid"
+    --"not-selectable-in-game"
+  },
+}
+local hidden_eei_out = table.deepcopy(hidden_eei_in)
+hidden_eei_out.name = "transformer-interface-hidden-out"
+hidden_eei_out.energy_source.usage_priority = "secondary-output"
+
+
+data:extend{transformer, transformer_item, transformer_recipe, hidden_pole_in, hidden_pole_out, hidden_pole_alt, hidden_eei_in, hidden_eei_out}
