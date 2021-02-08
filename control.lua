@@ -259,7 +259,10 @@ script.on_init(
     end
     -- Do loop twice to avoid infinite loop
     for _, surface_name in pairs(surface_names) do
-      create_editor_surface(surface_name .. "-transformer")
+      local new_surface_name = surface_name .. "-transformer"
+      if not game.surfaces[new_surface_name] and string.sub(surface_name, -12) ~= "-transformer" then
+        create_editor_surface(surface_name .. "-transformer")
+      end
     end
 
     -- Enable transformer recipe

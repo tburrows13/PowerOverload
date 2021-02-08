@@ -6,6 +6,8 @@ Date: 8 February 2020
     - Added support for modded poles from AAI Industry, Bob's Power, and Cargo Ships (more can be added upon request)
   Changes:
     - Reverted electric pole names back to their vanilla names
+  Bugfixes:
+    - Fixed crash when adding this mod to a save that it has been previously loaded with
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Date: 4 February 2020
