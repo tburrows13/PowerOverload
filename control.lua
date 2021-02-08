@@ -1,7 +1,8 @@
-require "__PowerOverload__/shared"
+local util = require "util"
+local shared = require "__PowerOverload__/shared"
 require "__PowerOverload__/scripts/create-surface"
 
-
+max_consumptions = {}
 
 local function on_pole_built(pole)
   local pole_name = pole.name
@@ -266,6 +267,17 @@ script.on_init(
       if force.technologies["electric-energy-distribution-1"].researched then
         force.recipes["po-transformer"].enabled = true
       end
+    end
+  end
+)
+
+script.on_load(
+  function()
+    -- Hopefully doesn't cause desyncs
+    local pole_names = shared.get_pole_names(script.active_mods)
+    for pole_name, default_consumption in pairs(pole_names) do
+      local max_consumption_string = settings.startup["power-overload-max-power-" .. pole_name].value
+      max_consumptions[pole_name] = shared.validate_and_parse_energy(max_consumption_string, default_consumption)
     end
   end
 )

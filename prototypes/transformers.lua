@@ -1,3 +1,6 @@
+-- Each transformer is comprised of a 'power switch', an input pole, and an output pole on the main surface
+-- and 2 alt poles and 2 EEIs on an alt surface
+
 local big_pole = data.raw["electric-pole"]["big-electric-pole"]
 
 
