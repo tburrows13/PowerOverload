@@ -149,6 +149,7 @@ pylon_recipe = {
     {"advanced-circuit", 10},
     {"copper-plate", 15}
   },
+  energy_required = 1.5  -- in seconds
   enabled = false
 }
 

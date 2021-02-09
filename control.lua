@@ -276,7 +276,7 @@ script.on_init(
 
 script.on_load(
   function()
-    -- Hopefully doesn't cause desyncs
+    -- Hopefully doesn't cause desyncs...
     local pole_names = shared.get_pole_names(script.active_mods)
     for pole_name, default_consumption in pairs(pole_names) do
       local max_consumption_string = settings.startup["power-overload-max-power-" .. pole_name].value

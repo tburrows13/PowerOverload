@@ -4,10 +4,13 @@ Date: 8 February 2020
   Features:
     - Added setting to customise power poles' maximum consumptions
     - Added support for modded poles from AAI Industry, Bob's Power, and Cargo Ships (more can be added upon request)
+    - Added option to have overloading a power pole damage it instead of instantly destroying it 
   Changes:
     - Reverted electric pole names back to their vanilla names
+    - Increased crafting time for "Very big electric pole" from 0.5 to 1.5 seconds
   Bugfixes:
     - Fixed crash when adding this mod to a save that it has been previously loaded with
+    - Fixed "Big" and "Very big" power poles never exploding
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Date: 4 February 2020
