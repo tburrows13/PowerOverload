@@ -7,6 +7,7 @@ local big_pole = data.raw["electric-pole"]["big-electric-pole"]
 local transformer = table.deepcopy(data.raw["power-switch"]["power-switch"])
 transformer.name = "po-transformer"
 transformer.wire_max_distance = 0
+transformer.minable.result = "po-transformer"
 
 local transformer_item = table.deepcopy(data.raw.item["power-switch"])
 transformer_item.name = "po-transformer"
