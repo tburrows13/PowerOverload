@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.2
 Date: ???
+  Features:
+    - Added support for modded poles from Bio Industries (more can be added upon request)
   Changes:
     - Lots of internal name changes
   Bugfixes:

@@ -22,9 +22,10 @@
 - Fuses to prevent power pole losses
 
 ## Compatibility
-- Currently pole from the following mods are supported:
+- Currently poles from the following mods are supported:
     - [AAI Industry](https://mods.factorio.com/mod/aai-industry)
     - [Bob's Power](https://mods.factorio.com/mod/bobpower)
+    - [Bio Industries](https://mods.factorio.com/mod/Bio_Industries)
     - [Cargo Ships](https://mods.factorio.com/mod/cargo-ships)
 - If you would like support for a particular mod, let me know. Since I haven't played many other mods, balance suggestions would be helpful
 

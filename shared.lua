@@ -51,6 +51,12 @@ local function get_pole_names(mods)
     ["cargo-ships"] = {
       ["floating-electric-pole"] = "2GW"
     },
+    ["Bio_Industries"] = {
+      ["bi-wooden-pole-big"] = "400MW",
+      ["bi-wooden-pole-huge"] = "1GW",
+      ["bi-large-substation"] = "500MW",
+
+    }
   }
 
   local loaded_pole_names = {}
