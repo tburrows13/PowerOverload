@@ -4,6 +4,7 @@ Date: ???
   Features:
     - Added support for modded poles from Bio Industries (more can be added upon request)
   Changes:
+    - Transformers now have a red tint to distinguish them from power switches
     - "Very big electric pole" renamed to "Huge electric pole"
     - Lots of internal name changes
     - Transformers no longer show up in both "Consumption" and "Production" sides of electric network statistics

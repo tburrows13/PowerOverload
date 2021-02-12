@@ -3,17 +3,34 @@
 
 local big_pole = data.raw["electric-pole"]["big-electric-pole"]
 
-
+local transformer_tint = {r=1, g=0.6, b=0.6}
 local transformer = table.deepcopy(data.raw["power-switch"]["power-switch"])
 transformer.name = "po-transformer"
 transformer.wire_max_distance = 0
 transformer.minable.result = "po-transformer"
+transformer.power_on_animation.layers[1].tint = transformer_tint
+transformer.power_on_animation.layers[1].hr_version.tint = transformer_tint
+transformer.icons = {{
+  icon = transformer.icon,
+  icon_size = transformer.icon_size,
+  icon_mipmaps = transformer.icon_mipmaps,
+  tint = transformer_tint
+}}
+
 
 local transformer_item = table.deepcopy(data.raw.item["power-switch"])
 transformer_item.name = "po-transformer"
 transformer_item.place_result = "po-transformer"
 transformer_item.subgroup = "energy-pipe-distribution"
 transformer_item.order = "a[energy]-f[transformer]"
+transformer_item.icon_tint = transformer_tint
+transformer_item.icons = {{
+  icon = transformer_item.icon,
+  icon_size = transformer_item.icon_size,
+  icon_mipmaps = transformer_item.icon_mipmaps,
+  tint = transformer_tint
+}}
+
 
 
 local transformer_recipe = table.deepcopy(data.raw.recipe["power-switch"])
@@ -23,8 +40,7 @@ transformer_recipe.result = "po-transformer"
 local hidden_pole_in = {
   type = "electric-pole",
   name = "po-hidden-electric-pole-in",
-  icon = transformer.icon,
-  icon_size = 64, icon_mipmaps = 4,
+  icons = transformer.icons,
   flags = {"not-on-map",
            "not-blueprintable",
            "not-deconstructable",
@@ -92,8 +108,7 @@ local hidden_eei_in = {
       input_flow_limit = "1YJ",
       output_flow_limit = "0YJ"
     },
-  icon = transformer.icon,
-  icon_size = 64, icon_mipmaps = 4,
+  icons = transformer.icons,
   flags = {
     "not-on-map",
     "not-blueprintable",
