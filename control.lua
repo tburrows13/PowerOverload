@@ -185,7 +185,7 @@ local function update_poles()
 
 
         if destroy_pole_setting == "destroy" then
-          log("Pole being killed at consumption " .. consumption .. " which is above max_consumption " .. max_consumption)
+          log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
           alert_on_destroyed(pole, consumption)
           pole.die()
           global.poles[i] = nil
@@ -222,7 +222,14 @@ local function update_transformers()
         -- Double buffer size if necessary
         if energy_in == buffer_size and energy_out == 0 then
           buffer_size = buffer_size * 2
-          log("Increasing buffer size to " .. buffer_size)
+          log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
+          interface_in.electric_buffer_size = buffer_size
+          interface_out.electric_buffer_size = buffer_size
+        end
+        -- Shrink the buffer size if necessary
+        if buffer_size > 20000 and energy_in < buffer_size / 2.2 then  -- Extra .2 to allow a bit of leeway
+          buffer_size = buffer_size / 2
+          log("Decreasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
         end
