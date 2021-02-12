@@ -83,14 +83,14 @@ hidden_pole_alt.maximum_wire_distance = 0.1
 local hidden_eei_in = {
   type = "electric-energy-interface",
   name = "po-transformer-interface-hidden-in",
-  localised_name = {"entity-name.transformer"},
+  localised_name = {"entity-name.po-transformer"},
   energy_source = {
       type = "electric",
       -- For reference, steam engines produce 15kJ/tick
       buffer_capacity = "20kJ",  -- Gets doubled every tick until it is no longer limiting
       usage_priority = "secondary-input",
       input_flow_limit = "1YJ",
-      output_flow_limit = "1YJ"
+      output_flow_limit = "0YJ"
     },
   icon = transformer.icon,
   icon_size = 64, icon_mipmaps = 4,
@@ -109,8 +109,10 @@ local hidden_eei_in = {
   },
 }
 local hidden_eei_out = table.deepcopy(hidden_eei_in)
-hidden_eei_out.name = "transformer-interface-hidden-out"
+hidden_eei_out.name = "po-transformer-interface-hidden-out"
 hidden_eei_out.energy_source.usage_priority = "secondary-output"
+hidden_eei_out.energy_source.input_flow_limit = "0J"
+hidden_eei_out.energy_source.output_flow_limit = "1YJ"
 
 
 data:extend{transformer, transformer_item, transformer_recipe, hidden_pole_in, hidden_pole_out, hidden_pole_alt, hidden_eei_in, hidden_eei_out}
