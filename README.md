@@ -30,7 +30,7 @@
 - If you would like support for a particular mod, let me know. Since I haven't played many other mods, balance suggestions would be helpful
 
 ## Graphics
-The tier 4 power pole uses the pre-0.17 "Big electric pole" graphics and the transformer uses the current power switch graphics. If you would be interested in creating better graphics for either of these, let me know.
+The "Huge electric pole" uses the pre-0.17 "Big electric pole" graphics and the transformer uses the current power switch graphics. If you would be interested in creating better graphics for either of these, let me know.
 
 ---
 
