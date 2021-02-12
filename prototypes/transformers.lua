@@ -22,7 +22,7 @@ transformer_recipe.result = "po-transformer"
 
 local hidden_pole_in = {
   type = "electric-pole",
-  name = "hidden-electric-pole-in",
+  name = "po-hidden-electric-pole-in",
   icon = transformer.icon,
   icon_size = 64, icon_mipmaps = 4,
   flags = {"not-on-map",
@@ -62,7 +62,7 @@ local hidden_pole_in = {
 }
 
 local hidden_pole_out = table.deepcopy(hidden_pole_in)
-hidden_pole_out.name = "hidden-electric-pole-out"
+hidden_pole_out.name = "po-hidden-electric-pole-out"
 hidden_pole_out.connection_points = {
   {
     shadow =
@@ -77,12 +77,12 @@ hidden_pole_out.connection_points = {
 }
 
 local hidden_pole_alt = table.deepcopy(hidden_pole_in)
-hidden_pole_alt.name = "hidden-electric-pole-alt"
+hidden_pole_alt.name = "po-hidden-electric-pole-alt"
 hidden_pole_alt.maximum_wire_distance = 0.1
 
 local hidden_eei_in = {
   type = "electric-energy-interface",
-  name = "transformer-interface-hidden-in",
+  name = "po-transformer-interface-hidden-in",
   localised_name = {"entity-name.transformer"},
   energy_source = {
       type = "electric",

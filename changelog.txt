@@ -1,8 +1,11 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.2
 Date: ???
+  Changes:
+    - Lots of internal name changes
   Bugfixes:
     - Fixed mining a transformer returns a power switch to the player's inventory
+    - Fixed mining a "Very big electric pole" returns a "Big electric pole" to the player's inventory
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.1
 Date: 8 February 2020

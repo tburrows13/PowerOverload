@@ -31,7 +31,7 @@ local function get_pole_names(mods)
       ["small-electric-pole"] = "20MW",  -- (Just over 40 steam engines-worth)
       ["medium-electric-pole"] = "100MW",
       ["big-electric-pole"] = "500MW",
-      ["very-big-electric-pole"] = "5GW",
+      ["po-very-big-electric-pole"] = "5GW",
       ["substation"] = "200MW"
     },
     ["aai-industry"] = {

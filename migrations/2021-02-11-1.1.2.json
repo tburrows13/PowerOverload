@@ -1,0 +1,24 @@
+{
+    "entity":
+    [
+      ["transformer", "po-transformer"],
+      ["very-big-electric-pole", "po-very-big-electric-pole"],
+      ["hidden-electric-pole-in", "po-hidden-electric-pole-in"],
+      ["hidden-electric-pole-out", "po-hidden-electric-pole-out"],
+      ["hidden-electric-pole-alt", "po-hidden-electric-pole-alt"],
+      ["transformer-interface-hidden-in", "po-transformer-interface-hidden-in"],
+      ["transformer-interface-hidden-out", "po-transformer-interface-hidden-out"]
+    ],
+    "item":
+    [
+      ["transformer", "po-transformer"],
+      ["very-big-electric-pole", "po-very-big-electric-pole"]
+    ],
+    "recipe":
+    [
+      ["transformer", "po-transformer"],
+      ["very-big-electric-pole", "po-very-big-electric-pole"]
+    ]
+
+  }
+  

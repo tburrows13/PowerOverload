@@ -9,7 +9,7 @@ local function on_pole_built(pole)
   for _, neighbour in pairs(pole.neighbours.copper) do
     -- TODO allow attaching to equivalent transformer
     if neighbour.type == "electric-pole" and
-        (pole_name ~= neighbour.name or pole_name == "hidden-electric-pole-in" or pole_name == "hidden-electric-pole-out") then
+        (pole_name ~= neighbour.name or pole_name == "po-hidden-electric-pole-in" or pole_name == "po-hidden-electric-pole-out") then
       pole.disconnect_neighbour(neighbour)
     end
   end
@@ -33,14 +33,14 @@ local function create_update_transformer(transformer)
   local position_in = {position.x - 0.6, position.y}
   local position_out = {position.x + 0.6, position.y}
   if not (transformer_parts.pole_in and transformer_parts.pole_in.valid) then
-    local pole_in = surface.create_entity{name = "hidden-electric-pole-in",
+    local pole_in = surface.create_entity{name = "po-hidden-electric-pole-in",
                                          position = position_in,
                                          force = transformer.force,
                                          raise_built = true}
     transformer_parts.pole_in = pole_in
   end
   if not (transformer_parts.pole_in_alt and transformer_parts.pole_in_alt.valid) then
-    local pole_in_alt = transformer_surface.create_entity{name = "hidden-electric-pole-alt",
+    local pole_in_alt = transformer_surface.create_entity{name = "po-hidden-electric-pole-alt",
                                              position = position_in,
                                              force = transformer.force,
                                              raise_built = true}
@@ -48,21 +48,21 @@ local function create_update_transformer(transformer)
     transformer_parts.pole_in_alt = pole_in_alt
   end
   if not (transformer_parts.interface_in and transformer_parts.interface_in.valid) then
-    local interface_in = transformer_surface.create_entity{name = "transformer-interface-hidden-in",
+    local interface_in = transformer_surface.create_entity{name = "po-transformer-interface-hidden-in",
                                               position = position_in,
                                               force = transformer.force}
     transformer_parts.interface_in = interface_in
   end
 
   if not (transformer_parts.pole_out and transformer_parts.pole_out.valid) then
-    local pole_out = surface.create_entity{name = "hidden-electric-pole-out",
+    local pole_out = surface.create_entity{name = "po-hidden-electric-pole-out",
                                          position = position_out,
                                          force = transformer.force,
                                          raise_built = true}
     transformer_parts.pole_out = pole_out
   end
   if not (transformer_parts.pole_out_alt and transformer_parts.pole_out_alt.valid) then
-    local pole_out_alt = transformer_surface.create_entity{name = "hidden-electric-pole-alt",
+    local pole_out_alt = transformer_surface.create_entity{name = "po-hidden-electric-pole-alt",
                                              position = position_out,
                                              force = transformer.force,
                                              raise_built = true}
@@ -70,7 +70,7 @@ local function create_update_transformer(transformer)
     transformer_parts.pole_out_alt = pole_out_alt
   end
   if not (transformer_parts.interface_out and transformer_parts.interface_out.valid) then
-    local interface_out = transformer_surface.create_entity{name = "transformer-interface-hidden-out",
+    local interface_out = transformer_surface.create_entity{name = "po-transformer-interface-hidden-out",
                                               position = position_out,
                                               force = transformer.force}
     transformer_parts.interface_out = interface_out

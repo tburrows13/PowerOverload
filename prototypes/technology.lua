@@ -15,7 +15,7 @@ data:extend{
     {
       {
         type = "unlock-recipe",
-        recipe = "very-big-electric-pole"
+        recipe = "po-very-big-electric-pole"
       }
     },
     prerequisites = {"electric-energy-distribution-2", "chemical-science-pack"},

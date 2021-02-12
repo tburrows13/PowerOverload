@@ -3,11 +3,11 @@ local big_pole = data.raw["electric-pole"]["big-electric-pole"]
 scale = 1.5
 local pylon =  {
     type = "electric-pole",
-    name = "very-big-electric-pole",
+    name = "po-very-big-electric-pole",
     icon = "__PowerOverload__/graphics/big-electric-pole-icon.png",
     icon_size = 32, icon_mipmaps = 1,
     flags = {"placeable-neutral", "player-creation", "fast-replaceable-no-build-while-moving"},
-    minable = {mining_time = 0.1, result = "big-electric-pole"},
+    minable = {mining_time = 0.1, result = "po-very-big-electric-pole"},
     max_health = 250,
     corpse = "big-electric-pole-remnants",
     dying_explosion = "big-electric-pole-explosion",
@@ -131,8 +131,8 @@ local pylon =  {
   }
 
 local pylon_item = table.deepcopy(data.raw.item["big-electric-pole"])
-pylon_item.name = "very-big-electric-pole"
-pylon_item.place_result = "very-big-electric-pole"
+pylon_item.name = "po-very-big-electric-pole"
+pylon_item.place_result = "po-very-big-electric-pole"
 pylon_item.icon = "__PowerOverload__/graphics/big-electric-pole-icon.png"
 pylon_item.icon_size = 32
 pylon_item.icon_mipmaps = 1
@@ -140,8 +140,8 @@ pylon_item.icon_mipmaps = 1
 
 pylon_recipe = {
   type = "recipe",
-  name = "very-big-electric-pole",
-  result = "very-big-electric-pole",
+  name = "po-very-big-electric-pole",
+  result = "po-very-big-electric-pole",
   ingredients =
   {
     {"iron-stick", 20},
