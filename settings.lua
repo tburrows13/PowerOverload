@@ -19,7 +19,6 @@ data:extend{
 }
 
 order = 0
-log(serpent.dump(shared))
 for pole_name, default_power in pairs(shared.get_pole_names(mods)) do
   data:extend{
     {

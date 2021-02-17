@@ -3,6 +3,7 @@ Version: 1.1.3
 Date: ????
   Bugfixes:
     - Fixed incompatibility with Mining Drones
+    - Fixed some poles never being checked for overload
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.2
 Date: 12 February 2020

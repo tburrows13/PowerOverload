@@ -13,9 +13,9 @@ local function on_pole_built(pole)
       pole.disconnect_neighbour(neighbour)
     end
   end
-  table.insert(global.poles, pole)
-  script.register_on_entity_destroyed(pole)
-
+  if max_consumptions[pole.name] then
+    table.insert(global.poles, pole)
+  end
 end
 
 
@@ -125,12 +125,6 @@ script.on_event(defines.events.on_entity_destroyed,
         end
         global.transformers[unit_number] = nil
       end
-
-      local pole = global.poles[unit_number]
-      if pole then
-        pole.destroy()
-        global.poles[unit_number] = nil
-      end
     end
   end
 )
@@ -181,16 +175,13 @@ local function update_poles()
       local consumption = get_total_consumption(pole.electric_network_statistics)
       local max_consumption = max_consumptions[pole.name]
       if max_consumption and consumption > max_consumption then
-
-
-
         if destroy_pole_setting == "destroy" then
           log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
           alert_on_destroyed(pole, consumption)
           pole.die()
-          global.poles[i] = nil
-        
-  
+          global.poles[i] = global.poles[table_size]
+          global.poles[table_size] = nil
+          table_size = table_size - 1
         else
           local damage_amount = (consumption / max_consumption - 0.95) * 10
           if damage_amount > pole.health then
@@ -202,7 +193,9 @@ local function update_poles()
 
       end
     else
-      global.poles[i] = nil
+      global.poles[i] = global.poles[table_size]
+      global.poles[table_size] = nil
+      table_size = table_size - 1
     end
   end
 end
@@ -253,18 +246,32 @@ script.on_event(defines.events.on_tick,
   end
 )
 
+
+local function reset_global_poles()
+  local poles = {}
+  for _, surface in pairs(game.surfaces) do
+    for _, pole in pairs(surface.find_entities_filtered{type = "electric-pole"}) do
+      if max_consumptions[pole.name] then
+        table.insert(poles, pole)
+      end
+    end
+  end
+  global.poles = poles
+end
+
+script.on_configuration_changed(
+  function()
+    -- Mainly needed for 1.2.0 migration
+    reset_global_poles()
+  end
+)
+
 script.on_init(
   function()
     global.poles = {}
     global.transformers = {}
-    local surface_names = {}
-    for _, surface in pairs(game.surfaces) do
-      table.insert(surface_names, surface.name)
-      for _, pole in pairs(surface.find_entities_filtered{type = "electric-pole"}) do
-        table.insert(global.poles, pole)
-      end
-    end
-    -- Do loop twice to avoid infinite loop
+    local surface_names = game.surfaces
+    reset_global_poles()
     for _, surface_name in pairs(surface_names) do
       local new_surface_name = surface_name .. "-transformer"
       if not game.surfaces[new_surface_name] and string.sub(surface_name, -12) ~= "-transformer" then
