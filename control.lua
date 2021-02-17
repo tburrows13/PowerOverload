@@ -133,7 +133,8 @@ local function get_total_consumption(statistics)
   for name, _ in pairs(statistics.input_counts) do
     total = total + 60 * statistics.get_flow_count{name = name,
                                                    input = true,
-                                                   precision_index = defines.flow_precision_index.one_second,
+                                                   precision_index = defines.flow_precision_index.five_seconds   -- >= 1.1.25
+                                                                     or defines.flow_precision_index.one_second, --  < 1.1.25
                                                    count = false}
   end
   return total

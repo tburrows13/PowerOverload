@@ -4,6 +4,7 @@ Date: ????
   Bugfixes:
     - Fixed incompatibility with Mining Drones
     - Fixed some poles never being checked for overload
+    - Fixed crash in Factorio 1.1.25
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.2
 Date: 12 February 2020
