@@ -1,13 +1,13 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.3
-Date: ????
+Date: 17 February 2021
   Bugfixes:
     - Fixed incompatibility with Mining Drones
     - Fixed some poles never being checked for overload
     - Fixed crash in Factorio 1.1.25
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.2
-Date: 12 February 2020
+Date: 12 February 2021
   Features:
     - Added support for modded poles from Bio Industries (more can be added upon request)
   Changes:
@@ -20,12 +20,12 @@ Date: 12 February 2020
     - Transformer internal buffer sizes now shrink dynamically (instead of just growing in previous versions)
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.1
-Date: 8 February 2020
+Date: 8 February 2021
   Bugfixes:
     - Fixed crash on load
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.0
-Date: 8 February 2020
+Date: 8 February 2021
   Features:
     - Added setting to customise power poles' maximum consumptions
     - Added support for modded poles from AAI Industry, Bob's Power, and Cargo Ships (more can be added upon request)
@@ -38,7 +38,7 @@ Date: 8 February 2020
     - Fixed "Big" and "Very big" power poles never exploding
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
-Date: 4 February 2020
+Date: 4 February 2021
   Features:
     - Initial release
     - Tier 4 power poles with very long range and high maximum power but no supply area
