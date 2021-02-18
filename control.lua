@@ -271,9 +271,9 @@ script.on_init(
   function()
     global.poles = {}
     global.transformers = {}
-    local surface_names = game.surfaces
     reset_global_poles()
-    for _, surface_name in pairs(surface_names) do
+    for _, surface in pairs(game.surfaces) do
+      local surface_name = surface.name
       local new_surface_name = surface_name .. "-transformer"
       if not game.surfaces[new_surface_name] and string.sub(surface_name, -12) ~= "-transformer" then
         create_editor_surface(surface_name .. "-transformer")
