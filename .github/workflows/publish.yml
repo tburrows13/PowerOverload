@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Publish Mod
-      uses: tburrows13/factorio-mod-portal-publish@vversion
+      uses: Xorimuth/factorio-mod-portal-publish@vversion
       env:
         FACTORIO_PASSWORD: ${{ secrets.FACTORIO_PASSWORD }}
         FACTORIO_USER: ${{ secrets.FACTORIO_USER }}
