@@ -11,6 +11,11 @@ local function on_pole_built(pole)
     if neighbour.type == "electric-pole" and
         (pole_name ~= neighbour.name or pole_name == "po-hidden-electric-pole-in" or pole_name == "po-hidden-electric-pole-out") then
       pole.disconnect_neighbour(neighbour)
+
+      -- Poles were momentarily connected so they shared electric network statistics.
+      -- This can cause the weaker poles to explode so we initiate a grace period of 5 seconds to prevent this.
+      global.network_grace_ticks[pole.electric_network_id] = game.tick
+      global.network_grace_ticks[neighbour.electric_network_id] = game.tick
     end
   end
   if max_consumptions[pole.name] then
@@ -177,25 +182,28 @@ local function update_poles()
     local i = math.random(table_size)
     local pole = poles[i]
     if pole and pole.valid then
-      local consumption = get_total_consumption(pole.electric_network_statistics)
-      local max_consumption = max_consumptions[pole.name]
-      if max_consumption and consumption > max_consumption then
-        if destroy_pole_setting == "destroy" then
-          log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
-          alert_on_destroyed(pole, consumption)
-          pole.die()
-          global.poles[i] = global.poles[table_size]
-          global.poles[table_size] = nil
-          table_size = table_size - 1
-        else
-          local damage_amount = (consumption / max_consumption - 0.95) * 10
-          if damage_amount > pole.health then
+      local pole_electric_network_id = pole.electric_network_id
+      local grace_period_tick = global.network_grace_ticks[pole_electric_network_id]
+      if not grace_period_tick or game.tick - grace_period_tick > 301 then -- 301 = 5 seconds
+        local consumption = get_total_consumption(pole.electric_network_statistics)
+        local max_consumption = max_consumptions[pole.name]
+        if max_consumption and consumption > max_consumption then
+          if destroy_pole_setting == "destroy" then
+            log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
             alert_on_destroyed(pole, consumption)
+            pole.die()
+            global.poles[i] = global.poles[table_size]
+            global.poles[table_size] = nil
+            table_size = table_size - 1
+          else
+            local damage_amount = (consumption / max_consumption - 0.95) * 10
+            if damage_amount > pole.health then
+              alert_on_destroyed(pole, consumption)
+            end
+            log("Pole being damaged " .. damage_amount)
+            pole.damage(damage_amount, 'neutral')
           end
-          log("Pole being damaged " .. damage_amount)
-          pole.damage(damage_amount, 'neutral')
         end
-
       end
     else
       global.poles[i] = global.poles[table_size]
@@ -325,8 +333,10 @@ end
 
 script.on_configuration_changed(
   function()
-    -- Mainly needed for 1.2.0 migration
+    -- Mainly needed for 1.1.3 migration
     reset_global_poles()
+
+    global.network_grace_ticks = {} -- Deliberate cleanup to stop it increasing forever :P
     create_transformer_surfaces()
   end
 )
@@ -335,6 +345,7 @@ script.on_init(
   function()
     global.poles = {}
     global.transformers = {}
+    global.network_grace_ticks = {}
     reset_global_poles()
     create_transformer_surfaces()
 

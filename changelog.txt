@@ -4,6 +4,7 @@ Date: 21 March 2021
   Changes:
     - Increased default maximum consumptions when playing with Krastorio2 (you have to reset mod settings to default each time you load with/without K2)
   Bugfixes:
+    - Fixed poles exploding when a pole on their network is placed next to a high-power network
     - Fixed crash when placing transformer on a newly added or renamed surface
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.4
