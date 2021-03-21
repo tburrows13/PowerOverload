@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.5
+Date: 21 March 2021
+  Bugfixes:
+    - Fixed crash when placing transformer on a newly added or renamed surface
+---------------------------------------------------------------------------------------------------
 Version: 1.1.4
 Date: 18 February 2021
   Bugfixes:

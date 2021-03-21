@@ -23,6 +23,10 @@ end
 local function create_update_transformer(transformer)
   local surface = transformer.surface
   local transformer_surface = game.get_surface(surface.name .. "-transformer")
+  if not transformer_surface then
+    game.print("Transformer surface missing. Please report this at https://mods.factorio.com/mod/PowerOverload/discussion")
+    return
+  end
   local transformer_parts = global.transformers[transformer.unit_number]
   if not transformer_parts or not transformer_parts.transformer then
     transformer_parts = {transformer = transformer}
@@ -247,6 +251,59 @@ script.on_event(defines.events.on_tick,
   end
 )
 
+-- Surface changes handling
+
+local function create_transformer_surface(surface_name)
+  local new_surface_name = surface_name .. "-transformer"
+  if not game.get_surface(new_surface_name) and string.sub(surface_name, -12) ~= "-transformer" then
+    create_editor_surface(new_surface_name)
+    log("Creating transformer surface " .. new_surface_name)
+  end
+
+end
+
+script.on_event(defines.events.on_surface_created,
+  function(event)
+    local surface = game.get_surface(event.surface_index)
+    create_transformer_surface(surface.name)
+  end
+)
+
+script.on_event(defines.events.on_surface_deleted,
+  function(event)
+    local surface = game.get_surface(event.surface_index)
+    local transformer_surface_name = surface.name .. "-transformer"
+    if game.get_surface(transformer_surface_name) then
+      game.delete_surface(transformer_surface_name)
+      log("Deleting transformer surface " .. transformer_surface_name)
+    end
+  end
+)
+
+script.on_event(defines.events.on_surface_cleared,
+  function(event)
+    local surface = game.get_surface(event.surface_index)
+    local transformer_surface_name = surface.name .. "-transformer"
+    local transformer_surface = game.get_surface(transformer_surface_name)
+    if transformer_surface then
+      transformer_surface.clear()
+      log("Clearing transformer surface " .. transformer_surface_name)
+    end
+  end
+)
+
+script.on_event(defines.events.on_surface_renamed,
+  function(event)
+    local old_transformer_surface_name = event.old_name .. "-transformer"
+    local old_transformer_surface = game.get_surface(old_transformer_surface_name)
+    local new_transformer_surface_name = event.new_name .. "-transformer"
+    if old_transformer_surface and not game.get_surface(new_transformer_surface_name) then
+      old_transformer_surface.name = 
+      log("Renaming transformer surface " .. old_transformer_surface_name .. " to " .. new_transformer_surface_name)
+    end
+  end
+)
+
 
 local function reset_global_poles()
   local poles = {}
@@ -260,10 +317,17 @@ local function reset_global_poles()
   global.poles = poles
 end
 
+local function create_transformer_surfaces()
+  for _, surface in pairs(game.surfaces) do
+    create_transformer_surface(surface.name)
+  end
+end
+
 script.on_configuration_changed(
   function()
     -- Mainly needed for 1.2.0 migration
     reset_global_poles()
+    create_transformer_surfaces()
   end
 )
 
@@ -272,13 +336,7 @@ script.on_init(
     global.poles = {}
     global.transformers = {}
     reset_global_poles()
-    for _, surface in pairs(game.surfaces) do
-      local surface_name = surface.name
-      local new_surface_name = surface_name .. "-transformer"
-      if not game.surfaces[new_surface_name] and string.sub(surface_name, -12) ~= "-transformer" then
-        create_editor_surface(surface_name .. "-transformer")
-      end
-    end
+    create_transformer_surfaces()
 
     -- Enable transformer recipe
     for _, force in pairs(game.forces) do
