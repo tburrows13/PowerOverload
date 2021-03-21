@@ -1,5 +1,6 @@
 local function combine_tables(first_table, second_table)
   for k,v in pairs(second_table) do first_table[k] = v end
+  return first_table
 end
 
 
@@ -55,7 +56,13 @@ local function get_pole_names(mods)
       ["bi-wooden-pole-big"] = "400MW",
       ["bi-wooden-pole-huge"] = "1GW",
       ["bi-large-substation"] = "500MW",
-
+    },
+    ["Krastorio2"] = {  -- Increased limits in K2 that overwrites base limits
+      ["small-electric-pole"] = "20MW",
+      ["medium-electric-pole"] = "200MW",
+      ["big-electric-pole"] = "2GW",
+      ["po-huge-electric-pole"] = "10GW",
+      ["substation"] = "400MW"
     }
   }
 
@@ -63,9 +70,10 @@ local function get_pole_names(mods)
 
   for mod, pole_names in pairs(mod_pole_names) do
     if mods[mod] then
-      combine_tables(loaded_pole_names, pole_names)
+      loaded_pole_names = combine_tables(loaded_pole_names, pole_names)
     end
   end
+  log(serpent.block(loaded_pole_names))
   return loaded_pole_names
 end
 
