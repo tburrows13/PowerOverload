@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.6
+Date: ???
+  Changes:
+    - Change transformer buffer resizing to more closely follow demand/supply on input energy and exactly follow output energy
+---------------------------------------------------------------------------------------------------
 Version: 1.1.5
 Date: 21 March 2021
   Changes:

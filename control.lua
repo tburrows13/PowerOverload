@@ -225,19 +225,17 @@ local function update_transformers()
         local energy_in = interface_in.energy
         local energy_out = interface_out.energy
 
-        -- Double buffer size if necessary
+        -- Increase buffer size we have hit the limit and all outgoing energy is used
         if energy_in == buffer_size and energy_out == 0 then
-          buffer_size = buffer_size * 2
-          log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
+          buffer_size = buffer_size * 1.1
+          --log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
-          interface_out.electric_buffer_size = buffer_size
-        end
-        -- Shrink the buffer size if necessary
-        if buffer_size > 20000 and energy_in < buffer_size / 2.2 then  -- Extra .2 to allow a bit of leeway
+
+        -- Shrink the buffer size if we have only filled less than 90% of the buffer
+        elseif energy_in < buffer_size * 0.9 then
           buffer_size = buffer_size / 2
-          log("Decreasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
+          --log("Decreasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
-          interface_out.electric_buffer_size = buffer_size
         end
 
         -- Transfer as much energy as possible
@@ -245,6 +243,7 @@ local function update_transformers()
         local overflow = energy_out - buffer_size
         interface_in.energy = overflow
         interface_out.energy = energy_out
+        interface_out.electric_buffer_size = energy_out
       end
     else
       global.transformers[i] = nil
