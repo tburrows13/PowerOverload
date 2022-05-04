@@ -113,8 +113,11 @@ local function on_destroyed(event)
   if transformer then
     local transformer_parts = global.transformers[transformer.unit_number]
     if transformer_parts then
-      for _, entity in pairs(transformer_parts) do
-        entity.destroy()
+      for name, entity in pairs(transformer_parts) do
+        if name ~= "transformer" then
+          -- If the transformer is destryed then the player won't get the item back
+          entity.destroy()
+        end
       end
     end
   end
