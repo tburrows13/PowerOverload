@@ -3,6 +3,7 @@ Version: 1.1.6
 Date: ???
   Bugfixes:
     - Fixed transformers being lost when mined instead of returned to inventory
+    - Fixed transformers not working with pipette tool 'Q'
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.5
 Date: 21 March 2021

@@ -8,6 +8,7 @@ local transformer = table.deepcopy(data.raw["power-switch"]["power-switch"])
 transformer.name = "po-transformer"
 transformer.wire_max_distance = 0
 transformer.minable.result = "po-transformer"
+transformer.placeable_by = {item = "po-transformer", count = 1}
 transformer.power_on_animation.layers[1].tint = transformer_tint
 transformer.power_on_animation.layers[1].hr_version.tint = transformer_tint
 transformer.icons = {{
@@ -23,15 +24,12 @@ transformer_item.name = "po-transformer"
 transformer_item.place_result = "po-transformer"
 transformer_item.subgroup = "energy-pipe-distribution"
 transformer_item.order = "a[energy]-f[transformer]"
-transformer_item.icon_tint = transformer_tint
 transformer_item.icons = {{
   icon = transformer_item.icon,
   icon_size = transformer_item.icon_size,
   icon_mipmaps = transformer_item.icon_mipmaps,
   tint = transformer_tint
 }}
-
-
 
 local transformer_recipe = table.deepcopy(data.raw.recipe["power-switch"])
 transformer_recipe.name = "po-transformer"
