@@ -228,8 +228,11 @@ local function update_transformers()
         local energy_in = interface_in.energy
         local energy_out = interface_out.energy
 
+        local efficiency = settings.global["power-overload-transformer-efficiency"].value
+
         -- Double buffer size if necessary
-        if energy_in == buffer_size and energy_out == 0 then
+        -- Due to effiency calculations we don't always empty the buffer when we need more energy
+        if energy_in == buffer_size and (buffer_size - energy_out) / efficiency > buffer_size  then
           buffer_size = buffer_size * 2
           log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
@@ -244,10 +247,13 @@ local function update_transformers()
         end
 
         -- Transfer as much energy as possible
-        energy_out = energy_out + energy_in
-        local overflow = energy_out - buffer_size
-        interface_in.energy = overflow
-        interface_out.energy = energy_out
+        local output_space = buffer_size - energy_out
+        local ideal_input_used = output_space / efficiency
+        local actual_input_used = math.min(ideal_input_used, energy_in)
+        local actual_output_gained = actual_input_used * efficiency
+
+        interface_in.energy = energy_in - actual_input_used
+        interface_out.energy = energy_out + actual_output_gained
       end
     else
       global.transformers[i] = nil

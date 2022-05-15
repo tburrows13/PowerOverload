@@ -15,6 +15,15 @@ data:extend{
     setting_type = "runtime-global",
     default_value = true,
     order = "b"
+  },
+  {
+    type = "double-setting",
+    name = "power-overload-transformer-efficiency",
+    setting_type = "runtime-global",
+    default_value = 1,
+    minimum_value = 0,
+    maximum_value = 1,
+    order = "c"
   }
 }
 
