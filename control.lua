@@ -7,9 +7,10 @@ max_consumptions = {}
 local function on_pole_built(pole)
   local pole_name = pole.name
   for _, neighbour in pairs(pole.neighbours.copper) do
-    -- TODO allow attaching to equivalent transformer
     if neighbour.type == "electric-pole" and
-        (pole_name ~= neighbour.name or pole_name == "po-hidden-electric-pole-in" or pole_name == "po-hidden-electric-pole-out") then
+        (pole_name == "po-hidden-electric-pole-in" or pole_name == "po-hidden-electric-pole-out" or
+         neighbour.name == "po-hidden-electric-pole-in" or neighbour.name == "po-hidden-electric-pole-out" or
+        (pole_name ~= neighbour.name and settings.global["power-overload-disconnect-different-poles"].value)) then
       pole.disconnect_neighbour(neighbour)
 
       -- Poles were momentarily connected so they shared electric network statistics.

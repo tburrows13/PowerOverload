@@ -2,19 +2,26 @@ local shared = require "shared"
 
 data:extend{
   {
+    type = "bool-setting",
+    name = "power-overload-disconnect-different-poles",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "a"
+  },
+  {
     type = "string-setting",
     name = "power-overload-on-pole-overload",
     setting_type = "runtime-global",
     default_value = "destroy",
     allowed_values = {"destroy", "damage"},
-    order = "a"
+    order = "b"
   },
   {
     type = "bool-setting",
     name = "power-overload-log-to-chat",
     setting_type = "runtime-global",
     default_value = true,
-    order = "b"
+    order = "c"
   },
   {
     type = "double-setting",
@@ -23,8 +30,8 @@ data:extend{
     default_value = 1,
     minimum_value = 0,
     maximum_value = 1,
-    order = "c"
-  }
+    order = "d"
+  },
 }
 
 order = 0

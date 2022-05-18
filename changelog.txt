@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.0
 Date: ???
+  Features:
+    - Added setting to disable automatically disconnect poles of different types when placed
   Changes:
     - Changed transformer buffer resizing to more closely follow demand/supply
 ---------------------------------------------------------------------------------------------------
