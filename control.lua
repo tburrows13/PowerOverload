@@ -280,13 +280,12 @@ script.on_event(defines.events.on_surface_created,
   end
 )
 
-script.on_event(defines.events.on_surface_deleted,
+script.on_event(defines.events.on_pre_surface_deleted,
   function(event)
     local surface = game.get_surface(event.surface_index)
     local transformer_surface_name = surface.name .. "-transformer"
     if game.get_surface(transformer_surface_name) then
       game.delete_surface(transformer_surface_name)
-      log("Deleting transformer surface " .. transformer_surface_name)
     end
   end
 )
