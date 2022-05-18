@@ -232,15 +232,15 @@ local function update_transformers()
 
         -- Double buffer size if necessary
         -- Due to effiency calculations we don't always empty the buffer when we need more energy
-        if energy_in == buffer_size and (buffer_size - energy_out) / efficiency > buffer_size  then
-          buffer_size = buffer_size * 2
+        local effective_energy_out = (energy_out - buffer_size) / efficiency + buffer_size
+        if energy_in == buffer_size and effective_energy_out <= 0 then
+          buffer_size = buffer_size * 1.2
           log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
-        end
-        -- Shrink the buffer size if necessary
-        if buffer_size > 20000 and energy_in < buffer_size / 2.2 then  -- Extra .2 to allow a bit of leeway
-          buffer_size = buffer_size / 2
+        elseif effective_energy_out / energy_in > 0.01 and buffer_size > 1000 then
+          -- Shrink the buffer size if necessary
+          buffer_size = buffer_size * 0.99
           log("Decreasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
