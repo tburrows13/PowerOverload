@@ -9,6 +9,8 @@ Date: 4 May 2022
   Bugfixes:
     - Fixed transformers being lost when mined instead of returned to inventory
     - Fixed transformers not working with pipette tool 'Q'
+  Locale:
+    - Added complete Brazilian Portuguese translations (thanks Bruno Melo on Crowdin!)
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.5
 Date: 21 March 2021
