@@ -18,7 +18,7 @@ local pylon =  {
         percent = 100
       }
     },
-    collision_box = {{-scale+(1-0.65),-scale+(1-0.65)}, {scale-(1-0.65), scale-(1-0.65)}},  -- {{-0.65, -0.65}, {0.65, 0.65}},
+    collision_box = {{-scale+(1-0.6),-scale+(1-0.6)}, {scale-(1-0.6), scale-(1-0.6)}},  -- {{-0.65, -0.65}, {0.65, 0.65}},
     selection_box = {{-1*scale, -1*scale}, {1*scale, 1*scale}},  -- {{-1, -1}, {1, 1}}
     damaged_trigger_effect = big_pole.damaged_trigger_effect,
     drawing_box = {{-1*scale, -3*scale}, {1*scale, 0.5*scale}},
@@ -34,7 +34,7 @@ local pylon =  {
       width = 168,
       height = 165,
       direction_count = 4,
-      shift = {1.6*scale, -1.1*scale}, -- {1.6, -1.1},
+      shift = {1.6*scale, -1.3*scale}, -- {1.6, -1.1},
       scale = scale,
       --[[hr_version =
       {
