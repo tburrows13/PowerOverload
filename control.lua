@@ -142,10 +142,13 @@ script.on_configuration_changed(
       return
     end
     old_version = util.split(old_version, ".")
-    if old_version[1] == 1 then
+    for i=1, #old_version do
+      old_version[i] = tonumber(old_version[i])
+    end
+    if old_version[1] <= 1 then
       if old_version[2] < 2 then
         -- Run on 1.2.0 load
-        game.get_force("player").reset_technology_effects()
+        game.forces["player"].reset_technology_effects()
         global.fuses = {}
         global.tick_installed = game.tick
       end
