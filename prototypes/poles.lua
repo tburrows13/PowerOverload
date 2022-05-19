@@ -8,7 +8,7 @@ for pole_name, prototype in pairs(data.raw["electric-pole"]) do
     end
     local description = prototype.localised_description
     if description then
-      prototype.localised_description = {"entity-description.po-electric-pole-consumption-append", description, max_consumption_string}
+      prototype.localised_description = {"", description, "\n", {"entity-description.po-electric-pole-consumption", max_consumption_string}}
     else
       prototype.localised_description = {"entity-description.po-electric-pole-consumption", max_consumption_string}
     end
