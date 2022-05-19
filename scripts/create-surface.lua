@@ -2,6 +2,20 @@
 ---------------------------------------------------------------------------------------------------
 -- surface handling
 
+function create_transformer_surface(surface_name)
+  local new_surface_name = surface_name .. "-transformer"
+  if not game.get_surface(new_surface_name) and string.sub(surface_name, -12) ~= "-transformer" then
+    create_editor_surface(new_surface_name)
+    log("Creating transformer surface " .. new_surface_name)
+  end
+end
+
+function create_transformer_surfaces()
+  for _, surface in pairs(game.surfaces) do
+    create_transformer_surface(surface.name)
+  end
+end
+
 local function editor_autoplace_control()
   for control in pairs(game.autoplace_control_prototypes) do
     if control:find("dirt") then
