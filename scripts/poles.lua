@@ -1,4 +1,8 @@
-local function on_pole_built(pole)
+local function is_fuse(pole)
+  return string.sub(pole.name, -5) == "-fuse"
+end
+
+function on_pole_built(pole)
   local pole_name = pole.name
   for _, neighbour in pairs(pole.neighbours.copper) do
     if neighbour.type == "electric-pole" and
@@ -14,7 +18,11 @@ local function on_pole_built(pole)
     end
   end
   if max_consumptions[pole.name] then
-    table.insert(global.poles, pole)
+    if is_fuse(pole) then
+      table.insert(global.fuses, pole)
+    else
+      table.insert(global.poles, pole)
+    end
   end
 end
 
@@ -42,19 +50,29 @@ local function alert_on_destroyed(pole, consumption)
   end
 end
 
-function update_poles()
-  local poles = global.poles
+function update_poles(pole_type)
+  local poles
+  if pole_type == "pole" then
+    poles = global.poles
+  elseif pole_type == "fuse" then
+    global.fuses = global.fuses or {}
+    poles = global.fuses
+  end
   local table_size = #poles
   if table_size == 0 then return end
   local destroy_pole_setting = settings.global["power-overload-on-pole-overload"].value
 
-  local average_tick_delay
   if destroy_pole_setting == "destroy" then
     -- Check each pole on average every 5 seconds (60 * 5 = 300)
     average_tick_delay = 300
   else
-    -- Check each pole on average every 5 seconds (60 * 5 = 300)
+    -- Check each pole on average every 1 seconds (60 * 5 = 300)
     average_tick_delay = 60
+  end
+
+  if pole_type == "fuse" then
+    -- Check fuses 10x as often
+    average_tick_delay = average_tick_delay / 10
   end
 
   -- + 1 ensures that we always check at least one pole 1
@@ -73,22 +91,22 @@ function update_poles()
             log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
             alert_on_destroyed(pole, consumption)
             pole.die()
-            global.poles[i] = global.poles[table_size]
-            global.poles[table_size] = nil
+            poles[i] = poles[table_size]
+            poles[table_size] = nil
             table_size = table_size - 1
           else
             local damage_amount = (consumption / max_consumption - 0.95) * 10
+            log("Pole being damaged " .. damage_amount)
             if damage_amount > pole.health then
               alert_on_destroyed(pole, consumption)
             end
-            log("Pole being damaged " .. damage_amount)
             pole.damage(damage_amount, 'neutral')
           end
         end
       end
     else
-      global.poles[i] = global.poles[table_size]
-      global.poles[table_size] = nil
+      poles[i] = poles[table_size]
+      poles[table_size] = nil
       table_size = table_size - 1
     end
   end

@@ -51,7 +51,8 @@ script.on_event(defines.events.on_entity_destroyed,
 
 script.on_event(defines.events.on_tick,
   function()
-    update_poles()
+    update_poles("fuse")
+    update_poles("pole")
     update_transformers()
   end
 )
@@ -113,18 +114,35 @@ end
 
 
 script.on_configuration_changed(
-  function()
+  function(changed_data)
     -- Mainly needed for 1.1.3 migration
     reset_global_poles()
 
     global.network_grace_ticks = {} -- Deliberate cleanup to stop it increasing forever :P
     create_transformer_surfaces()
+
+    local old_version
+    local mod_changes = changed_data.mod_changes
+    if mod_changes and mod_changes["PowerOverload"] and mod_changes["PowerOverload"]["old_version"] then
+      old_version = mod_changes["PowerOverload"]["old_version"]
+    else
+      return
+    end
+    old_version = util.split(old_version, ".")
+    if old_version[1] == 1 then
+      if old_version[2] < 2 then
+        -- Run on 1.2.0 load
+        game.get_force("player").reset_technology_effects()
+        global.fuses = {}
+      end
+    end
   end
 )
 
 script.on_init(
   function()
     global.poles = {}
+    global.fuses = {}
     global.transformers = {}
     global.network_grace_ticks = {}
     reset_global_poles()
