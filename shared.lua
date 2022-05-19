@@ -11,7 +11,7 @@ local function validate_and_parse_energy(consumption, default_consumption)
   if ending == "W" then
     -- Must check for "W" because parse_energy accepts "J"
     status, result = pcall(util.parse_energy, consumption)
-  else 
+  else
     status, result = false, "Does not end in W"
   end
 
@@ -26,6 +26,8 @@ local function validate_and_parse_energy(consumption, default_consumption)
 
 end
 
+-- These values are only the default values used in settings so changing them won't
+--change the actual values: use mod settings for that
 local function get_pole_names(mods)
   local mod_pole_names = {
     ["base"] = {
@@ -42,6 +44,12 @@ local function get_pole_names(mods)
     },
     ["aai-industry"] = {
       ["small-iron-electric-pole"] = "20MW"
+    },
+    ["space-exploration"] = {
+      ["se-pylon"] = "50GW",
+      ["se-pylon-substation"] = "2GW",
+      ["se-pylon-construction"] = "20GW",
+      ["se-pylon-construction-radar"] = "2GW",
     },
     ["bobpower"] = {
       ["medium-electric-pole-2"] = "150MW",
@@ -68,7 +76,22 @@ local function get_pole_names(mods)
       ["big-electric-pole"] = "2GW",
       ["po-huge-electric-pole"] = "10GW",
       ["substation"] = "400MW"
-    }
+    },
+    ["fixLargeElectricPole"] = {
+      ["large-electric-pole"] = "16GW"
+    },
+    ["Advanced_Electric"] = {
+      ["small-electric-pole-2"] = "24MW",
+      ["medium-electric-pole-2"] = "110MW",
+      ["medium-electric-pole-3"] = "120MW",
+      ["medium-electric-pole-4"] = "130MW",
+      ["big-electric-pole-2"] = "550MW",
+      ["big-electric-pole-3"] = "600MW",
+      ["big-electric-pole-4"] = "650MW",
+      ["substation-2"] = "220MW",
+      ["substation-3"] = "240MW",
+      ["substation-4"] = "260MW"
+    },
   }
 
   local loaded_pole_names = {}
