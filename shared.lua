@@ -33,7 +33,12 @@ local function get_pole_names(mods)
       ["medium-electric-pole"] = "100MW",
       ["big-electric-pole"] = "500MW",
       ["po-huge-electric-pole"] = "5GW",
-      ["substation"] = "200MW"
+      ["po-small-electric-fuse"] = "15MW",
+      ["po-medium-electric-fuse"] = "80MW",
+      ["po-big-electric-fuse"] = "400MW",
+      ["po-huge-electric-fuse"] = "4GW",
+      ["substation"] = "200MW",
+      ["po-interface"] = "100GW",
     },
     ["aai-industry"] = {
       ["small-iron-electric-pole"] = "20MW"

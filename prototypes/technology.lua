@@ -1,9 +1,11 @@
-table.insert(data.raw.technology["electric-energy-distribution-1"].effects,
-  {
+local electric_1_effects = data.raw.technology["electric-energy-distribution-1"].effects
+
+for _, recipe_name in pairs({"po-medium-electric-fuse", "po-big-electric-fuse"}) do
+  table.insert(electric_1_effects, {
     type = "unlock-recipe",
-    recipe = "po-transformer"
-  }
-)
+    recipe = recipe_name
+  })
+end
 
 data:extend{
   {
@@ -16,6 +18,10 @@ data:extend{
       {
         type = "unlock-recipe",
         recipe = "po-huge-electric-pole"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "po-huge-electric-fuse"
       },
       {
         type = "unlock-recipe",
