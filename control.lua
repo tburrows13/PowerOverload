@@ -51,8 +51,9 @@ script.on_event(defines.events.on_entity_destroyed,
 
 script.on_event(defines.events.on_tick,
   function()
-    update_poles("fuse")
-    update_poles("pole")
+    local consumption_cache = {}
+    update_poles("fuse", consumption_cache)
+    update_poles("pole", consumption_cache)
     update_transformers()
   end
 )

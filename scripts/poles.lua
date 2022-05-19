@@ -50,12 +50,11 @@ local function alert_on_destroyed(pole, consumption)
   end
 end
 
-function update_poles(pole_type)
+function update_poles(pole_type, consumption_cache)
   local poles
   if pole_type == "pole" then
     poles = global.poles
   elseif pole_type == "fuse" then
-    global.fuses = global.fuses or {}
     poles = global.fuses
   end
   local table_size = #poles
@@ -84,7 +83,12 @@ function update_poles(pole_type)
       local pole_electric_network_id = pole.electric_network_id
       local grace_period_tick = global.network_grace_ticks[pole_electric_network_id]
       if not grace_period_tick or game.tick - grace_period_tick > 301 then -- 301 = 5 seconds
-        local consumption = get_total_consumption(pole.electric_network_statistics)
+        local electric_network_id = pole.electric_network_id
+        local consumption = consumption_cache[electric_network_id]
+        if not consumption then
+          consumption = get_total_consumption(pole.electric_network_statistics)
+          consumption_cache[electric_network_id] = consumption
+        end
         local max_consumption = max_consumptions[pole.name]
         if max_consumption and consumption > max_consumption then
           if destroy_pole_setting == "destroy" then
