@@ -112,6 +112,18 @@ local function reset_global_poles()
   global.poles = poles
 end
 
+script.on_event(defines.events.on_gui_closed,
+  function(event)
+    if event.gui_type == defines.gui_type.entity and event.entity.type == "electric-pole" then
+      if not global.notif_shown and game.tick - global.tick_installed > 432000 then  -- 2 hours: 2 * 60m * 60s * 60t = 432,000
+        game.print("[Power Overload] I hope you are enjoying playing with Power Overload!\n" ..
+          "Please start a discussion thread on the mod portal if you would like to help with improving the graphics " ..
+          "or if you have balance suggestions.")
+        global.notif_shown = true
+      end
+    end
+  end
+)
 
 script.on_configuration_changed(
   function(changed_data)
@@ -134,6 +146,7 @@ script.on_configuration_changed(
         -- Run on 1.2.0 load
         game.get_force("player").reset_technology_effects()
         global.fuses = {}
+        global.tick_installed = game.tick
       end
     end
   end
@@ -145,6 +158,7 @@ script.on_init(
     global.fuses = {}
     global.transformers = {}
     global.network_grace_ticks = {}
+    global.tick_installed = game.tick
     reset_global_poles()
     create_transformer_surfaces()
 
