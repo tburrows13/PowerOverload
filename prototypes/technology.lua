@@ -16,9 +16,13 @@ data:extend{
       {
         type = "unlock-recipe",
         recipe = "po-huge-electric-pole"
+      },
+      {
+        type = "unlock-recipe",
+        recipe = "po-interface"
       }
     },
-    prerequisites = {"electric-energy-distribution-2", "chemical-science-pack"},
+    prerequisites = {"electric-energy-distribution-2", "chemical-science-pack", "advanced-electronics-2"},
     unit =
     {
       count = 400,
