@@ -152,6 +152,14 @@ script.on_configuration_changed(
   end
 )
 
+local function generate_max_consumption_table()
+  local pole_names = shared.get_pole_names(script.active_mods)
+  for pole_name, default_consumption in pairs(pole_names) do
+    local max_consumption_string = settings.startup["power-overload-max-power-" .. pole_name].value
+    max_consumptions[pole_name] = shared.validate_and_parse_energy(max_consumption_string, default_consumption)
+  end
+end
+
 script.on_init(
   function()
     global.poles = {}
@@ -159,6 +167,7 @@ script.on_init(
     global.transformers = {}
     global.network_grace_ticks = {}
     global.tick_installed = game.tick
+    generate_max_consumption_table()
     reset_global_poles()
     create_transformer_surfaces()
 
@@ -171,13 +180,4 @@ script.on_init(
   end
 )
 
-script.on_load(
-  function()
-    -- Hopefully doesn't cause desyncs...
-    local pole_names = shared.get_pole_names(script.active_mods)
-    for pole_name, default_consumption in pairs(pole_names) do
-      local max_consumption_string = settings.startup["power-overload-max-power-" .. pole_name].value
-      max_consumptions[pole_name] = shared.validate_and_parse_energy(max_consumption_string, default_consumption)
-    end
-  end
-)
+script.on_load(generate_max_consumption_table)

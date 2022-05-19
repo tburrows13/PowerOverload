@@ -5,6 +5,8 @@ Date: ???
     - Added setting to disable automatically disconnect poles of different types when placed
   Changes:
     - Changed transformer buffer resizing to more closely follow demand/supply
+  Bugfixes:
+    - Fixed poles not exploding until after saving and loading the first time
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.7
 Date: 18 May 2022
