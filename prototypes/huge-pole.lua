@@ -1,6 +1,7 @@
 local big_pole = data.raw["electric-pole"]["big-electric-pole"]
 
 scale = 1.5
+translate = -0.2
 local pylon =  {
     type = "electric-pole",
     name = "po-huge-electric-pole",
@@ -34,7 +35,7 @@ local pylon =  {
       width = 168,
       height = 165,
       direction_count = 4,
-      shift = {1.6*scale, -1.3*scale}, -- {1.6, -1.1},
+      shift = {1.6*scale, (-1.1 + translate)*scale}, -- {1.6, -1.1},
       scale = scale,
       --[[hr_version =
       {
@@ -52,57 +53,57 @@ local pylon =  {
       {
         shadow =
         {
-          copper = {2.7*scale, 0},
-          green = {1.8*scale, 0},
-          red = {3.6*scale, 0}
+          copper = {2.7*scale, translate},
+          green = {1.8*scale, translate},
+          red = {3.6*scale, translate}
         },
         wire =
         {
-          copper = {0, -3.125*scale},
-          green = {-0.59375*scale, -3.125*scale},
-          red = {0.625*scale, -3.125*scale}
+          copper = {0, (-3.125 + translate)*scale},
+          green = {-0.59375*scale, (-3.125 + translate)*scale},
+          red = {0.625*scale, (-3.125 + translate)*scale}
         }
       },
       {
         shadow =
         {
-          copper = {3.1*scale, 0.2*scale},
-          green = {2.3*scale, -0.3*scale},
-          red = {3.8*scale, 0.6*scale}
+          copper = {3.1*scale, (0.2 + translate)*scale},
+          green = {2.3*scale, (-0.3 + translate)*scale},
+          red = {3.8*scale, (0.6 + translate)*scale}
         },
         wire =
         {
-          copper = {-0.0625*scale, -3.125*scale},
-          green = {-0.5*scale, -3.4375*scale},
-          red = {0.34375*scale, -2.8125*scale}
+          copper = {-0.0625*scale, (-3.125 + translate)*scale},
+          green = {-0.5*scale, (-3.4375 + translate)*scale},
+          red = {0.34375*scale, (-2.8125 + translate)*scale}
         }
       },
       {
         shadow =
         {
-          copper = {2.9*scale, 0.06*scale},
-          green = {3.0*scale, -0.6*scale},
-          red = {3.0*scale, 0.8*scale}
+          copper = {2.9*scale, (0.06 + translate)*scale},
+          green = {3.0*scale, (-0.6 + translate)*scale},
+          red = {3.0*scale, (0.8 + translate)*scale}
         },
         wire =
         {
-          copper = {-0.09375*scale, -3.09375*scale},
-          green = {-0.09375*scale, -3.53125*scale},
-          red = {-0.09375*scale, -2.65625*scale}
+          copper = {-0.09375*scale, (-3.09375 + translate)*scale},
+          green = {-0.09375*scale, (-3.53125 + translate)*scale},
+          red = {-0.09375*scale, (-2.65625 + translate)*scale}
         }
       },
       {
         shadow =
         {
-          copper = {3.1*scale, 0.2*scale},
-          green = {3.8*scale, -0.3*scale},
-          red = {2.35*scale, 0.6*scale}
+          copper = {3.1*scale, (0.2 + translate)*scale},
+          green = {3.8*scale, (-0.3 + translate)*scale},
+          red = {2.35*scale, (0.6 + translate)*scale}
         },
         wire =
         {
-          copper = {-0.0625*scale, -3.1875*scale},
-          green = {0.375*scale, -3.5*scale},
-          red = {-0.46875*scale, -2.90625*scale}
+          copper = {-0.0625*scale, (-3.1875 + translate)*scale},
+          green = {0.375*scale, (-3.5 + translate)*scale},
+          red = {-0.46875*scale, (-2.90625 + translate)*scale}
         }
       }
     },
@@ -121,7 +122,7 @@ local pylon =  {
         priority = "extra-high",
         width = 16,
         height = 32,
-        shift = util.by_pixel(0, 60),
+        shift = {util.by_pixel(0, 60)[1]*scale,  (util.by_pixel(0, 60)[2] + translate)*scale},
         variation_count = 1,
         scale = 5*scale
       },
