@@ -17,7 +17,7 @@ function on_pole_built(pole)
       global.network_grace_ticks[neighbour.electric_network_id] = game.tick
     end
   end
-  if max_consumptions[pole.name] then
+  if global.max_consumptions[pole.name] then
     if is_fuse(pole) then
       table.insert(global.fuses, pole)
     else
@@ -73,6 +73,8 @@ function update_poles(pole_type, consumption_cache)
     -- Check fuses 10x as often
     average_tick_delay = average_tick_delay / 10
   end
+
+  local max_consumptions = global.max_consumptions
 
   -- + 1 ensures that we always check at least one pole 1
   local poles_to_check = math.floor(table_size / average_tick_delay) + 1

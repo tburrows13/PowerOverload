@@ -8,6 +8,7 @@ require "__PowerOverload__/scripts/poles"
 max_consumptions = {}
 
 
+
 local function on_built(event)
   local entity = event.created_entity or event.entity
   if entity then
@@ -100,19 +101,6 @@ script.on_event(defines.events.on_surface_renamed,
   end
 )
 
-
-local function reset_global_poles()
-  local poles = {}
-  for _, surface in pairs(game.surfaces) do
-    for _, pole in pairs(surface.find_entities_filtered{type = "electric-pole"}) do
-      if max_consumptions[pole.name] then
-        table.insert(poles, pole)
-      end
-    end
-  end
-  global.poles = poles
-end
-
 script.on_event(defines.events.on_gui_closed,
   function(event)
     if event.gui_type == defines.gui_type.entity and event.entity.type == "electric-pole" then
@@ -126,9 +114,31 @@ script.on_event(defines.events.on_gui_closed,
   end
 )
 
+local function generate_max_consumption_table()
+  local pole_names = shared.get_pole_names(script.active_mods)
+  local max_consumptions = {}
+  for pole_name, default_consumption in pairs(pole_names) do
+    local max_consumption_string = settings.startup["power-overload-max-power-" .. pole_name].value
+    max_consumptions[pole_name] = shared.validate_and_parse_energy(max_consumption_string, default_consumption)
+  end
+  global.max_consumptions = max_consumptions
+end
+
+local function reset_global_poles()
+  local poles = {}
+  for _, surface in pairs(game.surfaces) do
+    for _, pole in pairs(surface.find_entities_filtered{type = "electric-pole"}) do
+      if global.max_consumptions[pole.name] then
+        table.insert(poles, pole)
+      end
+    end
+  end
+  global.poles = poles
+end
+
 script.on_configuration_changed(
   function(changed_data)
-    -- Mainly needed for 1.1.3 migration
+    generate_max_consumption_table()
     reset_global_poles()
 
     global.network_grace_ticks = {} -- Deliberate cleanup to stop it increasing forever :P
@@ -156,14 +166,6 @@ script.on_configuration_changed(
   end
 )
 
-local function generate_max_consumption_table()
-  local pole_names = shared.get_pole_names(script.active_mods)
-  for pole_name, default_consumption in pairs(pole_names) do
-    local max_consumption_string = settings.startup["power-overload-max-power-" .. pole_name].value
-    max_consumptions[pole_name] = shared.validate_and_parse_energy(max_consumption_string, default_consumption)
-  end
-end
-
 script.on_init(
   function()
     global.poles = {}
@@ -183,5 +185,3 @@ script.on_init(
     end
   end
 )
-
-script.on_load(generate_max_consumption_table)
