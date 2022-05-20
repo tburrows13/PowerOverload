@@ -27,7 +27,7 @@ data:extend{
     type = "double-setting",
     name = "power-overload-transformer-efficiency",
     setting_type = "runtime-global",
-    default_value = 1,
+    default_value = 0.98,
     minimum_value = 0,
     maximum_value = 1,
     order = "d"

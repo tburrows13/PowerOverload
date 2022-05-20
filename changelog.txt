@@ -1,15 +1,18 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.0
-Date: ???
+Date: 20 May 2022
   Features:
-    - Added setting to disable automatically disconnect poles of different types when placed
+    - Fuses, which have a lower max consumption than the corresponding electric pole and are more likely to explode when overloaded
+    - High energy interface for providing energy to (primarily modded) buildings with very high power requirements
+    - Added transformer efficiency mechanic, set to 98% by default
+    - Added setting to disable automatically disconnecting poles of different types when placed
     - Added support for modded poles from Space Exploration, Large Electric Pole, and Advanced Electric
     - Increased performance of electric poles by 400%
     - New thumbnail
   Changes:
     - Changed transformer buffer resizing to more closely follow demand/supply
   Bugfixes:
-    - Fixed poles not exploding until after saving and loading the first time
+    - Fixed poles not exploding until after saving and loading for the first time
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.7
 Date: 18 May 2022
