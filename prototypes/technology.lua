@@ -1,6 +1,6 @@
 local electric_1_effects = data.raw.technology["electric-energy-distribution-1"].effects
 
-for _, recipe_name in pairs({"po-medium-electric-fuse", "po-big-electric-fuse"}) do
+for _, recipe_name in pairs({"po-medium-electric-fuse", "po-big-electric-fuse", "po-transformer"}) do
   table.insert(electric_1_effects, {
     type = "unlock-recipe",
     recipe = recipe_name
