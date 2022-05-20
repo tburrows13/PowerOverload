@@ -8,7 +8,7 @@ function on_pole_built(pole)
     if neighbour.type == "electric-pole" and
         (pole_name == "po-hidden-electric-pole-in" or pole_name == "po-hidden-electric-pole-out" or
          neighbour.name == "po-hidden-electric-pole-in" or neighbour.name == "po-hidden-electric-pole-out" or
-        (pole_name ~= neighbour.name and settings.global["power-overload-disconnect-different-poles"].value)) then
+        (pole_name ~= neighbour.name and global.global_settings["power-overload-disconnect-different-poles"])) then
       pole.disconnect_neighbour(neighbour)
 
       -- Poles were momentarily connected so they shared electric network statistics.
@@ -38,13 +38,13 @@ local function get_total_consumption(statistics)
   return total
 end
 
-local function alert_on_destroyed(pole, consumption)
+local function alert_on_destroyed(pole, consumption, log_to_chat)
   local force = pole.force
   if force then
     for _, player in pairs(force.players) do
       player.add_alert(pole, defines.alert_type.entity_destroyed)
     end
-    if settings.global["power-overload-log-to-chat"].value then
+    if log_to_chat then
       force.print({"overload-alert.alert", pole.name, math.ceil(consumption / 1000000)})  -- In MW
     end
   end
@@ -59,7 +59,11 @@ function update_poles(pole_type, consumption_cache)
   end
   local table_size = #poles
   if table_size == 0 then return end
-  local destroy_pole_setting = settings.global["power-overload-on-pole-overload"].value
+
+  local max_consumptions = global.max_consumptions
+  local global_settings = global.global_settings
+  local log_to_chat = global_settings["power-overload-log-to-chat"]
+  local destroy_pole_setting = global_settings["power-overload-on-pole-overload"]
 
   if destroy_pole_setting == "destroy" then
     -- Check each pole on average every 5 seconds (60 * 5 = 300)
@@ -73,8 +77,6 @@ function update_poles(pole_type, consumption_cache)
     -- Check fuses 10x as often
     average_tick_delay = average_tick_delay / 10
   end
-
-  local max_consumptions = global.max_consumptions
 
   -- + 1 ensures that we always check at least one pole 1
   local poles_to_check = math.floor(table_size / average_tick_delay) + 1
@@ -95,7 +97,7 @@ function update_poles(pole_type, consumption_cache)
         if max_consumption and consumption > max_consumption then
           if destroy_pole_setting == "destroy" then
             log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
-            alert_on_destroyed(pole, consumption)
+            alert_on_destroyed(pole, consumption, log_to_chat)
             pole.die()
             poles[i] = poles[table_size]
             poles[table_size] = nil
@@ -104,7 +106,7 @@ function update_poles(pole_type, consumption_cache)
             local damage_amount = (consumption / max_consumption - 0.95) * 10
             log("Pole being damaged " .. damage_amount)
             if damage_amount > pole.health then
-              alert_on_destroyed(pole, consumption)
+              alert_on_destroyed(pole, consumption, log_to_chat)
             end
             pole.damage(damage_amount, 'neutral')
           end

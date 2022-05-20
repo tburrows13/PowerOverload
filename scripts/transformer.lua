@@ -77,6 +77,8 @@ end
 
 
 function update_transformers()
+  local efficiency = global.global_settings["power-overload-transformer-efficiency"]
+
   for i, transformer in pairs(global.transformers) do
     local transformer_entity = transformer.transformer
     if transformer_entity and transformer_entity.valid then
@@ -87,9 +89,6 @@ function update_transformers()
         local buffer_size = interface_in.electric_buffer_size
         local energy_in = interface_in.energy
         local energy_out = interface_out.energy
-
-        local efficiency = settings.global["power-overload-transformer-efficiency"].value
-
         -- Double buffer size if necessary
         -- Due to effiency calculations we don't always empty the buffer when we need more energy
         local effective_energy_out = (energy_out - buffer_size) / efficiency + buffer_size

@@ -114,6 +114,21 @@ script.on_event(defines.events.on_gui_closed,
   end
 )
 
+local function update_global_settings()
+  local global_settings = {}
+  for _, setting in pairs({
+    "power-overload-disconnect-different-poles",
+    "power-overload-on-pole-overload",
+    "power-overload-log-to-chat",
+    "power-overload-transformer-efficiency",
+  }) do
+    global_settings[setting] = settings.global[setting].value
+  end
+  global.global_settings = global_settings
+end
+script.on_event(defines.events.on_runtime_mod_setting_changed, update_global_settings)
+
+
 local function generate_max_consumption_table()
   local pole_names = shared.get_pole_names(script.active_mods)
   local max_consumptions = {}
@@ -138,6 +153,8 @@ end
 
 script.on_configuration_changed(
   function(changed_data)
+    update_global_settings()
+
     generate_max_consumption_table()
     reset_global_poles()
 
@@ -173,15 +190,15 @@ script.on_init(
     global.transformers = {}
     global.network_grace_ticks = {}
     global.tick_installed = game.tick
+
+    update_global_settings()
     generate_max_consumption_table()
     reset_global_poles()
     create_transformer_surfaces()
 
     -- Enable transformer recipe
     for _, force in pairs(game.forces) do
-      if force.technologies["electric-energy-distribution-1"].researched then
-        force.recipes["po-transformer"].enabled = true
-      end
+      force.reset_technology_effects()
     end
   end
 )
