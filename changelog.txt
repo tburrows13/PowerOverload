@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.2
 Date: 25 May 2022
+  Compatability:
+    - Added lead to huge pole, big fuse, and high energy interface recipes when BZ Lead is installed
   Bugfixes:
     - Fixed high energy interface being available to craft before it has been researched
 ---------------------------------------------------------------------------------------------------

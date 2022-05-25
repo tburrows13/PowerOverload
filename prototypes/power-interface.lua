@@ -17,6 +17,9 @@ local recipe = {
   },
   result = "po-interface"
 }
+if mods["bzlead"] then
+  table.insert(recipe.ingredients, {"lead-plate", 25})
+end
 
 local item = {
   type = "item",
