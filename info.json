@@ -1,11 +1,11 @@
 {
     "name": "PowerOverload",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "title": "Power Overload",
     "author": "Xorimuth",
     "description": "Performant, semi-realistic power distribution overhaul.\nPower poles can explode if the total electrical consumption on the network is too high. Use transformers to separate networks so that subnetworks do not take more power than they can handle.",
     "factorio_version": "1.1",
-    "dependencies": ["base"],
+    "dependencies": ["base", "? bzlead"],
     "package": {
       "ignore": ["resources/*"]
     }

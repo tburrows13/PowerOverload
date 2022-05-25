@@ -44,7 +44,7 @@ for pole_name, default_power in pairs(shared.get_pole_names(mods)) do
 
       setting_type = "startup",
       default_value = default_power,
-      order = order  -- Doesn't really work with more than 10 types of pole
+      order = tostring(order)  -- Doesn't really work with more than 10 types of pole
     }
   }
   order = order + 1
