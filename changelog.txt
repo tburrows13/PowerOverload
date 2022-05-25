@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.2
+Date: 25 May 2022
+  Bugfixes:
+    - Fixed high energy interface being available to craft before it has been researched
+---------------------------------------------------------------------------------------------------
 Version: 1.2.1
 Date: 20 May 2022
   Bugfixes:

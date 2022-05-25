@@ -8,7 +8,7 @@ local red_tint = {r=1, g=0.6, b=0.6}
 local recipe = {
   type = "recipe",
   name = "po-interface",
-  enabled = true,
+  enabled = false,
   ingredients =
   {
     {"steel-plate", 100},
