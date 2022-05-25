@@ -51,13 +51,7 @@ for _, pole_name in pairs(pole_names) do
     recipe.enabled = true
   end
 
-  local ingredient_multiplier = 20 / (recipe.result_count or 1)
-  local new_ingredients = {}
-  for _, ingredient in pairs(recipe.ingredients) do
-    table.insert(new_ingredients, {ingredient[1], ingredient[2] * ingredient_multiplier})
-  end
-  recipe.ingredients = new_ingredients
-  recipe.result_count = 1
+  -- Recipe ingredients are dynamically set in fuse-recipes from the power pole ingredients
 
   data:extend({fuse, item, recipe})
 end
