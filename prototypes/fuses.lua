@@ -44,14 +44,7 @@ for _, pole_name in pairs(pole_names) do
     tint = red_tint,
   }}
 
-  local recipe = table.deepcopy(data.raw.recipe[prototype_name])
-  recipe.name = name
-  recipe.result = name
-  if pole_name == "small-electric" then
-    recipe.enabled = true
-  end
+  -- Recipe is created in data-updates, as ingredients are dynamically set from the power pole ingredients
 
-  -- Recipe ingredients are dynamically set in fuse-recipes from the power pole ingredients
-
-  data:extend({fuse, item, recipe})
+  data:extend({fuse, item})
 end

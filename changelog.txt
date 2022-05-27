@@ -1,8 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.4
+Date: 27 May 2022
+  Compatability:
+    - Fixed and tested compatability with AAI Industry and BZ Lead
+---------------------------------------------------------------------------------------------------
 Version: 1.2.3
 Date: 25 May 2022
   Compatability:
-    - Fixed crash when loading with some mods
+    - Attempted to fix crash when loading with some mods
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.2
 Date: 25 May 2022
