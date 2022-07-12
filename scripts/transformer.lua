@@ -78,6 +78,7 @@ end
 
 function update_transformers()
   local efficiency = global.global_settings["power-overload-transformer-efficiency"]
+  local log_increase_decrease_buffer = global.global_settings["power-overload-log-increase-decrease-buffer"]
 
   for i, transformer in pairs(global.transformers) do
     local transformer_entity = transformer.transformer
@@ -94,13 +95,17 @@ function update_transformers()
         local effective_energy_out = (energy_out - buffer_size) / efficiency + buffer_size
         if energy_in == buffer_size and effective_energy_out <= 0 then
           buffer_size = buffer_size * 1.2
-          log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
+          if log_increase_decrease_buffer then
+            log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
+          end
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
         elseif effective_energy_out / energy_in > 0.01 and buffer_size > 1000 then
           -- Shrink the buffer size if necessary
           buffer_size = buffer_size * 0.99
-          log("Decreasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
+          if log_increase_decrease_buffer then
+            log("Decreasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
+          end
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
         end

@@ -24,6 +24,13 @@ data:extend{
     order = "c"
   },
   {
+    type = "bool-setting",
+    name = "power-overload-log-increase-decrease-buffer",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "ca"
+  },
+  {
     type = "double-setting",
     name = "power-overload-transformer-efficiency",
     setting_type = "runtime-global",

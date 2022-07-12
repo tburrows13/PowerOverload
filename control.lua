@@ -120,6 +120,7 @@ local function update_global_settings()
     "power-overload-disconnect-different-poles",
     "power-overload-on-pole-overload",
     "power-overload-log-to-chat",
+    "power-overload-log-increase-decrease-buffer",
     "power-overload-transformer-efficiency",
   }) do
     global_settings[setting] = settings.global[setting].value
