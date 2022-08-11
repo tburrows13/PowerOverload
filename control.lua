@@ -15,7 +15,7 @@ local function on_built(event)
     if entity.type == "electric-pole" then
       on_pole_built(entity)
     elseif entity.name == "po-transformer" then
-      create_update_transformer(entity)
+      create_transformer(entity)
     end
   end
 end
@@ -178,6 +178,13 @@ script.on_configuration_changed(
         game.forces["player"].reset_technology_effects()
         global.fuses = {}
         global.tick_installed = game.tick
+      end
+      if old_version[2] < 2 or (old_version[2] == 2 and old_version[3] < 5) then
+        -- Run on 1.2.5 load
+        for _, transformer_parts in pairs(global.transformers) do
+          create_transformer(transformer_parts.transformer, transformer_parts)
+        end
+        
       end
     end
   end
