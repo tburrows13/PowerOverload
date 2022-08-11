@@ -94,13 +94,13 @@ function update_transformers()
         local effective_energy_out = (energy_out - buffer_size) / efficiency + buffer_size
         if energy_in == buffer_size and effective_energy_out <= 0 then
           buffer_size = buffer_size * 1.2
-          log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
+          --log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
         elseif effective_energy_out / energy_in > 0.01 and buffer_size > 1000 then
           -- Shrink the buffer size if necessary
           buffer_size = buffer_size * 0.99
-          log("Decreasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
+          --log("Decreasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
         end
