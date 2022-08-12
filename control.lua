@@ -28,7 +28,7 @@ script.on_event(defines.events.script_raised_built, on_built, {{filter = "type",
 local function on_destroyed(event)
   local transformer = event.entity
   if transformer then
-    on_transformer_destroyed(transformer)
+    on_transformer_destroyed(transformer.unit_number)
   end
 end
 script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "name", name = "po-transformer"}})
@@ -39,13 +39,7 @@ script.on_event(defines.events.on_entity_destroyed,
   function(event)
     local unit_number = event.unit_number
     if unit_number then
-      local transformer_parts = global.transformers[unit_number]
-      if transformer_parts then
-        for _, entity in pairs(transformer_parts) do
-          entity.destroy()
-        end
-        global.transformers[unit_number] = nil
-      end
+      on_transformer_destroyed(unit_number)
     end
   end
 )

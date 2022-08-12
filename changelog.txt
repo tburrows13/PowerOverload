@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.6
+Date: 12 August 2022
+  Bugfixes:
+    - Fixed crash when removing a transformer
+    - Fixed some parts of transformers being left behind if destroyed by certain mod interactions 
+---------------------------------------------------------------------------------------------------
 Version: 1.2.5
 Date: 11 August 2022
   Changes:

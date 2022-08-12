@@ -84,15 +84,17 @@ function check_transformer(transformer_parts)
   end
 end
 
-function on_transformer_destroyed(transformer)
-  local transformer_parts = global.transformers[transformer.unit_number]
+function on_transformer_destroyed(unit_number)
+  local transformer_parts = global.transformers[unit_number]
   if transformer_parts then
-    for name, entity in pairs(transformer_parts) do
-      if name ~= "transformer" then
-        -- If the transformer is destryed then the player won't get the item back
-        entity.destroy()
+    -- If the transformer itself is destroyed then the player won't get the item back
+    for _, part_name in pairs({"pole_in", "pole_in_alt", "interface_in", "pole_out", "pole_out_alt", "interface_out"}) do
+      local part = transformer_parts[part_name]
+      if part and part.valid then
+        part.destroy()
       end
     end
+    global.transformers[unit_number] = nil
   end
 end
 
@@ -100,7 +102,7 @@ end
 function update_transformers()
   local efficiency = global.global_settings["power-overload-transformer-efficiency"]
 
-  for i, transformer in pairs(global.transformers) do
+  for unit_number, transformer in pairs(global.transformers) do
     local transformer_entity = transformer.transformer
     if transformer_entity and transformer_entity.valid then
       if transformer_entity.power_switch_state then
@@ -136,7 +138,7 @@ function update_transformers()
         interface_out.energy = energy_out + actual_output_gained
       end
     else
-      global.transformers[i] = nil
+      on_transformer_destroyed(unit_number)
     end
   end
 end
