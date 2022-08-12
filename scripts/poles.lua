@@ -10,11 +10,6 @@ function on_pole_built(pole)
          neighbour.name == "po-hidden-electric-pole-in" or neighbour.name == "po-hidden-electric-pole-out" or
         (pole_name ~= neighbour.name and global.global_settings["power-overload-disconnect-different-poles"])) then
       pole.disconnect_neighbour(neighbour)
-
-      -- Poles were momentarily connected so they shared electric network statistics.
-      -- This can cause the weaker poles to explode so we initiate a grace period of 5 seconds to prevent this.
-      global.network_grace_ticks[pole.electric_network_id] = game.tick
-      global.network_grace_ticks[neighbour.electric_network_id] = game.tick
     end
   end
   if global.max_consumptions[pole.name] then
@@ -29,11 +24,13 @@ end
 local function get_total_consumption(statistics)
   local total = 0
   for name, _ in pairs(statistics.input_counts) do
-    total = total + 60 * statistics.get_flow_count{name = name,
-                                                   input = true,
-                                                   precision_index = defines.flow_precision_index.five_seconds   -- >= 1.1.25
-                                                                     or defines.flow_precision_index.one_second, --  < 1.1.25
-                                                   count = false}
+    total = total + 60 * statistics.get_flow_count{
+      name = name,
+      input = true,
+      precision_index = defines.flow_precision_index.five_seconds,
+      sample_index = 1,
+      count = false,
+    }
   end
   return total
 end
@@ -84,32 +81,28 @@ function update_poles(pole_type, consumption_cache)
     local i = math.random(table_size)
     local pole = poles[i]
     if pole and pole.valid then
-      local pole_electric_network_id = pole.electric_network_id
-      local grace_period_tick = global.network_grace_ticks[pole_electric_network_id]
-      if not grace_period_tick or game.tick - grace_period_tick > 301 then -- 301 = 5 seconds
-        local electric_network_id = pole.electric_network_id
-        local consumption = consumption_cache[electric_network_id]
-        if not consumption then
-          consumption = get_total_consumption(pole.electric_network_statistics)
-          consumption_cache[electric_network_id] = consumption
-        end
-        local max_consumption = max_consumptions[pole.name]
-        if max_consumption and consumption > max_consumption then
-          if destroy_pole_setting == "destroy" then
-            log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
+      local electric_network_id = pole.electric_network_id
+      local consumption = consumption_cache[electric_network_id]
+      if not consumption then
+        consumption = get_total_consumption(pole.electric_network_statistics)
+        consumption_cache[electric_network_id] = consumption
+      end
+      local max_consumption = max_consumptions[pole.name]
+      if max_consumption and consumption > max_consumption then
+        if destroy_pole_setting == "destroy" then
+          log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
+          alert_on_destroyed(pole, consumption, log_to_chat)
+          pole.die()
+          poles[i] = poles[table_size]
+          poles[table_size] = nil
+          table_size = table_size - 1
+        else
+          local damage_amount = (consumption / max_consumption - 0.95) * 10
+          log("Pole being damaged " .. damage_amount)
+          if damage_amount > pole.health then
             alert_on_destroyed(pole, consumption, log_to_chat)
-            pole.die()
-            poles[i] = poles[table_size]
-            poles[table_size] = nil
-            table_size = table_size - 1
-          else
-            local damage_amount = (consumption / max_consumption - 0.95) * 10
-            log("Pole being damaged " .. damage_amount)
-            if damage_amount > pole.health then
-              alert_on_destroyed(pole, consumption, log_to_chat)
-            end
-            pole.damage(damage_amount, 'neutral')
           end
+          pole.damage(damage_amount, 'neutral')
         end
       end
     else

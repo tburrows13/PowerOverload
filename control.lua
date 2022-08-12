@@ -158,7 +158,7 @@ script.on_configuration_changed(
     generate_max_consumption_table()
     reset_global_poles()
 
-    global.network_grace_ticks = {} -- Deliberate cleanup to stop it increasing forever :P
+    global.network_grace_ticks = nil
     create_transformer_surfaces()
 
     local old_version
@@ -184,7 +184,6 @@ script.on_configuration_changed(
         for _, transformer_parts in pairs(global.transformers) do
           create_transformer(transformer_parts.transformer, transformer_parts)
         end
-        
       end
     end
   end
@@ -195,7 +194,6 @@ script.on_init(
     global.poles = {}
     global.fuses = {}
     global.transformers = {}
-    global.network_grace_ticks = {}
     global.tick_installed = game.tick
 
     update_global_settings()
