@@ -89,7 +89,7 @@ script.on_event(defines.events.on_surface_renamed,
     local old_transformer_surface = game.get_surface(old_transformer_surface_name)
     local new_transformer_surface_name = event.new_name .. "-transformer"
     if old_transformer_surface and not game.get_surface(new_transformer_surface_name) then
-      old_transformer_surface.name = 
+      old_transformer_surface.name = new_transformer_surface_name
       log("Renaming transformer surface " .. old_transformer_surface_name .. " to " .. new_transformer_surface_name)
     end
   end
