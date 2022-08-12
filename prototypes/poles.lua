@@ -10,7 +10,7 @@ for pole_name, prototype in pairs(data.raw["electric-pole"]) do
     if description then
       prototype.localised_description = {"", description, "\n", {"entity-description.po-electric-pole-consumption", max_consumption_string}}
     else
-      prototype.localised_description = {"entity-description.po-electric-pole-consumption", max_consumption_string}
+      prototype.localised_description = {"", "[font=default-semibold][color=255, 230, 192]", {"description.max-energy-consumption"}, ":[/color][/font] ", max_consumption_string}
     end
   end
 end
