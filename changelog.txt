@@ -1,8 +1,11 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.5
-Date: ???
+Date: 11 August 2022
   Changes:
+    - Connecting networks can now immediately trigger pole explosions instead of waiting up to 5 seconds
     - Increased performance of transformers by 60%
+    - Removed log spam
+    - Removed duplicate info icons in mod settings
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.4
 Date: 27 May 2022
