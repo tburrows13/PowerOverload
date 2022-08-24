@@ -43,3 +43,7 @@ data:extend{
     order = "c-e-c"
   },
 }
+
+if mods["pyalternativeenergy"] then
+  require "pyalternativeenergy/technology"
+end
