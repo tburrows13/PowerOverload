@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.7
+Date: 23 August 2022
+  Compatability:
+    - Added support for Py Alternative Energy
+  Bugfixes:
+    - Fixed restored missing locale key affecting fuse max consumption display
+---------------------------------------------------------------------------------------------------
 Version: 1.2.6
 Date: 12 August 2022
   Bugfixes:
