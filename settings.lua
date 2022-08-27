@@ -13,7 +13,7 @@ data:extend{
     name = "power-overload-on-pole-overload",
     setting_type = "runtime-global",
     default_value = "destroy",
-    allowed_values = {"destroy", "damage"},
+    allowed_values = {"destroy", "damage", "fire"},
     order = "b"
   },
   {

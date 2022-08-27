@@ -1,0 +1,13 @@
+info.json
+LICENCE.txt
+changelog.txt
+control.lua
+data-updates.lua
+data.lua
+settings.lua
+shared.lua
+graphics/
+locale/
+migrations/
+prototypes/
+scripts/
