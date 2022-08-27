@@ -47,6 +47,7 @@ local function alert_on_destroyed(pole, consumption, log_to_chat)
     end
 end
 
+
 function update_poles(pole_type, consumption_cache)
     local poles
     if pole_type == "pole" then
