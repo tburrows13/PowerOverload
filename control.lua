@@ -49,7 +49,7 @@ script.on_event(defines.events.script_raised_built, on_built, {{
 local function on_destroyed(event)
     local transformer = event.entity
     if transformer then
-        on_transformer_destroyed(transformer.unit_number)
+        on_transformer_destroyed(transformer)
     end
 end
 script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{
@@ -71,7 +71,13 @@ script.on_event(defines.events.script_raised_destroy, on_destroyed, {{
 script.on_event(defines.events.on_entity_destroyed, function(event)
     local unit_number = event.unit_number
     if unit_number then
-        on_transformer_destroyed(unit_number)
+        local transformer_parts = global.transformers[unit_number]
+        if transformer_parts then
+            for _, entity in pairs(transformer_parts) do
+                entity.destroy()
+            end
+            global.transformers[unit_number] = nil
+        end
     end
 end)
 
@@ -111,8 +117,8 @@ script.on_event(defines.events.on_surface_renamed, function(event)
     local old_transformer_surface = game.get_surface(old_transformer_surface_name)
     local new_transformer_surface_name = event.new_name .. "-transformer"
     if old_transformer_surface and not game.get_surface(new_transformer_surface_name) then
-        old_transformer_surface.name = new_transformer_surface_name
-        log("Renaming transformer surface " .. old_transformer_surface_name .. " to " .. new_transformer_surface_name)
+        old_transformer_surface.name = log("Renaming transformer surface " .. old_transformer_surface_name .. " to " ..
+                                               new_transformer_surface_name)
     end
 end)
 
