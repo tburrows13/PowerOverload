@@ -69,7 +69,7 @@ function update_poles(pole_type, consumption_cache)
         -- Check each pole on average every 5 seconds (60 * 5 = 300)
         average_tick_delay = 300
     elseif destroy_pole_setting == "fire" then
-        -- Check each pole on average every 50 seconds (60 * 5 = 300)
+        -- Check each pole on average every 5 seconds (60 * 5 = 300)
         average_tick_delay = 300
     else
         -- Check each pole on average every 1 seconds (60 * 5 = 300)
@@ -108,15 +108,18 @@ function update_poles(pole_type, consumption_cache)
                     poles[table_size] = nil
                     table_size = table_size - 1
 
-                elseif destroy_pole_setting == "fire" and pole_type ~= "fuse" then
-
-                    if (rando > 1.50) then
-                        log("Pole has caught fire ")
-                        pole.surface.create_entity {
-                            name = "fire-flame",
-                            position = pole.position
-                        }
-                    end
+        elseif destroy_pole_setting == "fire" and pole_type ~= "fuse" then
+            
+            local chanceOfFlame = math.random() * (consumption / max_consumption);
+            local poleIsNotAlreadyOnFire = pole.surface.find_entity('fire-flame', pole.position ) == nil
+            
+            if ((chanceOfFlame > 1.1  ) and  poleIsNotAlreadyOnFire ) then
+                log("Pole has caught fire ")
+                pole.surface.create_entity {
+                    name = "fire-flame",
+                    position = pole.position
+                }
+            end
 
                 else
                     local damage_amount = (consumption / max_consumption - 0.95) * 10
