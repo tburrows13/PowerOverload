@@ -6,6 +6,12 @@ for _, recipe_name in pairs({"po-medium-electric-fuse", "po-big-electric-fuse", 
     recipe = recipe_name
   })
 end
+if mods["pyalternativeenergy"] then
+  table.insert(electric_1_effects, {
+    type = "unlock-recipe",
+    recipe = "po-nexelit-power-fuse"
+  })
+end
 
 data:extend{
   {
@@ -43,7 +49,3 @@ data:extend{
     order = "c-e-c"
   },
 }
-
-if mods["pyalternativeenergy"] then
-  require "pyalternativeenergy/technology"
-end

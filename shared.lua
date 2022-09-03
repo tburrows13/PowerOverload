@@ -124,7 +124,6 @@ local function get_poles_to_make_fuses(mods)
     table.insert(pole_names, "nexelit-power")
   end
 
-  log(serpent.block(pole_names))
   return pole_names
 end
 
@@ -132,26 +131,22 @@ end
 local function get_name_for_fuse(pole_name)
   local name_prefix = "po-"
   local name_suffix = "-fuse"
-
   local name = name_prefix .. pole_name .. name_suffix
-
   return name
 end
 
 -- Returns the prototype of the pole used to make a fuse from a given pole name, defined in 'get_poles_to_make_fuses'
 local function get_prototype_name_for_pole(pole_name)
-
   local prototype_name = pole_name .. "-pole"
   if pole_name == "huge-electric" then  -- Huge electric pole is defined as 'po-huge-electric-pole', so we need a special case here.
     prototype_name = "po-huge-electric-pole"
   end
-
   return prototype_name
 end
 
 return {
   get_pole_names = get_pole_names,
-  validate_and_parse_energy = validate_and_parse_energy, 
+  validate_and_parse_energy = validate_and_parse_energy,
   get_poles_to_make_fuses = get_poles_to_make_fuses,
   get_name_for_fuse = get_name_for_fuse,
   get_prototype_name_for_pole = get_prototype_name_for_pole
