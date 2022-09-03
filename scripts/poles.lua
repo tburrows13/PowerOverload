@@ -97,16 +97,16 @@ function update_poles(pole_type, consumption_cache)
           poles[table_size] = nil
           table_size = table_size - 1
         elseif destroy_pole_setting == "fire" and pole_type ~= "fuse" then            
-            local chanceOfFlame = math.random() * (consumption / max_consumption);
-            local poleIsNotAlreadyOnFire = pole.surface.find_entity('fire-flame', pole.position ) == nil
-            local thesholdSetting = global.global_settings["power-overload-fire-probability"]
-            if ((chanceOfFlame > thesholdSetting  ) and  poleIsNotAlreadyOnFire ) then
-                log("Pole has caught fire ")
-                pole.surface.create_entity {
-                    name = "fire-flame",
-                    position = pole.position
-                }
-            end
+          local chanceOfFlame = math.random() * (consumption / max_consumption)
+          local poleIsNotAlreadyOnFire = pole.surface.find_entity('fire-flame', pole.position) == nil
+          local thesholdSetting = global.global_settings["power-overload-fire-probability"]
+          if (chanceOfFlame > thesholdSetting) and poleIsNotAlreadyOnFire then
+            log("Pole has caught fire")
+            pole.surface.create_entity{
+              name = "fire-flame",
+              position = pole.position
+            }
+          end
         else
           local damage_amount = (consumption / max_consumption - 0.95) * 10
           log("Pole being damaged " .. damage_amount)
