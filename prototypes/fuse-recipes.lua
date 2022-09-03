@@ -1,6 +1,4 @@
-local pole_names = { "small-electric", "medium-electric", "big-electric", "huge-electric" }
-local name_prefix = "po-"
-local name_suffix = "-fuse"
+local shared = require "__PowerOverload__/shared"
 
 local function multiply_ingredients(from_recipe, to_recipe, name)
   to_recipe.result = name
@@ -28,13 +26,9 @@ local function multiply_ingredients(from_recipe, to_recipe, name)
   to_recipe.result_count = 1
 end
 
-for _, pole_name in pairs(pole_names) do
-  local name = name_prefix .. pole_name .. name_suffix
-
-  local prototype_name = pole_name .. "-pole"
-  if pole_name == "huge-electric" then  -- Already contains "po-" suffix
-    prototype_name = "po-huge-electric-pole"
-  end
+for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do
+  local name = shared.get_name_for_fuse(pole_name)
+  local prototype_name = shared.get_prototype_name_for_pole(pole_name)
 
   local base_recipe = data.raw.recipe[prototype_name]
   local recipe = table.deepcopy(base_recipe)

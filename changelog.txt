@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.2.7
+Date: 23 August 2022
+  Compatability:
+    - Added support for Py Alternative Energy
+    - Increased default fuse maximum consumptions when playing with Krastorio2 to correspond to already-increased pole consumptions
+  Bugfixes:
+    - Fixed some poles missing their "Max. consumption" locale entry
+---------------------------------------------------------------------------------------------------
 Version: 1.2.6
 Date: 12 August 2022
   Bugfixes:

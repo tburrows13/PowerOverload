@@ -75,6 +75,10 @@ local function get_pole_names(mods)
       ["medium-electric-pole"] = "200MW",
       ["big-electric-pole"] = "2GW",
       ["po-huge-electric-pole"] = "10GW",
+      ["po-small-electric-fuse"] = "15MW",
+      ["po-medium-electric-fuse"] = "160MW",
+      ["po-big-electric-fuse"] = "1.6GW",
+      ["po-huge-electric-fuse"] = "8GW",
       ["substation"] = "400MW"
     },
     ["fixLargeElectricPole"] = {
@@ -92,6 +96,20 @@ local function get_pole_names(mods)
       ["substation-3"] = "240MW",
       ["substation-4"] = "260MW"
     },
+    ["pyalternativeenergy"] = {
+      ["small-electric-pole"] = "20MW",
+      ["medium-electric-pole"] = "200MW",
+      ["big-electric-pole"] = "2GW",
+      ["po-huge-electric-pole"] = "10GW",
+      ["po-small-electric-fuse"] = "15MW",
+      ["po-medium-electric-fuse"] = "160MW",
+      ["po-big-electric-fuse"] = "1.6GW",
+      ["po-huge-electric-fuse"] = "8GW",
+      ["substation"] = "400MW",
+      ["nexelit-power-pole"] = "800MW",
+      ["po-nexelit-power-fuse"] = "640MW",
+      ["nexelit-substation"] = "4GW"
+    }
   }
 
   local loaded_pole_names = {}
@@ -105,4 +123,39 @@ local function get_pole_names(mods)
   return loaded_pole_names
 end
 
-return {get_pole_names = get_pole_names, validate_and_parse_energy = validate_and_parse_energy}
+local function get_poles_to_make_fuses(mods)
+  -- Note, this assumes the naming convention always ends in '-pole'.  If this is not true, this and
+  -- other functions will need to be further modified.
+  local pole_names = { "small-electric", "medium-electric", "big-electric", "huge-electric" }
+
+  if mods["pyalternativeenergy"] then
+    table.insert(pole_names, "nexelit-power")
+  end
+
+  return pole_names
+end
+
+-- Returns the name of a fuse for a given pole name, defined in 'get_poles_to_make_fuses'
+local function get_name_for_fuse(pole_name)
+  local name_prefix = "po-"
+  local name_suffix = "-fuse"
+  local name = name_prefix .. pole_name .. name_suffix
+  return name
+end
+
+-- Returns the prototype of the pole used to make a fuse from a given pole name, defined in 'get_poles_to_make_fuses'
+local function get_prototype_name_for_pole(pole_name)
+  local prototype_name = pole_name .. "-pole"
+  if pole_name == "huge-electric" then  -- Huge electric pole is defined as 'po-huge-electric-pole', so we need a special case here.
+    prototype_name = "po-huge-electric-pole"
+  end
+  return prototype_name
+end
+
+return {
+  get_pole_names = get_pole_names,
+  validate_and_parse_energy = validate_and_parse_energy,
+  get_poles_to_make_fuses = get_poles_to_make_fuses,
+  get_name_for_fuse = get_name_for_fuse,
+  get_prototype_name_for_pole = get_prototype_name_for_pole
+}
