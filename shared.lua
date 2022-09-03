@@ -75,6 +75,10 @@ local function get_pole_names(mods)
       ["medium-electric-pole"] = "200MW",
       ["big-electric-pole"] = "2GW",
       ["po-huge-electric-pole"] = "10GW",
+      ["po-small-electric-fuse"] = "15MW",
+      ["po-medium-electric-fuse"] = "160MW",
+      ["po-big-electric-fuse"] = "1.6GW",
+      ["po-huge-electric-fuse"] = "8GW",
       ["substation"] = "400MW"
     },
     ["fixLargeElectricPole"] = {
@@ -97,6 +101,10 @@ local function get_pole_names(mods)
       ["medium-electric-pole"] = "200MW",
       ["big-electric-pole"] = "2GW",
       ["po-huge-electric-pole"] = "10GW",
+      ["po-small-electric-fuse"] = "15MW",
+      ["po-medium-electric-fuse"] = "160MW",
+      ["po-big-electric-fuse"] = "1.6GW",
+      ["po-huge-electric-fuse"] = "8GW",
       ["substation"] = "400MW",
       ["nexelit-power-pole"] = "800MW",
       ["po-nexelit-power-fuse"] = "640MW",
