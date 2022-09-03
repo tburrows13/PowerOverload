@@ -6,11 +6,12 @@ for pole_name, prototype in pairs(data.raw["electric-pole"]) do
     if not shared.validate_and_parse_energy(max_consumption_string) then
       max_consumption_string = default_consumption
     end
+    local localised_string = {"", "[font=default-semibold][color=255, 230, 192]", {"description.max-energy-consumption"}, ":[/color][/font] ", max_consumption_string}
     local description = prototype.localised_description
     if description then
-      prototype.localised_description = {"", description, "\n", {"entity-description.po-electric-pole-consumption", max_consumption_string}}
+      prototype.localised_description = {"", description, "\n", localised_string}
     else
-      prototype.localised_description = {"", "[font=default-semibold][color=255, 230, 192]", {"description.max-energy-consumption"}, ":[/color][/font] ", max_consumption_string}
+      prototype.localised_description = localised_string
     end
   end
 end
