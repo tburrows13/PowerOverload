@@ -44,5 +44,6 @@ are just red tints of vanilla entities. If you would be interested in creating b
 
 ---
 
+You can help by translating this mod into your language using [CrowdIn](https://crowdin.com/project/factorio-mods-localization). Any translations made will be included in the next release.
 If you've been using this mod, I'd love to see some screenshots or saves from your playthrough.
 If you have any bug reports, feedback, or balance suggestions, please let me know through the [Discussion page](https://mods.factorio.com/mod/PowerOverload/discussion).
