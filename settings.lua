@@ -32,15 +32,6 @@ data:extend{
     maximum_value = 1,
     order = "d"
   },
-  {
-    type = "double-setting",
-    name = "power-overload-fire-probability",
-    setting_type = "runtime-global",
-    default_value = 1.1,
-    minimum_value = 1,
-    maximum_value = 10,
-    order = "e"
-  },
 }
 
 order = 0

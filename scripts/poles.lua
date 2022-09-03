@@ -62,11 +62,13 @@ function update_poles(pole_type, consumption_cache)
   local log_to_chat = global_settings["power-overload-log-to-chat"]
   local destroy_pole_setting = global_settings["power-overload-on-pole-overload"]
 
-  if destroy_pole_setting == "destroy" then
+  if destroy_pole_setting == "fire" then
+    average_tick_delay = 600
+  elseif destroy_pole_setting == "destroy" then
     -- Check each pole on average every 5 seconds (60 * 5 = 300)
     average_tick_delay = 300
   else
-    -- Check each pole on average every 1 seconds (60 * 5 = 300)
+    -- Check each pole on average every 1 second
     average_tick_delay = 60
   end
 
@@ -90,26 +92,26 @@ function update_poles(pole_type, consumption_cache)
       local max_consumption = max_consumptions[pole.name]
       if max_consumption and consumption > max_consumption then
         if destroy_pole_setting == "destroy" then
-          log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
+          --log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")
           alert_on_destroyed(pole, consumption, log_to_chat)
           pole.die()
           poles[i] = poles[table_size]
           poles[table_size] = nil
           table_size = table_size - 1
-        elseif destroy_pole_setting == "fire" and pole_type ~= "fuse" then            
-          local chanceOfFlame = math.random() * (consumption / max_consumption)
-          local poleIsNotAlreadyOnFire = pole.surface.find_entity('fire-flame', pole.position) == nil
-          local thesholdSetting = global.global_settings["power-overload-fire-probability"]
-          if (chanceOfFlame > thesholdSetting) and poleIsNotAlreadyOnFire then
-            log("Pole has caught fire")
-            pole.surface.create_entity{
-              name = "fire-flame",
-              position = pole.position
-            }
+        elseif destroy_pole_setting == "fire" and pole_type ~= "fuse" then
+          local consumption_ratio = consumption / max_consumption
+          if consumption_ratio > 1 then
+            if (consumption_ratio + 0.01) * math.random() > 1 then
+              --log("Pole has caught fire")
+              pole.surface.create_entity{
+                name = "fire-flame",
+                position = pole.position,
+              }
+            end
           end
         else
           local damage_amount = (consumption / max_consumption - 0.95) * 10
-          log("Pole being damaged " .. damage_amount)
+          --log("Pole being damaged " .. damage_amount)
           if damage_amount > pole.health then
             alert_on_destroyed(pole, consumption, log_to_chat)
           end

@@ -115,7 +115,6 @@ local function update_global_settings()
     "power-overload-on-pole-overload",
     "power-overload-log-to-chat",
     "power-overload-transformer-efficiency",
-    "power-overload-fire-probability"
   }) do
     global_settings[setting] = settings.global[setting].value
   end
