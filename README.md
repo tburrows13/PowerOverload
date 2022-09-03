@@ -9,7 +9,10 @@
 - High energy interface that only provide energy on one side for providing energy to (primarily modded) buildings with very high power requirements
 - Four tiers of fuses which have a lower max consumption than the corresponding electric pole and are more likely to explode when overloaded
 - Each type of pole has a fully configurable maximum power consumption, but I'd appreciate feedback if you think that the default values should change
-- Option to have overloading a power pole damage it instead of instantly destroying it (current formula: `damage = (consumption / max_consumption - 0.95) * 10` applied on average once a second)
+- Modes of destruction:
+    - Destroy _(default)_: Poles are destroyed (each pole checked on average every 5 seconds)
+    - Damage: Poles are damaged (each pole receives damage of `(consumption / max_consumption - 0.95) * 10` applied on average once a second)
+    - Catch fire: Poles catch fire, damaging surrounding entities (each pole is set on fire if `consumption / max_consumption + 0.01) * math.random() > 1` applied on average every 10 seconds)
 
 ## Tips
 - You'll want to have a central 'spine' of higher tier poles. Use transformers to branch off it into subnetworks with lower tier poles or substations
@@ -32,6 +35,7 @@
     - [Cargo Ships](https://mods.factorio.com/mod/cargo-ships)
     - [Advanced Electric](https://mods.factorio.com/mod/Advanced_Electric)
     - [Large Electric Pole](https://mods.factorio.com/mod/fixLargeElectricPole)
+    - Pyanodons Alternative Energy (open beta)
 - If you would like support for a particular mod, let me know. Since I haven't played many other mods, balance suggestions would be helpful
 
 ## Graphics

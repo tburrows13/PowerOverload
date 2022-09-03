@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------------------------------
-Version: 1.2.7
-Date: 23 August 2022
+Version: 1.3.0
+Date: 4 September 2022
+  Features:
+    - Added "Catch fire" mode, which sets overloaded poles on fire, damaging surrounding entities
   Compatability:
     - Added support for Py Alternative Energy
     - Increased default fuse maximum consumptions when playing with Krastorio2 to correspond to already-increased pole consumptions
