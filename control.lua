@@ -45,11 +45,11 @@ script.on_event(defines.events.on_entity_destroyed,
 )
 
 script.on_event(defines.events.on_tick,
-  function()
+  function(event)
     local consumption_cache = {}
     update_poles("fuse", consumption_cache)
     update_poles("pole", consumption_cache)
-    update_transformers()
+    update_transformers(event.tick)
   end
 )
 
@@ -177,6 +177,12 @@ script.on_configuration_changed(
         -- Run on 1.2.5 load
         for _, transformer_parts in pairs(global.transformers) do
           create_transformer(transformer_parts.transformer, transformer_parts)
+        end
+      end
+      if old_version[2] < 3 or (old_version[2] == 2 and old_version[3] < 1) then
+        -- Run on 1.3.1 load
+        for _, transformer_parts in pairs(global.transformers) do
+          transformer_parts.bucket = transformer_parts.transformer.unit_number % 600
         end
       end
     end

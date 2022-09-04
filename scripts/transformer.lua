@@ -19,6 +19,7 @@ function create_transformer(transformer_entity, old_transformer_parts)
     force = transformer_entity.force,
     position_in = position_in,
     position_out = position_out,
+    bucket = transformer_entity.unit_number % 600
   }
 
   global.transformers[transformer_entity.unit_number] = transformer_parts
@@ -35,51 +36,76 @@ function create_transformer(transformer_entity, old_transformer_parts)
     transformer_parts.interface_out = old_transformer_parts.interface_out
   end
 
-  check_transformer(transformer_parts)  -- Creates all the extra entities
+  -- Creates all the extra entities
+  check_transformer_poles(transformer_parts)
+  check_transformer_interfaces(transformer_parts)
 end
 
-function check_transformer(transformer_parts)
-  if not (transformer_parts.pole_in and transformer_parts.pole_in.valid) then
-    local pole_in = transformer_parts.surface.create_entity{name = "po-hidden-electric-pole-in",
-                                         position = transformer_parts.position_in,
-                                         force = transformer_parts.force,
-                                         raise_built = true}
+function check_transformer_poles(transformer_parts)
+  -- Called occasionally to fix breakages
+  local pole_in = transformer_parts.pole_in
+  if not (pole_in and pole_in.valid) then
+    pole_in = transformer_parts.surface.create_entity{
+      name = "po-hidden-electric-pole-in",
+      position = transformer_parts.position_in,
+      force = transformer_parts.force,
+      raise_built = true
+    }
     transformer_parts.pole_in = pole_in
   end
-  if not (transformer_parts.pole_in_alt and transformer_parts.pole_in_alt.valid) then
-    local pole_in_alt = transformer_parts.transformer_surface.create_entity{name = "po-hidden-electric-pole-alt",
-                                             position = transformer_parts.position_in,
-                                             force = transformer_parts.force,
-                                             raise_built = true}
-    pole_in_alt.connect_neighbour(transformer_parts.pole_in)
+
+  local pole_in_alt = transformer_parts.pole_in_alt
+  if not (pole_in_alt and pole_in_alt.valid) then
+    pole_in_alt = transformer_parts.transformer_surface.create_entity{
+      name = "po-hidden-electric-pole-alt",
+      position = transformer_parts.position_in,
+      force = transformer_parts.force,
+      raise_built = true
+    }
     transformer_parts.pole_in_alt = pole_in_alt
   end
+  pole_in_alt.connect_neighbour(pole_in)
+
+  local pole_out = transformer_parts.pole_out
+  if not (pole_out and pole_out.valid) then
+    pole_out = transformer_parts.surface.create_entity{
+      name = "po-hidden-electric-pole-out",
+      position = transformer_parts.position_out,
+      force = transformer_parts.force,
+      raise_built = true
+    }
+    transformer_parts.pole_out = pole_out
+  end
+  local pole_out_alt = transformer_parts.pole_out_alt
+  if not (pole_out_alt and pole_out_alt.valid) then
+    pole_out_alt = transformer_parts.transformer_surface.create_entity{
+      name = "po-hidden-electric-pole-alt",
+      position = transformer_parts.position_out,
+      force = transformer_parts.force,
+      raise_built = true
+    }
+    transformer_parts.pole_out_alt = pole_out_alt
+  end
+  pole_out_alt.connect_neighbour(pole_out)
+end
+
+function check_transformer_interfaces(transformer_parts)
+  -- Called every tick
   if not (transformer_parts.interface_in and transformer_parts.interface_in.valid) then
-    local interface_in = transformer_parts.transformer_surface.create_entity{name = "po-transformer-interface-hidden-in",
-                                              position = transformer_parts.position_in,
-                                              force = transformer_parts.force}
+    local interface_in = transformer_parts.transformer_surface.create_entity{
+      name = "po-transformer-interface-hidden-in",
+      position = transformer_parts.position_in,
+      force = transformer_parts.force
+    }
     transformer_parts.interface_in = interface_in
   end
 
-  if not (transformer_parts.pole_out and transformer_parts.pole_out.valid) then
-    local pole_out = transformer_parts.surface.create_entity{name = "po-hidden-electric-pole-out",
-                                         position = transformer_parts.position_out,
-                                         force = transformer_parts.force,
-                                         raise_built = true}
-    transformer_parts.pole_out = pole_out
-  end
-  if not (transformer_parts.pole_out_alt and transformer_parts.pole_out_alt.valid) then
-    local pole_out_alt = transformer_parts.transformer_surface.create_entity{name = "po-hidden-electric-pole-alt",
-                                             position = transformer_parts.position_out,
-                                             force = transformer_parts.force,
-                                             raise_built = true}
-    pole_out_alt.connect_neighbour(transformer_parts.pole_out)
-    transformer_parts.pole_out_alt = pole_out_alt
-  end
   if not (transformer_parts.interface_out and transformer_parts.interface_out.valid) then
-    local interface_out = transformer_parts.transformer_surface.create_entity{name = "po-transformer-interface-hidden-out",
-                                              position = transformer_parts.position_out,
-                                              force = transformer_parts.force}
+    local interface_out = transformer_parts.transformer_surface.create_entity{
+      name = "po-transformer-interface-hidden-out",
+      position = transformer_parts.position_out,
+      force = transformer_parts.force
+    }
     transformer_parts.interface_out = interface_out
   end
 end
@@ -99,14 +125,19 @@ function on_transformer_destroyed(unit_number)
 end
 
 
-function update_transformers()
+function update_transformers(tick)
   local efficiency = global.global_settings["power-overload-transformer-efficiency"]
+  local current_bucket = tick % 600
 
   for unit_number, transformer in pairs(global.transformers) do
     local transformer_entity = transformer.transformer
     if transformer_entity and transformer_entity.valid then
       if transformer_entity.power_switch_state then
-        check_transformer(transformer)
+        check_transformer_interfaces(transformer)
+        if transformer.bucket == current_bucket then
+          log("Checking poles")
+          check_transformer_poles(transformer)
+        end
         local interface_in = transformer.interface_in
         local interface_out = transformer.interface_out
         local buffer_size = interface_in.electric_buffer_size
