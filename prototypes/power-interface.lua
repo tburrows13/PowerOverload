@@ -2,7 +2,7 @@ local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 
 
-local red_tint = {r=1, g=0.6, b=0.6}
+local blue_tint = {r=0.5, g=0.7, b=1}
 
 
 local recipe = {
@@ -27,7 +27,7 @@ local item = {
   icons = {{
     icon = "__base__/graphics/icons/substation.png",
     icon_size = 64, icon_mipmaps = 4,
-    tint = red_tint
+    tint = blue_tint
   }},
   subgroup = "energy-pipe-distribution",
   order = "a[energy]-e[po-interface]",
@@ -54,7 +54,7 @@ local interface = {
   icons = {{
     icon = "__base__/graphics/icons/substation.png",
     icon_size = 64, icon_mipmaps = 4,
-    tint = red_tint
+    tint = blue_tint
   }},
   flags = {"placeable-neutral", "player-creation"},
   minable = {mining_time = 0.1, result = "po-interface"},
@@ -88,7 +88,7 @@ local interface = {
         height = 136,
         direction_count = 4,
         shift = translate_pos(util.by_pixel(0, 1-32)),
-        tint = red_tint,
+        tint = blue_tint,
         scale = gfx_scale,
         hr_version =
         {
@@ -98,7 +98,7 @@ local interface = {
           height = 270,
           direction_count = 4,
           shift = translate_pos(util.by_pixel(0, 1-32)),
-          tint = red_tint,
+          tint = blue_tint,
           scale = gfx_scale * 0.5
         }
       },
