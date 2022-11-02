@@ -35,12 +35,14 @@
     - [Cargo Ships](https://mods.factorio.com/mod/cargo-ships)
     - [Advanced Electric](https://mods.factorio.com/mod/Advanced_Electric)
     - [Large Electric Pole](https://mods.factorio.com/mod/fixLargeElectricPole)
-    - Pyanodons Alternative Energy (open beta)
+    - [Krastorio2](https://mods.factorio.com/mod/Krastorio2)
+    - [Industrial Revolution 2](https://mods.factorio.com/mod/IndustrialRevolution)
+    - [Pyanodons Alternative Energy](https://mods.factorio.com/mod/pyalternativeenergy)
 - If you would like support for a particular mod, let me know. Since I haven't played many other mods, balance suggestions would be helpful
 
 ## Graphics
 The "Huge electric pole" uses the pre-0.17 "Big electric pole" graphics. The transformer, fuses, and high energy interface
-are just red tints of vanilla entities. If you would be interested in creating better graphics for any of these, let me know.
+are just red/blue tints of vanilla entities. If you would be interested in creating better graphics for any of these, let me know.
 
 ---
 
