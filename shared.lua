@@ -96,6 +96,11 @@ local function get_pole_names(mods)
       ["substation-3"] = "240MW",
       ["substation-4"] = "260MW"
     },
+    ["IndustrialRevolution"] = {
+      ["small-bronze-pole"] = "30MW",
+      ["small-iron-pole"] = "30MW",
+      ["big-wooden-pole"] = "200MW",
+    },
     ["pyalternativeenergy"] = {
       ["small-electric-pole"] = "20MW",
       ["medium-electric-pole"] = "200MW",

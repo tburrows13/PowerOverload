@@ -6,7 +6,13 @@
     "homepage": "https://discord.gg/pkJc4v9nfT",
     "description": "Performant, semi-realistic power distribution overhaul.\nPower poles can explode if the total electrical consumption on the network is too high. Use transformers to separate networks so that subnetworks do not take more power than they can handle.",
     "factorio_version": "1.1",
-    "dependencies": ["base >= 1.1.60", "? bzlead", "? aai-industry", "(?) pyalternativeenergy"],
+    "dependencies": [
+      "base >= 1.1.60",
+      "? bzlead",
+      "? aai-industry",
+      "(?) pyalternativeenergy",
+      "(?) IndustrialRevolution"
+    ],
     "package": {
       "ignore": ["resources/*"]
     }
