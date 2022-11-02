@@ -101,7 +101,7 @@ local function get_pole_names(mods)
       ["small-iron-pole"] = "30MW",
       ["big-wooden-pole"] = "200MW",
     },
-    ["pyalternativeenergy"] = {
+    ["pycoalprocessing"] = {  -- Py 'base': covers all py combinations, overwrites base limits
       ["small-electric-pole"] = "20MW",
       ["medium-electric-pole"] = "200MW",
       ["big-electric-pole"] = "2GW",
@@ -111,6 +111,8 @@ local function get_pole_names(mods)
       ["po-big-electric-fuse"] = "1.6GW",
       ["po-huge-electric-fuse"] = "8GW",
       ["substation"] = "400MW",
+    }
+    ["pyalternativeenergy"] = {
       ["nexelit-power-pole"] = "800MW",
       ["po-nexelit-power-fuse"] = "640MW",
       ["nexelit-substation"] = "4GW"

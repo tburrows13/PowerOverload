@@ -35,9 +35,11 @@
     - [Cargo Ships](https://mods.factorio.com/mod/cargo-ships)
     - [Advanced Electric](https://mods.factorio.com/mod/Advanced_Electric)
     - [Large Electric Pole](https://mods.factorio.com/mod/fixLargeElectricPole)
-    - [Krastorio2](https://mods.factorio.com/mod/Krastorio2)
     - [Industrial Revolution 2](https://mods.factorio.com/mod/IndustrialRevolution)
     - [Pyanodons Alternative Energy](https://mods.factorio.com/mod/pyalternativeenergy)
+- The following mods do not add new poles, but when loaded the default maximum consumptions are increased:
+    - [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
+    - [Pyanodons Coal Processing](https://mods.factorio.com/mod/pycoalprocessing)
 - If you would like support for a particular mod, let me know. Since I haven't played many other mods, balance suggestions would be helpful
 
 ## Graphics
