@@ -111,12 +111,12 @@ local function get_pole_names(mods)
       ["po-big-electric-fuse"] = "1.6GW",
       ["po-huge-electric-fuse"] = "8GW",
       ["substation"] = "400MW",
-    }
+    },
     ["pyalternativeenergy"] = {
       ["nexelit-power-pole"] = "800MW",
       ["po-nexelit-power-fuse"] = "640MW",
       ["nexelit-substation"] = "4GW"
-    }
+    },
   }
 
   local loaded_pole_names = {}
