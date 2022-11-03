@@ -44,3 +44,87 @@ for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do
 
   data:extend({fuse, item})
 end
+
+
+local small_fuse = data.raw["electric-pole"]["po-small-electric-fuse"]
+small_fuse.pictures.layers[1].direction_count = 1
+small_fuse.pictures.layers[2].direction_count = 1
+small_fuse.pictures.layers[2].hr_version.direction_count = 1
+small_fuse.pictures.layers[1].hr_version = {
+  filename = "__PowerOverload__/graphics/Small_Fuse.png",
+  priority = "extra-high",
+  width = 80,
+  height = 207,
+  direction_count = 1,
+  shift = util.by_pixel(0, -51),
+  scale = 0.5
+}
+small_fuse.connection_points =
+{
+  {
+    shadow =
+    {
+      copper = util.by_pixel_hr(245.0, -34.0),
+    },
+    wire =
+    {
+      copper = util.by_pixel_hr(0, -120.0),
+    }
+  },
+}
+
+local medium_fuse = data.raw["electric-pole"]["po-medium-electric-fuse"]
+medium_fuse.pictures.layers[1].direction_count = 1
+medium_fuse.pictures.layers[2].direction_count = 1
+medium_fuse.pictures.layers[2].hr_version.direction_count = 1
+medium_fuse.pictures.layers[1].hr_version = {
+  filename = "__PowerOverload__/graphics/Medium_Fuse.png",
+  priority = "extra-high",
+  width = 67,
+  height = 194,
+  direction_count = 1,
+  shift = util.by_pixel(0, -51),
+  scale = 0.5
+}
+medium_fuse.connection_points =
+{
+  {
+    shadow =
+    {
+      copper = util.by_pixel_hr(245.0, -34.0),
+    },
+    wire =
+    {
+      copper = util.by_pixel_hr(0, -120.0),
+    }
+  },
+}
+
+local big_fuse = data.raw["electric-pole"]["po-big-electric-fuse"]
+big_fuse.pictures.layers[1].direction_count = 1
+big_fuse.pictures.layers[2].direction_count = 1
+big_fuse.pictures.layers[2].hr_version.direction_count = 1
+big_fuse.pictures.layers[1].hr_version = {
+  filename = "__PowerOverload__/graphics/Large_Fuse_2.png",
+  priority = "extra-high",
+  --width = 111,
+  --height = 197,
+  width = 110,
+  height = 215,
+  direction_count = 1,
+  shift = util.by_pixel(0, -51),
+  scale = 0.5
+}
+big_fuse.connection_points =
+{
+  {
+    shadow =
+    {
+      copper = util.by_pixel_hr(245.0, -34.0),
+    },
+    wire =
+    {
+      copper = util.by_pixel_hr(0, -120.0),
+    }
+  },
+}
