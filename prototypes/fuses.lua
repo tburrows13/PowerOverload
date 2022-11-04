@@ -10,6 +10,9 @@ for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do
   local fuse = table.deepcopy(data.raw["electric-pole"][prototype_name])
   fuse.name = name
   fuse.minable.result = name
+
+  fuse.supply_area_distance = 0
+
   fuse.icons = {{
     icon = fuse.icon,
     icon_size = fuse.icon_size,
