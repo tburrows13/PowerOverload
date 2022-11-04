@@ -51,12 +51,12 @@ small_fuse.pictures.layers[1].direction_count = 1
 small_fuse.pictures.layers[2].direction_count = 1
 small_fuse.pictures.layers[2].hr_version.direction_count = 1
 small_fuse.pictures.layers[1].hr_version = {
-  filename = "__PowerOverload__/graphics/Small_Fuse.png",
+  filename = "__PowerOverload__/graphics/small-fuse.png",
   priority = "extra-high",
   width = 80,
   height = 207,
   direction_count = 1,
-  shift = util.by_pixel(0, -51),
+  shift = util.by_pixel(8, -44.5),
   scale = 0.5
 }
 small_fuse.connection_points =
@@ -68,7 +68,7 @@ small_fuse.connection_points =
     },
     wire =
     {
-      copper = util.by_pixel_hr(0, -120.0),
+      copper = util.by_pixel_hr(17, -181.0),
     }
   },
 }
@@ -78,12 +78,12 @@ medium_fuse.pictures.layers[1].direction_count = 1
 medium_fuse.pictures.layers[2].direction_count = 1
 medium_fuse.pictures.layers[2].hr_version.direction_count = 1
 medium_fuse.pictures.layers[1].hr_version = {
-  filename = "__PowerOverload__/graphics/Medium_Fuse.png",
+  filename = "__PowerOverload__/graphics/medium-fuse.png",
   priority = "extra-high",
   width = 67,
   height = 194,
   direction_count = 1,
-  shift = util.by_pixel(0, -51),
+  shift = util.by_pixel(2, -31),
   scale = 0.5
 }
 medium_fuse.connection_points =
@@ -95,7 +95,7 @@ medium_fuse.connection_points =
     },
     wire =
     {
-      copper = util.by_pixel_hr(0, -120.0),
+      copper = util.by_pixel_hr(22, -157.0),
     }
   },
 }
@@ -105,14 +105,14 @@ big_fuse.pictures.layers[1].direction_count = 1
 big_fuse.pictures.layers[2].direction_count = 1
 big_fuse.pictures.layers[2].hr_version.direction_count = 1
 big_fuse.pictures.layers[1].hr_version = {
-  filename = "__PowerOverload__/graphics/Large_Fuse_2.png",
+  filename = "__PowerOverload__/graphics/big-fuse.png",
   priority = "extra-high",
-  --width = 111,
-  --height = 197,
-  width = 110,
-  height = 215,
+  width = 111,
+  height = 197,
+  --width = 110,
+  --height = 215,
   direction_count = 1,
-  shift = util.by_pixel(0, -51),
+  shift = util.by_pixel(2, -30),
   scale = 0.5
 }
 big_fuse.connection_points =
@@ -124,7 +124,7 @@ big_fuse.connection_points =
     },
     wire =
     {
-      copper = util.by_pixel_hr(0, -120.0),
+      copper = util.by_pixel_hr(21, -152.0),
     }
   },
 }
