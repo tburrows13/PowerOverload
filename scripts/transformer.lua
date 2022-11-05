@@ -1,5 +1,5 @@
 function create_transformer(transformer_entity, old_transformer_parts)
-  -- Use transformer_parts for migration only
+  -- Use old_transformer_parts for migration only
 
   local surface = transformer_entity.surface
   local transformer_surface = game.get_surface(surface.name .. "-transformer")

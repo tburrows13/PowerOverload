@@ -108,6 +108,44 @@ script.on_event(defines.events.on_gui_closed,
   end
 )
 
+local function on_dolly_moved_entity(event)
+  local transformer = event.moved_entity
+  if not transformer.name == "po-transformer" then return end
+  local transformer_parts = global.transformers[transformer.unit_number]
+  if not transformer_parts then return end
+
+  check_transformer_interfaces(transformer_parts)
+  check_transformer_poles(transformer_parts)
+
+  local position = transformer.position
+  local position_in = {position.x - 0.6, position.y}
+  local position_out = {position.x + 0.6, position.y}
+
+  transformer_parts.position_in = position_in
+  transformer_parts.position_out = position_out
+
+  transformer_parts.pole_in.teleport(position_in)
+  transformer_parts.pole_in_alt.teleport(position_in)
+  transformer_parts.interface_in.teleport(position_in)
+  transformer_parts.pole_out.teleport(position_out)
+  transformer_parts.pole_out_alt.teleport(position_out)
+  transformer_parts.interface_out.teleport(position_out)
+end
+
+local function handle_picker_dollies()
+  if remote.interfaces["PickerDollies"] and remote.interfaces["PickerDollies"]["dolly_moved_entity_id"] then
+    script.on_event(remote.call("PickerDollies", "dolly_moved_entity_id"), on_dolly_moved_entity)
+    remote.call("PickerDollies", "add_blacklist_name", "po-hidden-electric-pole-in")
+    remote.call("PickerDollies", "add_blacklist_name", "po-hidden-electric-pole-out")
+    -- The next 3 entities are only ever on transformer surfaces so don't actually need to be blacklisted
+    remote.call("PickerDollies", "add_blacklist_name", "po-hidden-electric-pole-alt")
+    remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-in")
+    remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-out")
+
+  end
+
+end
+
 local function update_global_settings()
   local global_settings = {}
   for _, setting in pairs({
@@ -200,6 +238,7 @@ script.on_init(
     generate_max_consumption_table()
     reset_global_poles()
     create_transformer_surfaces()
+    handle_picker_dollies()
 
     -- Enable transformer recipe
     for _, force in pairs(game.forces) do
@@ -207,3 +246,5 @@ script.on_init(
     end
   end
 )
+
+script.on_load(handle_picker_dollies)
