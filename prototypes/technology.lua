@@ -18,7 +18,7 @@ data:extend{
     type = "technology",
     name = "electric-energy-distribution-3",
     icon_size = 165, icon_mipmaps = 1,
-    icon = "__PowerOverload__/graphics/big-electric-pole-tech.png",
+    icon = "__PowerOverload__/graphics/huge-electric-pole-tech.png",
     effects =
     {
       {

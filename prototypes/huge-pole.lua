@@ -30,7 +30,7 @@ local pylon =  {
     close_sound = big_pole.close_sound,
     pictures =
     {
-      filename = "__PowerOverload__/graphics/big-electric-pole.png",
+      filename = "__PowerOverload__/graphics/huge-electric-pole.png",
       priority = "extra-high",
       width = 168,
       height = 165,
