@@ -5,7 +5,7 @@ translate = -0.2
 local pylon =  {
     type = "electric-pole",
     name = "po-huge-electric-pole",
-    icon = "__PowerOverload__/graphics/big-electric-pole-icon.png",
+    icon = "__PowerOverload__/graphics/icons/huge-electric-pole.png",
     icon_size = 32, icon_mipmaps = 1,
     flags = {"placeable-neutral", "player-creation", "fast-replaceable-no-build-while-moving"},
     minable = {mining_time = 0.1, result = "po-huge-electric-pole"},
@@ -134,7 +134,7 @@ local pylon =  {
 local pylon_item = table.deepcopy(data.raw.item["big-electric-pole"])
 pylon_item.name = "po-huge-electric-pole"
 pylon_item.place_result = "po-huge-electric-pole"
-pylon_item.icon = "__PowerOverload__/graphics/big-electric-pole-icon.png"
+pylon_item.icon = "__PowerOverload__/graphics/icons/huge-electric-pole.png"
 pylon_item.icon_size = 32
 pylon_item.icon_mipmaps = 1
 

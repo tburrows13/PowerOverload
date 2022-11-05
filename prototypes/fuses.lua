@@ -49,6 +49,8 @@ for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do
 end
 
 
+-- Custom graphics
+
 local small_fuse = data.raw["electric-pole"]["po-small-electric-fuse"]
 small_fuse.pictures.layers[1].direction_count = 1
 small_fuse.pictures.layers[2].direction_count = 1
@@ -131,3 +133,27 @@ big_fuse.connection_points =
     }
   },
 }
+
+local small_fuse_icon = {{
+  icon = "__PowerOverload__/graphics/icons/small-electric-fuse.png",
+  icon_size = 64,
+  icon_mipmaps = 4,
+}}
+small_fuse.icons = small_fuse_icon
+data.raw.item["po-small-electric-fuse"].icons = small_fuse_icon
+
+local medium_fuse_icon = {{
+  icon = "__PowerOverload__/graphics/icons/medium-electric-fuse.png",
+  icon_size = 64,
+  icon_mipmaps = 4,
+}}
+medium_fuse.icons = medium_fuse_icon
+data.raw.item["po-medium-electric-fuse"].icons = medium_fuse_icon
+
+local big_fuse_icon = {{
+  icon = "__PowerOverload__/graphics/icons/big-electric-fuse.png",
+  icon_size = 64,
+  icon_mipmaps = 4,
+}}
+big_fuse.icons = big_fuse_icon
+data.raw.item["po-big-electric-fuse"].icons = big_fuse_icon
