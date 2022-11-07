@@ -35,12 +35,27 @@ local transformer_recipe = table.deepcopy(data.raw.recipe["power-switch"])
 transformer_recipe.name = "po-transformer"
 transformer_recipe.result = "po-transformer"
 
+local hidden_pole_item = table.deepcopy(data.raw.item["small-electric-pole"])
+hidden_pole_item.name = "po-hidden-electric-pole"
+hidden_pole_item.flags = {"hidden"}
+hidden_pole_item.place_result = ""
+hidden_pole_item.icons = {
+  transformer_item.icons[1],
+  {
+    icon = "__base__/graphics/icons/copper-cable.png",
+    icon_size = 64,
+    icon_mipmaps = 4,
+    scale = 0.35,
+    --tint = transformer_tint
+  }
+}
+
 local hidden_pole_in = {
   type = "electric-pole",
   name = "po-hidden-electric-pole-in",
   icons = transformer.icons,
-  flags = {"not-on-map",
-           "not-blueprintable",
+  flags = {"player-creation",
+           "not-on-map",
            "not-deconstructable",
            "hidden",
            "hide-alt-info",
@@ -52,12 +67,12 @@ local hidden_pole_in = {
   minable = nil,
   max_health = 50,
   --corpse = "small-electric-pole-remnants",
-  --collision_box = {{-0.15, -0.15}, {0.15, 0.15}},
+  collision_box = {{-0.15, -0.15}, {0.15, 0.15}},
   selection_box = {{-0.4, -1}, {0.4, 1}},
   selection_priority = 255,  -- Default 50
   maximum_wire_distance = 8,
   supply_area_distance = 0.2,
-  placeable_by = {item = "po-transformer", count = 1},
+  placeable_by = {item = "po-hidden-electric-pole", count = 1},
   collision_mask = {},
   open_sound = big_pole.open_sound,
   close_sound = big_pole.close_sound,
@@ -141,4 +156,4 @@ for _, prototype in pairs({transformer, hidden_pole_in, hidden_pole_out}) do
 end
 
 
-data:extend{transformer, transformer_item, transformer_recipe, hidden_pole_in, hidden_pole_out, hidden_pole_alt, hidden_eei_in, hidden_eei_out}
+data:extend{transformer, transformer_item, transformer_recipe, hidden_pole_item, hidden_pole_in, hidden_pole_out, hidden_pole_alt, hidden_eei_in, hidden_eei_out}

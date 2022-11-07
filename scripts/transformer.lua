@@ -37,8 +37,24 @@ function create_transformer(transformer_entity, old_transformer_parts)
   end
 
   -- Creates all the extra entities
+  revive_ghost_poles(transformer_parts)
   check_transformer_poles(transformer_parts)
   check_transformer_interfaces(transformer_parts)
+end
+
+function revive_ghost_poles(transformer_parts)
+  -- Called on transformer creation
+  local surface = transformer_parts.surface
+
+  local pole_in_ghost = surface.find_entities_filtered{position = transformer_parts.position_in, ghost_name = "po-hidden-electric-pole-in", limit = 1}[1]
+  if pole_in_ghost then
+    _, transformer_parts.pole_in = pole_in_ghost.revive()
+  end
+
+  local pole_out_ghost = surface.find_entities_filtered{position = transformer_parts.position_out, ghost_name = "po-hidden-electric-pole-out", limit = 1}[1]
+  if pole_out_ghost then
+    _, transformer_parts.pole_out = pole_out_ghost.revive()
+  end
 end
 
 function check_transformer_poles(transformer_parts)
