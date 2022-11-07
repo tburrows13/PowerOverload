@@ -3,6 +3,7 @@ local shared = require "__PowerOverload__/shared"
 require "__PowerOverload__/scripts/create-surface"
 require "__PowerOverload__/scripts/transformer"
 require "__PowerOverload__/scripts/poles"
+require "__PowerOverload__/scripts/power-interface"
 
 
 max_consumptions = {}
