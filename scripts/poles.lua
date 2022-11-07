@@ -2,10 +2,10 @@ local function is_fuse(pole)
   return string.sub(pole.name, -5) == "-fuse"
 end
 
-function on_pole_built(pole)
+function on_pole_built(pole, tags)
   local pole_name = pole.name
   for _, neighbour in pairs(pole.neighbours.copper) do
-    if neighbour.type == "electric-pole" and
+    if neighbour.type == "electric-pole" and not (tags and tags["po-skip-disconnection"]) and
         (pole_name == "po-hidden-electric-pole-in" or pole_name == "po-hidden-electric-pole-out" or
          neighbour.name == "po-hidden-electric-pole-in" or neighbour.name == "po-hidden-electric-pole-out" or
         (pole_name ~= neighbour.name and global.global_settings["power-overload-disconnect-different-poles"])) then

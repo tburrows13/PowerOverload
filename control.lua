@@ -13,14 +13,19 @@ local function on_built(event)
   local entity = event.created_entity or event.entity
   if entity then
     if entity.type == "electric-pole" then
-      on_pole_built(entity)
+      on_pole_built(entity, event.tags)
+    elseif entity.type == "entity-ghost" and (event.stack.is_blueprint or event.stack.is_blueprint_book) then
+      -- Entity was (probably) built as part of blueprint, so prevent automatic disconnection of wires when it is built
+      local tags = entity.tags or {}
+      tags["po-skip-disconnection"] = true
+      entity.tags = tags
     elseif entity.name == "po-transformer" then
       create_transformer(entity)
     end
   end
 end
 -- Needs to be 4 separate lines so that the filters work
-script.on_event(defines.events.on_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
+script.on_event(defines.events.on_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "ghost_type", type = "electric-pole"}})
 script.on_event(defines.events.on_robot_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
 script.on_event(defines.events.script_raised_revive, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
 script.on_event(defines.events.script_raised_built, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
