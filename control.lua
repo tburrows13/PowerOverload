@@ -171,8 +171,16 @@ local function generate_max_consumption_table()
   local pole_names = shared.get_pole_names(script.active_mods)
   local max_consumptions = {}
   for pole_name, default_consumption in pairs(pole_names) do
-    local max_consumption_string = settings.startup["power-overload-max-power-" .. pole_name].value
-    max_consumptions[pole_name] = shared.validate_and_parse_energy(max_consumption_string, default_consumption)
+    local setting_pole_name = shared.get_pole_aliases()[pole_name] or pole_name
+    local max_consumption_string = settings.startup["power-overload-max-power-" .. setting_pole_name].value
+    local max_consumption = shared.validate_and_parse_energy(max_consumption_string)
+    if not max_consumption then
+      game.print("Consumption setting '" .. max_consumption_string .. "' is not valid")
+      max_consumption = shared.validate_and_parse_energy(default_consumption)
+    end
+    if max_consumption then
+      max_consumptions[pole_name] = max_consumption
+    end
   end
   global.max_consumptions = max_consumptions
 end

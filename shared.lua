@@ -4,7 +4,7 @@ local function combine_tables(first_table, second_table)
 end
 
 
-local function validate_and_parse_energy(consumption, default_consumption)
+local function validate_and_parse_energy(consumption)
   -- Sanitise user-input energy values
   local ending = consumption:sub(consumption:len())
   local status, result
@@ -21,7 +21,7 @@ local function validate_and_parse_energy(consumption, default_consumption)
     return result * 60 * 1.01
   else
     log("Parsing energy setting '" .. consumption .. "' failed with error: " .. result)
-    return default_consumption or false
+    return false
   end
 
 end
@@ -41,6 +41,9 @@ local function get_pole_names(mods)
       ["po-huge-electric-fuse"] = "4GW",
       ["substation"] = "200MW",
       ["po-interface"] = "100GW",
+      ["po-interface-north"] = "100GW",  -- Hidden from settings
+      ["po-interface-east"] = "100GW",  -- Hidden from settings
+      ["po-interface-south"] = "100GW",  -- Hidden from settings
     },
     ["aai-industry"] = {
       ["small-iron-electric-pole"] = "20MW"
@@ -130,6 +133,14 @@ local function get_pole_names(mods)
   return loaded_pole_names
 end
 
+local function get_pole_aliases()
+  return {
+    ["po-interface-north"] = "po-interface",
+    ["po-interface-east"] = "po-interface",
+    ["po-interface-south"] = "po-interface",
+  }
+end
+
 local function get_poles_to_make_fuses(mods)
   -- Note, this assumes the naming convention always ends in '-pole'.  If this is not true, this and
   -- other functions will need to be further modified.
@@ -161,6 +172,7 @@ end
 
 return {
   get_pole_names = get_pole_names,
+  get_pole_aliases = get_pole_aliases,
   validate_and_parse_energy = validate_and_parse_energy,
   get_poles_to_make_fuses = get_poles_to_make_fuses,
   get_name_for_fuse = get_name_for_fuse,

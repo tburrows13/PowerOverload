@@ -36,17 +36,19 @@ data:extend{
 
 order = 0
 for pole_name, default_power in pairs(shared.get_pole_names(mods)) do
-  data:extend{
-    {
-      type = "string-setting",
-      name = "power-overload-max-power-" .. pole_name,
-      localised_name = {"", {"description.max-energy-consumption"}, ": ", {"mod-setting-name.power-overload-entity", pole_name}},
+  if not shared.get_pole_aliases()[pole_name] then
+    data:extend{
+      {
+        type = "string-setting",
+        name = "power-overload-max-power-" .. pole_name,
+        localised_name = {"", {"description.max-energy-consumption"}, ": ", {"mod-setting-name.power-overload-entity", pole_name}},
 
-      setting_type = "startup",
-      default_value = default_power,
-      order = tostring(order)  -- Doesn't really work with more than 10 types of pole
+        setting_type = "startup",
+        default_value = default_power,
+        order = tostring(order)  -- Doesn't really work with more than 10 types of pole
+      }
     }
-  }
-  order = order + 1
+    order = order + 1
+  end
 end
   

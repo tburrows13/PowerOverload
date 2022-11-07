@@ -1,5 +1,6 @@
 local pole_names = shared.get_pole_names(mods)
 for pole_name, prototype in pairs(data.raw["electric-pole"]) do
+  pole_name = shared.get_pole_aliases()[pole_name] or pole_name
   local default_consumption = pole_names[pole_name]
   if default_consumption then
     local max_consumption_string = settings.startup["power-overload-max-power-" .. pole_name].value
