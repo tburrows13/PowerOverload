@@ -103,6 +103,8 @@ function check_transformer_poles(transformer_parts)
     transformer_parts.pole_out_alt = pole_out_alt
   end
   pole_out_alt.connect_neighbour(pole_out)
+
+  pole_in.disconnect_neighbour(pole_out)
 end
 
 function check_transformer_interfaces(transformer_parts)
