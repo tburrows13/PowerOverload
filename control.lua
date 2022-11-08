@@ -15,7 +15,7 @@ local function on_built(event)
   if entity then
     if entity.type == "electric-pole" then
       on_pole_built(entity, event.tags)
-    elseif entity.type == "entity-ghost" and (event.stack.is_blueprint or event.stack.is_blueprint_book) then
+    elseif entity.type == "entity-ghost" and game.get_player(event.player_index).is_cursor_blueprint() then
       -- Entity was (probably) built as part of blueprint, so prevent automatic disconnection of wires when it is built
       local tags = entity.tags or {}
       tags["po-skip-disconnection"] = true
