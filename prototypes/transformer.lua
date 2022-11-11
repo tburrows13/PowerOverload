@@ -66,7 +66,7 @@ local hidden_pole_in = {
   collision_box = {{-0.15, -0.15}, {0.15, 0.15}},
   selection_box = {{-0.4, -1}, {0.4, 1}},
   selection_priority = 255,  -- Default 50
-  maximum_wire_distance = 4,
+  maximum_wire_distance = 5,
   supply_area_distance = 0.2,
   placeable_by = {item = "po-hidden-electric-pole", count = 1},
   collision_mask = {},
