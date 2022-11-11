@@ -41,14 +41,13 @@ for pole_name, default_power in pairs(shared.get_pole_names(mods)) do
       {
         type = "string-setting",
         name = "power-overload-max-power-" .. pole_name,
-        localised_name = {"", {"description.max-energy-consumption"}, ": ", {"mod-setting-name.power-overload-entity", pole_name}},
+        localised_name = {"", {"description.max-energy-consumption"}, ": [entity=" .. pole_name .. "] ", {"mod-setting-name.power-overload-entity", pole_name}},
 
         setting_type = "startup",
         default_value = default_power,
-        order = tostring(order)  -- Doesn't really work with more than 10 types of pole
+        order = string.format("%03d", tostring(order))
       }
     }
     order = order + 1
   end
 end
-  
