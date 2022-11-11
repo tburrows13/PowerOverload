@@ -16,7 +16,7 @@ small_fuse.pictures.layers[2].hr_version = {
   width = 266,
   height = 56,
   direction_count = 1,
-  shift = util.by_pixel(51, 3),
+  shift = util.by_pixel(60, -2),
   draw_as_shadow = true,
   scale = 0.5
 }
@@ -25,11 +25,11 @@ small_fuse.connection_points =
   {
     shadow =
     {
-      copper = util.by_pixel_hr(245.0, -34.0),
+      copper = util.by_pixel_hr(230, -2),
     },
     wire =
     {
-      copper = util.by_pixel_hr(19, -178.5),
+      copper = util.by_pixel_hr(19, -177.5),
     }
   },
 }
@@ -52,7 +52,7 @@ medium_fuse.pictures.layers[2].hr_version = {
   width = 225,
   height = 44,
   direction_count = 1,
-  shift = util.by_pixel(56.5, -1),
+  shift = util.by_pixel(43, 4),
   draw_as_shadow = true,
   scale = 0.5
 }
@@ -62,11 +62,11 @@ medium_fuse.connection_points =
   {
     shadow =
     {
-      copper = util.by_pixel_hr(245.0, -34.0),
+      copper = util.by_pixel_hr(193.5, -6.5),
     },
     wire =
     {
-      copper = util.by_pixel(8.25, -77.25),
+      copper = util.by_pixel(8.25, -76.5),
     }
   },
 }
@@ -89,7 +89,7 @@ big_fuse.pictures.layers[2].hr_version = {
   width = 209,
   height = 78,
   direction_count = 1,
-  shift = util.by_pixel(60, 0),
+  shift = util.by_pixel(30, 0),
   draw_as_shadow = true,
   scale = 0.5
 }
@@ -99,11 +99,11 @@ big_fuse.connection_points =
   {
     shadow =
     {
-      copper = util.by_pixel_hr(245.0, -34.0),
+      copper = util.by_pixel_hr(158, -26),
     },
     wire =
     {
-      copper = util.by_pixel(8.5, -75.0),
+      copper = util.by_pixel(8.5, -74),
     }
   },
 }

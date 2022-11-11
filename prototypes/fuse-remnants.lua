@@ -41,7 +41,7 @@ small_fuse_remnants.animation = {
     height = 56,
     frame_count = 1,
     direction_count = 1,
-    shift = util.by_pixel(17, -1),
+    shift = util.by_pixel(60, -2),
     draw_as_shadow = true,
     scale = 0.5
   }
@@ -89,7 +89,7 @@ medium_fuse_remnants.animation = {
     height = 44,
     frame_count = 1,
     direction_count = 1,
-    shift = util.by_pixel(17, -1),
+    shift = util.by_pixel(34.5, 4),
     draw_as_shadow = true,
     scale = 0.5
   }
@@ -137,7 +137,7 @@ big_fuse_remnants.animation = {
     height = 78,
     frame_count = 1,
     direction_count = 1,
-    shift = util.by_pixel(17, -1),
+    shift = util.by_pixel(25.5, 0.5),
     draw_as_shadow = true,
     scale = 0.5
   }
