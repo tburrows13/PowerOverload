@@ -2,6 +2,8 @@
 
 local small_fuse_remnants = table.deepcopy(data.raw.corpse["small-electric-pole-remnants"])
 small_fuse_remnants.name = "po-small-electric-fuse-remnants"
+small_fuse_remnants.localised_name = {"remnant-name", {"entity-name.po-small-electric-fuse"}}
+small_fuse_remnants.order = small_fuse_remnants.order .. "-a"
 small_fuse_remnants.animation_overlay = {
   filename = "__PowerOverload__/graphics/entity/small-electric-fuse/small-fuse-remnants.png",
   line_length = 1,
@@ -48,6 +50,8 @@ data.raw["electric-pole"]["po-small-electric-fuse"].corpse = "po-small-electric-
 
 local medium_fuse_remnants = table.deepcopy(data.raw.corpse["medium-electric-pole-remnants"])
 medium_fuse_remnants.name = "po-medium-electric-fuse-remnants"
+medium_fuse_remnants.localised_name = {"remnant-name", {"entity-name.po-medium-electric-fuse"}}
+medium_fuse_remnants.order = medium_fuse_remnants.order .. "-a"
 medium_fuse_remnants.animation_overlay = {
   filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse-remnants.png",
   line_length = 1,
@@ -94,6 +98,8 @@ data.raw["electric-pole"]["po-medium-electric-fuse"].corpse = "po-medium-electri
 
 local big_fuse_remnants = table.deepcopy(data.raw.corpse["big-electric-pole-remnants"])
 big_fuse_remnants.name = "po-big-electric-fuse-remnants"
+big_fuse_remnants.localised_name = {"remnant-name", {"entity-name.po-big-electric-fuse"}}
+big_fuse_remnants.order = big_fuse_remnants.order .. "-a"
 big_fuse_remnants.animation_overlay = {
   filename = "__PowerOverload__/graphics/entity/big-electric-fuse/big-fuse-remnants.png",
   line_length = 1,
