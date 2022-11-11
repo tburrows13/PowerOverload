@@ -45,15 +45,18 @@ end
 function revive_ghost_poles(transformer_parts)
   -- Called on transformer creation
   local surface = transformer_parts.surface
+  local bounding_box = transformer_parts.transformer.bounding_box
 
-  local pole_in_ghost = surface.find_entities_filtered{position = transformer_parts.position_in, ghost_name = "po-hidden-electric-pole-in", limit = 1}[1]
+  local pole_in_ghost = surface.find_entities_filtered{area = bounding_box, ghost_name = "po-hidden-electric-pole-in", limit = 1}[1]
   if pole_in_ghost then
     _, transformer_parts.pole_in = pole_in_ghost.revive()
+    transformer_parts.pole_in.teleport(transformer_parts.position_in)
   end
 
-  local pole_out_ghost = surface.find_entities_filtered{position = transformer_parts.position_out, ghost_name = "po-hidden-electric-pole-out", limit = 1}[1]
+  local pole_out_ghost = surface.find_entities_filtered{area = bounding_box, ghost_name = "po-hidden-electric-pole-out", limit = 1}[1]
   if pole_out_ghost then
     _, transformer_parts.pole_out = pole_out_ghost.revive()
+    transformer_parts.pole_out.teleport(transformer_parts.position_out)
   end
 end
 
