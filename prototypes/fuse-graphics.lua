@@ -1,7 +1,14 @@
 local small_fuse = data.raw["electric-pole"]["po-small-electric-fuse"]
-small_fuse.pictures.layers[1].direction_count = 1
-small_fuse.pictures.layers[1].hr_version = {
+small_fuse.pictures.layers[1] = {
   filename = "__PowerOverload__/graphics/entity/small-electric-fuse/small-fuse.png",
+  priority = "extra-high",
+  width = 40,
+  height = 104,
+  direction_count = 1,
+  shift = util.by_pixel(9, -44.25),
+}
+small_fuse.pictures.layers[1].hr_version = {
+  filename = "__PowerOverload__/graphics/entity/small-electric-fuse/hr-small-fuse.png",
   priority = "extra-high",
   width = 80,
   height = 207,
@@ -9,9 +16,17 @@ small_fuse.pictures.layers[1].hr_version = {
   shift = util.by_pixel(9, -44.25),
   scale = 0.5
 }
-small_fuse.pictures.layers[2].direction_count = 1
-small_fuse.pictures.layers[2].hr_version = {
+small_fuse.pictures.layers[2] = {
   filename = "__PowerOverload__/graphics/entity/small-electric-fuse/small-fuse-shadow.png",
+  priority = "extra-high",
+  width = 133,
+  height = 28,
+  direction_count = 1,
+  shift = util.by_pixel(60, -2),
+  draw_as_shadow = true
+}
+small_fuse.pictures.layers[2].hr_version = {
+  filename = "__PowerOverload__/graphics/entity/small-electric-fuse/hr-small-fuse-shadow.png",
   priority = "extra-high",
   width = 266,
   height = 56,
@@ -35,9 +50,16 @@ small_fuse.connection_points =
 }
 
 local medium_fuse = data.raw["electric-pole"]["po-medium-electric-fuse"]
-medium_fuse.pictures.layers[1].direction_count = 1
-medium_fuse.pictures.layers[1].hr_version = {
+medium_fuse.pictures.layers[1] = {
   filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse.png",
+  priority = "extra-high",
+  width = 34,
+  height = 98,
+  direction_count = 1,
+  shift = util.by_pixel(-0.75, -30.5),
+}
+medium_fuse.pictures.layers[1].hr_version = {
+  filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/hr-medium-fuse.png",
   priority = "extra-high",
   width = 67,
   height = 194,
@@ -45,9 +67,17 @@ medium_fuse.pictures.layers[1].hr_version = {
   shift = util.by_pixel(-0.75, -30.5),
   scale = 0.5
 }
-medium_fuse.pictures.layers[2].direction_count = 1
-medium_fuse.pictures.layers[2].hr_version = {
+medium_fuse.pictures.layers[2] = {
   filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse-shadow.png",
+  priority = "extra-high",
+  width = 113,
+  height = 22,
+  direction_count = 1,
+  shift = util.by_pixel(43, 4),
+  draw_as_shadow = true
+}
+medium_fuse.pictures.layers[2].hr_version = {
+  filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/hr-medium-fuse-shadow.png",
   priority = "extra-high",
   width = 225,
   height = 44,
@@ -72,9 +102,16 @@ medium_fuse.connection_points =
 }
 
 local big_fuse = data.raw["electric-pole"]["po-big-electric-fuse"]
-big_fuse.pictures.layers[1].direction_count = 1
-big_fuse.pictures.layers[1].hr_version = {
+big_fuse.pictures.layers[1] = {
   filename = "__PowerOverload__/graphics/entity/big-electric-fuse/big-fuse.png",
+  priority = "extra-high",
+  width = 56,
+  height = 99,
+  direction_count = 1,
+  shift = util.by_pixel(0, -29),
+}
+big_fuse.pictures.layers[1].hr_version = {
+  filename = "__PowerOverload__/graphics/entity/big-electric-fuse/hr-big-fuse.png",
   priority = "extra-high",
   width = 111,
   height = 197,
@@ -82,9 +119,17 @@ big_fuse.pictures.layers[1].hr_version = {
   shift = util.by_pixel(0, -29),
   scale = 0.5
 }
-big_fuse.pictures.layers[2].direction_count = 1
-big_fuse.pictures.layers[2].hr_version = {
+big_fuse.pictures.layers[2] = {
   filename = "__PowerOverload__/graphics/entity/big-electric-fuse/big-fuse-shadow.png",
+  priority = "extra-high",
+  width = 105,
+  height = 39,
+  direction_count = 1,
+  shift = util.by_pixel(30, 0),
+  draw_as_shadow = true
+}
+big_fuse.pictures.layers[2].hr_version = {
+  filename = "__PowerOverload__/graphics/entity/big-electric-fuse/hr-big-fuse-shadow.png",
   priority = "extra-high",
   width = 209,
   height = 78,
