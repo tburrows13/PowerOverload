@@ -172,7 +172,7 @@ local medium_fuse_icon = {{
 }}
 medium_fuse.icons = medium_fuse_icon
 data.raw.item["po-medium-electric-fuse"].icons = medium_fuse_icon
---data.raw.corpse["po-medium-electric-fuse-remnants"].icons = medium_fuse_icon
+data.raw.corpse["po-medium-electric-fuse-remnants"].icons = medium_fuse_icon
 
 local big_fuse_icon = {{
   icon = "__PowerOverload__/graphics/icons/big-electric-fuse.png",
@@ -181,4 +181,4 @@ local big_fuse_icon = {{
 }}
 big_fuse.icons = big_fuse_icon
 data.raw.item["po-big-electric-fuse"].icons = big_fuse_icon
---data.raw.corpse["po-big-electric-fuse-remnants"].icons = big_fuse_icon
+data.raw.corpse["po-big-electric-fuse-remnants"].icons = big_fuse_icon
