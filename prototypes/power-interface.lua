@@ -61,7 +61,7 @@ local interface = {
       percent = 90
     }
   },
-  collision_box = {{-0.95, -0.95}, {0.95, 0.95}},
+  collision_box = {{-0.85, -0.85}, {0.85, 0.85}},
   selection_box = {{-1, -1}, {1, 1}},
   damaged_trigger_effect_box = {{-0.5, -2.5}, {0.5, 0.5}},  -- Used to generate damaged_trigger_effect
   damaged_trigger_effect = hit_effects.entity({{-0.5, -2.5}, {0.5, 0.5}}),  -- Overriden in translate_interface
