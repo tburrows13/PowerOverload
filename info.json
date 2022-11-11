@@ -11,7 +11,8 @@
       "? bzlead",
       "? aai-industry",
       "(?) pyalternativeenergy",
-      "(?) IndustrialRevolution"
+      "(?) IndustrialRevolution",
+      "(?) PickerDollies"
     ],
     "package": {
       "ignore": ["resources/*"]
