@@ -24,6 +24,8 @@ local function multiply_ingredients(from_recipe, to_recipe, name)
   to_recipe.ingredients = new_ingredients
 
   to_recipe.result_count = 1
+
+  to_recipe.enabled = true  -- overridden in technology-updates
 end
 
 for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do

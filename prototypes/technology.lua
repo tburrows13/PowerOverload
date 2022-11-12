@@ -1,11 +1,9 @@
 local electric_1_effects = data.raw.technology["electric-energy-distribution-1"].effects
 
-for _, recipe_name in pairs({"po-medium-electric-fuse", "po-big-electric-fuse", "po-transformer"}) do
-  table.insert(electric_1_effects, {
-    type = "unlock-recipe",
-    recipe = recipe_name
-  })
-end
+table.insert(electric_1_effects, {
+  type = "unlock-recipe",
+  recipe = "po-transformer"
+})
 if mods["pyalternativeenergy"] then
   table.insert(electric_1_effects, {
     type = "unlock-recipe",
@@ -16,7 +14,9 @@ end
 data:extend{
   {
     type = "technology",
-    name = "electric-energy-distribution-3",
+    name = "po-electric-energy-distribution-3",
+    localised_name = {"", {"technology-name.electric-energy-distribution"}, " 3"},
+    localised_description = {"technology-description.electric-energy-distribution"},
     icon_size = 165, icon_mipmaps = 1,
     icon = "__PowerOverload__/graphics/huge-electric-pole-tech.png",
     effects =

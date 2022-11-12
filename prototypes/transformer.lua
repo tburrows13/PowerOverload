@@ -34,7 +34,7 @@ transformer_recipe.result = "po-transformer"
 local hidden_pole_item = table.deepcopy(data.raw.item["small-electric-pole"])
 hidden_pole_item.name = "po-hidden-electric-pole"
 hidden_pole_item.flags = {"hidden"}
-hidden_pole_item.place_result = ""
+hidden_pole_item.place_result = nil
 hidden_pole_item.icons = {
   transformer_item.icons[1],
   {

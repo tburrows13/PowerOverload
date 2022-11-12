@@ -8,8 +8,8 @@
     "factorio_version": "1.1",
     "dependencies": [
       "base >= 1.1.60",
-      "? bzlead",
-      "? aai-industry",
+      "(?) bzlead",
+      "(?) aai-industry",
       "(?) pyalternativeenergy",
       "(?) IndustrialRevolution",
       "(?) PickerDollies"

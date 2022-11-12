@@ -153,9 +153,5 @@ pylon_recipe = {
   energy_required = 1.5,  -- in seconds
   enabled = false
 }
-if mods["bzlead"] then
-  table.insert(pylon_recipe.ingredients, {"lead-plate", 10})
-end
-
 
 data:extend{pylon, pylon_item, pylon_recipe}

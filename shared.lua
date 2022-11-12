@@ -82,7 +82,8 @@ local function get_pole_names(mods)
       ["po-medium-electric-fuse"] = "160MW",
       ["po-big-electric-fuse"] = "1.6GW",
       ["po-huge-electric-fuse"] = "8GW",
-      ["substation"] = "400MW"
+      ["substation"] = "400MW",
+      ["kr-substation-mk2"] = "600MW"
     },
     ["fixLargeElectricPole"] = {
       ["large-electric-pole"] = "16GW"
