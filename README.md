@@ -24,7 +24,7 @@
     - [Rate Calculator](https://mods.factorio.com/mod/RateCalculator) for ensuring that a subnetworks' power requirements are not too large
 
 ## Compatibility
-- Currently poles from the following mods are supported:
+- Poles from the following mods are supported:
     - [AAI Industry](https://mods.factorio.com/mod/aai-industry)
     - [Space Exploration](https://mods.factorio.com/mod/space-exploration)
     - [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
@@ -45,7 +45,7 @@
 
 ## Performance
 At the current level of optimisation, you should expect to be able to maintain 60UPS well into the hundreds of science-per-minute.
-As such, it work particularly well with smaller overhaul mods like Krastorio 2 and Industrial Revolution 2.
+As such, it works particularly well with smaller overhaul mods like Krastorio 2 and Industrial Revolution 2. Late-game Space Exploration will likely run into UPS issues, although I do have future plans for further optimisation.
 
 ## Graphics
 Thanks to busdriver4 for creating the amazing fuse and transformer graphics!
