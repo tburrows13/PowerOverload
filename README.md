@@ -23,28 +23,32 @@
     - [Wire Shortcuts](https://mods.factorio.com/mod/WireShortcutshttps://mods.factorio.com/mod/WireShortcuts) for easier connecting and disconnecting of wires
     - [Rate Calculator](https://mods.factorio.com/mod/RateCalculator) for ensuring that a subnetworks' power requirements are not too large
 
-## Future updates
-- Allow transformer wire connections to be included in blueprints
-
 ## Compatibility
 - Currently poles from the following mods are supported:
     - [AAI Industry](https://mods.factorio.com/mod/aai-industry)
     - [Space Exploration](https://mods.factorio.com/mod/space-exploration)
+    - [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
+    - [Industrial Revolution 2](https://mods.factorio.com/mod/IndustrialRevolution)
     - [Bob's Power](https://mods.factorio.com/mod/bobpower)
     - [Bio Industries](https://mods.factorio.com/mod/Bio_Industries)
     - [Cargo Ships](https://mods.factorio.com/mod/cargo-ships)
     - [Advanced Electric](https://mods.factorio.com/mod/Advanced_Electric)
     - [Large Electric Pole](https://mods.factorio.com/mod/fixLargeElectricPole)
-    - [Industrial Revolution 2](https://mods.factorio.com/mod/IndustrialRevolution)
-    - [Pyanodons Alternative Energy](https://mods.factorio.com/mod/pyalternativeenergy)
-- The following mods do not add new poles, but when loaded the default maximum consumptions are increased:
+    - [Pyanodons Alternative Energy](https://mods.factorio.com/mod/pyalternativeenergy) (also adds a Nexelit fuse)
+- When the following mods are loaded, the default maximum consumptions are increased:
     - [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
     - [Pyanodons Coal Processing](https://mods.factorio.com/mod/pycoalprocessing)
+- Most recipes are generated dynamically and so should be balanced no matter which mod is installed
+- Angel's and 248k do not add any extra power poles, so should work. Nullius and 5Dim's are not supported
+- Pyanodons compatibility is currently broken
 - If you would like support for a particular mod, let me know. Since I haven't played many other mods, balance suggestions would be helpful
 
+## Performance
+At the current level of optimisation, you should expect to be able to maintain 60UPS well into the hundreds of science-per-minute.
+As such, it work particularly well with smaller overhaul mods like Krastorio 2 and Industrial Revolution 2.
+
 ## Graphics
-The "Huge electric pole" uses the pre-0.17 "Big electric pole" graphics. The transformer, fuses, and high energy interface
-are just red/blue tints of vanilla entities. If you would be interested in creating better graphics for any of these, let me know.
+Thanks to busdriver4 for creating the amazing fuse and transformer graphics!
 
 ---
 

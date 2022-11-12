@@ -1,4 +1,22 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.0
+Date: 12 November 2022
+  Features:
+    - New graphics for fuses and transformer (thanks to busfinder4!)
+    - Transformer connections are now saved in blueprints
+    - Better handling of ghost wires/poles so blueprinted poles/fuses are not automatically disconnected from poles of different types
+    - High energy interfaces can now be rotated
+    - Industrial Revolution 2 support
+    - Picker Dollies support
+    - Improved compatibility with other overhaul mods
+  Changes:
+    - Removed fuse supply area
+    - Reduced transformer wire reach from 8 to 5
+    - Licence changed from LGPL to MIT
+  Bugfixes:
+    - Fixed crash when max consumption setting is invalid
+    - Fixed max consumption settings being in the wrong order when there are more than 10 types of poles
+---------------------------------------------------------------------------------------------------
 Version: 1.3.1
 Date: 5 September 2022
   Changes:
