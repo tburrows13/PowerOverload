@@ -13,6 +13,7 @@
     - Destroy _(default)_: Poles are destroyed (each pole checked on average every 5 seconds)
     - Damage: Poles are damaged (each pole receives damage of `(consumption / max_consumption - 0.95) * 10` applied on average once a second)
     - Catch fire: Poles catch fire, damaging surrounding entities (each pole is set on fire if `consumption / max_consumption + 0.01) * math.random() > 1` applied on average every 10 seconds)
+    - Nothing: Nothing happens. Use temporarily when adding the mod to an existing save so that the necessary adjustments can be made first.
 
 ## Tips
 - You'll want to have a central 'spine' of higher tier poles. Use transformers to branch off it into subnetworks containing lower tier poles

@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.1
+Date: 13 November 2022
+  Features:
+    - Added "Nothing" overload mode, for use temporarily when adding to an existing save so that the necessary adjustments can be made first
+---------------------------------------------------------------------------------------------------
 Version: 1.4.0
 Date: 12 November 2022
   Features:
@@ -14,6 +19,7 @@ Date: 12 November 2022
     - Reduced transformer wire reach from 8 to 5
     - Licence changed from LGPL to MIT
   Bugfixes:
+    - Fixed Substation MK2 from Krastorio 2 not being available
     - Fixed crash when max consumption setting is invalid
     - Fixed max consumption settings being in the wrong order when there are more than 10 types of poles
 ---------------------------------------------------------------------------------------------------
