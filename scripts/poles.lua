@@ -68,7 +68,9 @@ function update_poles(pole_type, consumption_cache)
   local log_to_chat = global_settings["power-overload-log-to-chat"]
   local destroy_pole_setting = global_settings["power-overload-on-pole-overload"]
 
-  if destroy_pole_setting == "fire" then
+  if destroy_pole_setting == "nothing" then
+    return
+  elseif destroy_pole_setting == "fire" then
     average_tick_delay = 600
   elseif destroy_pole_setting == "destroy" then
     -- Check each pole on average every 5 seconds (60 * 5 = 300)
