@@ -159,7 +159,7 @@ big_fuse.connection_points =
 local small_fuse_icon = {{
   icon = "__PowerOverload__/graphics/icons/small-electric-fuse.png",
   icon_size = 64,
-  icon_mipmaps = 4,
+  icon_mipmaps = 1,
 }}
 small_fuse.icons = small_fuse_icon
 data.raw.item["po-small-electric-fuse"].icons = small_fuse_icon
@@ -168,7 +168,7 @@ data.raw.corpse["po-small-electric-fuse-remnants"].icons = small_fuse_icon
 local medium_fuse_icon = {{
   icon = "__PowerOverload__/graphics/icons/medium-electric-fuse.png",
   icon_size = 64,
-  icon_mipmaps = 4,
+  icon_mipmaps = 1,
 }}
 medium_fuse.icons = medium_fuse_icon
 data.raw.item["po-medium-electric-fuse"].icons = medium_fuse_icon
