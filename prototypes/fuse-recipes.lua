@@ -7,9 +7,6 @@ local function multiply_ingredients(from_recipe, to_recipe, name)
     result_count = to_recipe.results[1].amount
     to_recipe.results = nil
   end
-  if name == "po-small-electric-fuse" then
-    to_recipe.enabled = true
-  end
 
   local ingredient_multiplier = 20 / (result_count or from_recipe.result_count or 1)
 
@@ -25,7 +22,9 @@ local function multiply_ingredients(from_recipe, to_recipe, name)
 
   to_recipe.result_count = 1
 
-  to_recipe.enabled = true  -- overridden in technology-updates
+  if not mods["pypostprocessing"] then  -- https://mods.factorio.com/mod/PowerOverload/discussion/6371d7602024262b14858736
+    to_recipe.enabled = true  -- overridden in technology-updates
+  end
 end
 
 for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do
