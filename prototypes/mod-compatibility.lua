@@ -12,6 +12,13 @@ if mods["IndustrialRevolution"] then
   end
 end
 
+if mods["pyalternativeenergy"] then
+  table.insert(data.raw.technology["electric-energy-distribution-1"].effects, {
+    type = "unlock-recipe",
+    recipe = "po-nexelit-power-fuse"
+  })
+end
+
 if mods["bzlead"] then
   table.insert(data.raw.recipe["po-huge-electric-pole"].ingredients, {"lead-plate", 10})
   table.insert(data.raw.recipe["po-huge-electric-fuse"].ingredients, {"lead-plate", 200})

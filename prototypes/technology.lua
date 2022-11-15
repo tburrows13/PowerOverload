@@ -4,12 +4,6 @@ table.insert(electric_1_effects, {
   type = "unlock-recipe",
   recipe = "po-transformer"
 })
-if mods["pyalternativeenergy"] then
-  table.insert(electric_1_effects, {
-    type = "unlock-recipe",
-    recipe = "po-nexelit-power-fuse"
-  })
-end
 
 data:extend{
   {
