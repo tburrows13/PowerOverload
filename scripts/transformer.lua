@@ -156,7 +156,7 @@ function update_transformers(tick)
       if transformer_entity.power_switch_state then
         check_transformer_interfaces(transformer)
         if transformer.bucket == current_bucket then
-          log("Checking poles")
+          --log("Checking poles")
           check_transformer_poles(transformer)
         end
         local interface_in = transformer.interface_in
@@ -168,7 +168,7 @@ function update_transformers(tick)
         -- Due to effiency calculations we don't always empty the buffer when we need more energy
         local effective_energy_out = (energy_out - buffer_size) / efficiency + buffer_size
         if energy_in == buffer_size and effective_energy_out <= 0 then
-          buffer_size = buffer_size * 1.2
+          buffer_size = buffer_size * 1.01
           --log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
