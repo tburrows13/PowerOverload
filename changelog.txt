@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.2
+Date: 15 November 2022
+  Changes:
+    - Improved transformer and small/medium fuse icons
+    - Reduced default maximum consumptions of Industrial Revolution 2 poles, and moved transformer unlock earlier
+  Bugfixes:
+    - Fixed Pyanodons compatibility
+---------------------------------------------------------------------------------------------------
 Version: 1.4.1
 Date: 13 November 2022
   Features:

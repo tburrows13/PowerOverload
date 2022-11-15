@@ -41,7 +41,6 @@
     - [Pyanodons Coal Processing](https://mods.factorio.com/mod/pycoalprocessing)
 - Most recipes are generated dynamically and so should be balanced no matter which mod is installed
 - Angel's and 248k do not add any extra power poles, so should work. Nullius and 5Dim's are not supported
-- Pyanodons compatibility is currently broken
 - If you would like support for a particular mod, let me know. Since I haven't played many other mods, balance suggestions would be helpful
 
 ## Performance
