@@ -15,8 +15,8 @@ transformer.power_on_animation.layers[1].filename = "__PowerOverload__/graphics/
 transformer.power_on_animation.layers[1].hr_version.filename = "__PowerOverload__/graphics/hr-transformer.png"
 transformer.icons = {{
   icon = "__PowerOverload__/graphics/icons/transformer.png",
-  icon_size = transformer.icon_size,
-  icon_mipmaps = transformer.icon_mipmaps,
+  icon_size = 64,
+  icon_mipmaps = 1,
 }}
 
 
