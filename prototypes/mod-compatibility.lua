@@ -25,6 +25,12 @@ if mods["bzlead"] then
   table.insert(data.raw.recipe["po-interface"].ingredients, {"lead-plate", 25})  
 end
 
+if mods["bzaluminum"] then
+  table.insert(data.raw.recipe["po-huge-electric-pole"].ingredients, {"acsr-cable", 4})
+  table.insert(data.raw.recipe["po-huge-electric-fuse"].ingredients, {"acsr-cable", 80})
+  table.insert(data.raw.recipe["po-interface"].ingredients, {"acsr-cable", 50})  
+end
+
 if mods["space-exploration"] then
   table.insert(data.raw.technology["se-energy-beam-defence"].prerequisites, "po-electric-energy-distribution-3")
 end

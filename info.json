@@ -9,6 +9,8 @@
     "dependencies": [
       "base >= 1.1.60",
       "(?) bzlead",
+      "(?) bzaluminum",
+      "(?) bzgas",
       "(?) aai-industry",
       "(?) pyalternativeenergy",
       "(?) IndustrialRevolution",
