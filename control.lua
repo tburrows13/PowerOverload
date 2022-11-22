@@ -5,10 +5,11 @@ require "__PowerOverload__/scripts/transformer"
 require "__PowerOverload__/scripts/poles"
 require "__PowerOverload__/scripts/power-interface"
 
-
 max_consumptions = {}
 
-
+function is_fuse(pole)
+  return string.sub(pole.name, -5) == "-fuse"
+end
 
 local function on_built(event)
   local entity = event.created_entity or event.entity
@@ -32,15 +33,17 @@ script.on_event(defines.events.script_raised_revive, on_built, {{filter = "type"
 script.on_event(defines.events.script_raised_built, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
 
 local function on_destroyed(event)
-  local transformer = event.entity
-  if transformer then
-    on_transformer_destroyed(transformer.unit_number)
+  local entity = event.entity
+  if entity and entity.name == "po-transformer" then
+    on_transformer_destroyed(entity.unit_number)
+  elseif entity and is_fuse(entity) then
+    entity.disconnect_neighbour()
   end
 end
-script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.on_robot_pre_mined, on_destroyed, {{filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.on_entity_died, on_destroyed, {{filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.script_raised_destroy, on_destroyed, {{filter = "name", name = "po-transformer"}})
+script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
+script.on_event(defines.events.on_robot_pre_mined, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
+script.on_event(defines.events.on_entity_died, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
+script.on_event(defines.events.script_raised_destroy, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
 script.on_event(defines.events.on_entity_destroyed,
   function(event)
     local unit_number = event.unit_number

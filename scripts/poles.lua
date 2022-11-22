@@ -1,7 +1,3 @@
-local function is_fuse(pole)
-  return string.sub(pole.name, -5) == "-fuse"
-end
-
 local always_disconnect = {
   ["po-hidden-electric-pole-in"] = true,
   ["po-hidden-electric-pole-out"] = true,
