@@ -49,6 +49,7 @@ local function get_pole_names(mods)
       ["small-iron-electric-pole"] = "20MW"
     },
     ["space-exploration"] = {
+      ["se-addon-power-pole"] = "2GW",
       ["se-pylon"] = "50GW",
       ["se-pylon-substation"] = "2GW",
       ["se-pylon-construction"] = "20GW",
