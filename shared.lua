@@ -100,6 +100,25 @@ local function get_pole_names(mods)
       ["substation-3"] = "240MW",
       ["substation-4"] = "260MW"
     },
+    ["AdvancedSubstation"] = {
+      ["substation-2"] = "250MW",
+      ["substation-3"] = "300MW",
+    },
+    ["FactorioExtended-Plus-Power"] = {
+      ["medium-electric-pole-mk2"] = "120MW",
+      ["medium-electric-pole-mk3"] = "140MW",
+      ["big-electric-pole-mk2"] = "600MW",
+      ["big-electric-pole-mk3"] = "700MW",
+      ["substation-mk2"] = "250MW",
+      ["substation-mk3"] = "300MW",
+    },
+    ["fpp"] = {
+      ["long-distance-electric-pole"] = "5GW",
+    },
+    ["omnimatter_energy"] = {
+      ["small-iron-electric-pole"] = "25MW",
+      ["small-omnium-electric-pole"] = "30MW",
+    },
     ["IndustrialRevolution"] = {
       ["small-bronze-pole"] = "25MW",
       ["small-iron-pole"] = "25MW",

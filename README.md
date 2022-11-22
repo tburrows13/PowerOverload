@@ -34,6 +34,10 @@
     - [Bio Industries](https://mods.factorio.com/mod/Bio_Industries)
     - [Cargo Ships](https://mods.factorio.com/mod/cargo-ships)
     - [Advanced Electric](https://mods.factorio.com/mod/Advanced_Electric)
+    - [Advanced Substation](https://mods.factorio.com/mod/AdvancedSubstation)
+    - [Omnienergy](https://mods.factorio.com/mod/omnimatter_energy)
+    - [FactorioExtended Plus-Power](https://mods.factorio.com/mod/FactorioExtended-Plus-Power)
+    - [Factorio Plus Plus](https://mods.factorio.com/mod/fpp)
     - [Large Electric Pole](https://mods.factorio.com/mod/fixLargeElectricPole)
     - [Pyanodons Alternative Energy](https://mods.factorio.com/mod/pyalternativeenergy) (also adds a Nexelit fuse)
 - When the following mods are loaded, the default maximum consumptions are increased:
