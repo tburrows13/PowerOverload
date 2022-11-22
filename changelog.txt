@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.3
+Date: 22 November 2022
+  Features:
+    - Added text tips & tricks
+    - Added support for poles from Advanced Substatino, Omnienergy, FactorioExtended Plus, and Factorio Plus Plus
+    - Added a maximum consumption to Addon power pole from Space Exploration
+  Changes:
+    - Improved big fuse icon
+    - Poles connected to a fuse will no longer automatically connect to each other when the fuse is destroyed
+    - Added items to some recipes when BZ Aluminum or Natural Gas mods are installed
+    - Transformers take longer to increase transfer rate
+  Bugfixes:
+    - Fixed factories from "Factorissimo 2 - notnotmelon fork" not getting power inside
+---------------------------------------------------------------------------------------------------
 Version: 1.4.2
 Date: 15 November 2022
   Changes:
