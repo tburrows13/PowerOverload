@@ -2,6 +2,18 @@ local function is_fuse(pole)
   return string.sub(pole.name, -5) == "-fuse"
 end
 
+local always_disconnect = {
+  ["po-hidden-electric-pole-in"] = true,
+  ["po-hidden-electric-pole-out"] = true,
+}
+
+local never_disconnect = {
+  ["factory-power-pole"] = true,
+  ["factory-power-connection"] = true,
+  ["factory-overflow-pole"] = true,
+  ["factory-circuit-connector"] = true,
+}
+
 function on_pole_built(pole, tags)
   local pole_name = pole.name
   for _, neighbour in pairs(pole.neighbours.copper) do
@@ -11,10 +23,14 @@ function on_pole_built(pole, tags)
       neighbour_type = neighbour.ghost_type
       neighbour_name = neighbour.ghost_name
     end
-    if neighbour_type == "electric-pole" and not (tags and tags["po-skip-disconnection"]) and
-        (pole_name == "po-hidden-electric-pole-in" or pole_name == "po-hidden-electric-pole-out" or
-        neighbour_name == "po-hidden-electric-pole-in" or neighbour_name == "po-hidden-electric-pole-out" or
-        (pole_name ~= neighbour_name and global.global_settings["power-overload-disconnect-different-poles"])) then
+    if neighbour_type == "electric-pole"
+        and not (tags and tags["po-skip-disconnection"])
+        and not (never_disconnect[pole_name] or never_disconnect[neighbour_name])
+        and (
+          always_disconnect[pole_name] or always_disconnect[neighbour_name]
+          or (pole_name ~= neighbour_name and global.global_settings["power-overload-disconnect-different-poles"])
+        )
+        then
       pole.disconnect_neighbour(neighbour)
     end
   end
