@@ -177,7 +177,7 @@ data.raw.corpse["po-medium-electric-fuse-remnants"].icons = medium_fuse_icon
 local big_fuse_icon = {{
   icon = "__PowerOverload__/graphics/icons/big-electric-fuse.png",
   icon_size = 64,
-  icon_mipmaps = 4,
+  icon_mipmaps = 1,
 }}
 big_fuse.icons = big_fuse_icon
 data.raw.item["po-big-electric-fuse"].icons = big_fuse_icon
