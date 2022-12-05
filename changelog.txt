@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.4
+Date: 4 December 2022
+  Changes:
+    - PyAE 1.1.4 changed the location of the Nexlit power pole from electric-energy-distribution-1 to 3.  
+      This change updates the Nexelit fuse to the same location in the tech tree.
+    - Buffed slightly the wooden power pole and fuse to better match PyAE's early-game electricity usage (+37.5%).  This
+      setting will only be applied for new games - to apply it to an existing game, reset these values in mod settings to the new default.
+
+---------------------------------------------------------------------------------------------------
 Version: 1.4.3
 Date: 22 November 2022
   Features:

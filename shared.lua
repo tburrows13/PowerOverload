@@ -126,11 +126,11 @@ local function get_pole_names(mods)
       ["big-wooden-pole"] = "150MW",
     },
     ["pycoalprocessing"] = {  -- Py 'base': covers all py combinations, overwrites base limits
-      ["small-electric-pole"] = "20MW",
+      ["small-electric-pole"] = "27.5MW",
       ["medium-electric-pole"] = "200MW",
       ["big-electric-pole"] = "2GW",
       ["po-huge-electric-pole"] = "10GW",
-      ["po-small-electric-fuse"] = "15MW",
+      ["po-small-electric-fuse"] = "22MW",
       ["po-medium-electric-fuse"] = "160MW",
       ["po-big-electric-fuse"] = "1.6GW",
       ["po-huge-electric-fuse"] = "8GW",
