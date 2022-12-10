@@ -35,6 +35,10 @@ small_fuse.pictures.layers[2].hr_version = {
   draw_as_shadow = true,
   scale = 0.5
 }
+small_fuse.water_reflection.pictures.filename = "__PowerOverload__/graphics/entity/small-electric-fuse/small-fuse-reflection.png"
+small_fuse.water_reflection.pictures.variation_count = 1
+small_fuse.water_reflection.orientation_to_variation = false
+
 small_fuse.connection_points =
 {
   {
@@ -86,6 +90,7 @@ medium_fuse.pictures.layers[2].hr_version = {
   draw_as_shadow = true,
   scale = 0.5
 }
+medium_fuse.water_reflection.pictures.filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse-reflection.png"
 
 medium_fuse.connection_points =
 {
@@ -138,7 +143,7 @@ big_fuse.pictures.layers[2].hr_version = {
   draw_as_shadow = true,
   scale = 0.5
 }
-
+big_fuse.water_reflection.pictures.filename = "__PowerOverload__/graphics/entity/big-electric-fuse/big-fuse-reflection.png"
 big_fuse.connection_points =
 {
   {
