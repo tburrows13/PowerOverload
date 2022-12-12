@@ -12,7 +12,7 @@ for pole_name, prototype in pairs(data.raw["electric-pole"]) do
     if description then
       prototype.localised_description = {"", description, "\n", localised_string}
     else
-      prototype.localised_description = localised_string
+      prototype.localised_description = {"", {"?", {"", {"entity-description." .. pole_name}, "\n"}, ""}, localised_string}
     end
   end
 end
