@@ -49,7 +49,7 @@
 
 ## Performance
 At the current level of optimisation, you should expect to be able to maintain 60UPS well into the hundreds of science-per-minute.
-As such, it works particularly well with smaller overhaul mods like Krastorio 2 and Industrial Revolution 2. Late-game Space Exploration will likely run into UPS issues, although I do have future plans for further optimisation.
+As such, it works particularly well with smaller overhaul mods like Krastorio 2 and Industrial Revolution 2. Late-game Space Exploration or Pyanodons will likely run into UPS issues, although I do have future plans for further optimisation.
 
 ## Graphics
 Thanks to busdriver4 for creating the amazing fuse and transformer graphics!
