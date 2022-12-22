@@ -168,7 +168,9 @@ function update_transformers(tick)
         -- Due to effiency calculations we don't always empty the buffer when we need more energy
         local effective_energy_out = (energy_out - buffer_size) / efficiency + buffer_size
         if energy_in == buffer_size and effective_energy_out <= 0 then
-          buffer_size = buffer_size * 1.01
+          buffer_size = buffer_size * 1.01 + 1666.667
+          -- Add a constant amount so that networks with low consumption and high variance can spin up in time
+          -- 100kW = 100,000 / 60 = 1666.667
           --log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
