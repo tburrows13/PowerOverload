@@ -26,8 +26,8 @@ local function validate_and_parse_energy(consumption)
 
 end
 
--- These values are only the default values used in settings so changing them won't
---change the actual values: use mod settings for that
+-- These values are only the default values used in settings so changing them
+-- won't change the actual values: use mod settings for that
 local function get_pole_names(mods)
   local mod_pole_names = {
     ["base"] = {
@@ -35,7 +35,7 @@ local function get_pole_names(mods)
       ["medium-electric-pole"] = "100MW",
       ["big-electric-pole"] = "500MW",
       ["po-huge-electric-pole"] = "5GW",
-      ["po-small-electric-fuse"] = "15MW",
+      ["po-small-electric-fuse"] = "16MW",
       ["po-medium-electric-fuse"] = "80MW",
       ["po-big-electric-fuse"] = "400MW",
       ["po-huge-electric-fuse"] = "4GW",
@@ -79,7 +79,7 @@ local function get_pole_names(mods)
       ["medium-electric-pole"] = "200MW",
       ["big-electric-pole"] = "2GW",
       ["po-huge-electric-pole"] = "10GW",
-      ["po-small-electric-fuse"] = "15MW",
+      ["po-small-electric-fuse"] = "16MW",
       ["po-medium-electric-fuse"] = "160MW",
       ["po-big-electric-fuse"] = "1.6GW",
       ["po-huge-electric-fuse"] = "8GW",
@@ -126,11 +126,11 @@ local function get_pole_names(mods)
       ["big-wooden-pole"] = "150MW",
     },
     ["pycoalprocessing"] = {  -- Py 'base': covers all py combinations, overwrites base limits
-      ["small-electric-pole"] = "20MW",
+      ["small-electric-pole"] = "30MW",
       ["medium-electric-pole"] = "200MW",
       ["big-electric-pole"] = "2GW",
       ["po-huge-electric-pole"] = "10GW",
-      ["po-small-electric-fuse"] = "15MW",
+      ["po-small-electric-fuse"] = "24MW",
       ["po-medium-electric-fuse"] = "160MW",
       ["po-big-electric-fuse"] = "1.6GW",
       ["po-huge-electric-fuse"] = "8GW",

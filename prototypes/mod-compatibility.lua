@@ -13,7 +13,7 @@ if mods["IndustrialRevolution"] then
 end
 
 if mods["pyalternativeenergy"] then
-  table.insert(data.raw.technology["electric-energy-distribution-1"].effects, {
+  table.insert(data.raw.technology["electric-energy-distribution-3"].effects, {
     type = "unlock-recipe",
     recipe = "po-nexelit-power-fuse"
   })

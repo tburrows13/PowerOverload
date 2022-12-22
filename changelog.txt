@@ -1,9 +1,19 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.4
+Date: 11 December 2022
+  Changes:
+    - Added new fuse reflections corresponding to the new graphics
+    - Improved compatibility with PyAE 1.1.4: Nexelit fuse moved to Electric Energy Distribution 3
+    - Increased some default maximum consumptions (to apply to existing games, reset these values in mod settings to default)
+      - Small fuse maximum consumption to 16MW (from 15MW)
+      - Pyanodons: Small power pole maximum consumption to 30MW (from 20MW)
+      - Pyanodons: Small fuse maximum consumption to 24MW (from 15MW)
+---------------------------------------------------------------------------------------------------
 Version: 1.4.3
 Date: 22 November 2022
   Features:
     - Added text tips & tricks
-    - Added support for poles from Advanced Substatino, Omnienergy, FactorioExtended Plus, and Factorio Plus Plus
+    - Added support for poles from Advanced Substation, Omnienergy, FactorioExtended Plus, and Factorio Plus Plus
     - Added a maximum consumption to Addon power pole from Space Exploration
   Changes:
     - Improved big fuse icon
