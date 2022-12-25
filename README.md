@@ -29,7 +29,7 @@
     - [AAI Industry](https://mods.factorio.com/mod/aai-industry)
     - [Space Exploration](https://mods.factorio.com/mod/space-exploration)
     - [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)
-    - [Industrial Revolution 2](https://mods.factorio.com/mod/IndustrialRevolution)
+    - [Industrial Revolution 2/3](https://mods.factorio.com/mod/IndustrialRevolution3)
     - [Bob's Power](https://mods.factorio.com/mod/bobpower)
     - [Bio Industries](https://mods.factorio.com/mod/Bio_Industries)
     - [Cargo Ships](https://mods.factorio.com/mod/cargo-ships)
