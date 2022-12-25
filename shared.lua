@@ -125,6 +125,11 @@ local function get_pole_names(mods)
       ["small-iron-pole"] = "25MW",
       ["big-wooden-pole"] = "150MW",
     },
+    ["IndustrialRevolution3"] = {
+      ["small-bronze-pole"] = "25MW",
+      ["small-iron-pole"] = "25MW",
+      ["big-wooden-pole"] = "150MW",
+    },
     ["pycoalprocessing"] = {  -- Py 'base': covers all py combinations, overwrites base limits
       ["small-electric-pole"] = "30MW",
       ["medium-electric-pole"] = "200MW",

@@ -90,7 +90,21 @@ medium_fuse.pictures.layers[2].hr_version = {
   draw_as_shadow = true,
   scale = 0.5
 }
-medium_fuse.water_reflection.pictures.filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse-reflection.png"
+medium_fuse.water_reflection =  -- Defined here because IR3 removes the water reflection entirely
+{
+  pictures =
+  {
+    filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse-reflection.png",
+    priority = "extra-high",
+    width = 12,
+    height = 28,
+    shift = util.by_pixel(0, 55),
+    variation_count = 1,
+    scale = 5
+  },
+  rotate = false,
+  orientation_to_variation = false
+}
 
 medium_fuse.connection_points =
 {

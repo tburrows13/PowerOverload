@@ -1,5 +1,5 @@
 -- data-updates
-if mods["IndustrialRevolution"] then
+if mods["IndustrialRevolution"] then  -- An experiment with leaving the transformer unlock until later with IR3
   table.insert(data.raw.technology["ir2-steam-power"].effects, {
     type = "unlock-recipe",
     recipe = "po-transformer"
