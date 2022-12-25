@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.5
+Date: 25 December 2022
+  Features:
+    - Improved transformer spin-up times on very low consumption networks
+    - Industrial Revolution 3 compatibility
+---------------------------------------------------------------------------------------------------
 Version: 1.4.4
 Date: 11 December 2022
   Changes:
