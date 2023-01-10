@@ -10,7 +10,7 @@ local never_disconnect = {
   ["factory-circuit-connector"] = true,
 }
 
-function on_pole_built(pole, tags)
+function on_pole_built(pole, tags, player)
   local pole_name = pole.name
   for _, neighbour in pairs(pole.neighbours.copper) do
     local neighbour_type = neighbour.type
@@ -19,11 +19,12 @@ function on_pole_built(pole, tags)
       neighbour_type = neighbour.ghost_type
       neighbour_name = neighbour.ghost_name
     end
+    local disconnect_all = player and not player.is_shortcut_toggled("po-auto-connect-poles")
     if neighbour_type == "electric-pole"
         and not (tags and tags["po-skip-disconnection"])
         and not (never_disconnect[pole_name] or never_disconnect[neighbour_name])
         and (
-          always_disconnect[pole_name] or always_disconnect[neighbour_name]
+          disconnect_all or always_disconnect[pole_name] or always_disconnect[neighbour_name]
           or (pole_name ~= neighbour_name and global.global_settings["power-overload-disconnect-different-poles"])
         )
         then

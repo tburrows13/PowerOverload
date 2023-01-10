@@ -8,4 +8,5 @@ require "__PowerOverload__/prototypes/fuse-graphics"
 require "__PowerOverload__/prototypes/fuse-recipes"  -- Mostly overriden in data-updates
 require "__PowerOverload__/prototypes/transformer"
 require "__PowerOverload__/prototypes/technology"
+require "__PowerOverload__/prototypes/shortcuts"
 require "__PowerOverload__/prototypes/tips-and-tricks"

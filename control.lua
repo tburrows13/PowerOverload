@@ -15,7 +15,7 @@ local function on_built(event)
   local entity = event.created_entity or event.entity
   if entity then
     if entity.type == "electric-pole" then
-      on_pole_built(entity, event.tags)
+      on_pole_built(entity, event.tags, event.name == defines.events.on_built_entity and game.get_player(event.player_index))
     elseif entity.type == "entity-ghost" and game.get_player(event.player_index).is_cursor_blueprint() then
       -- Entity was (probably) built as part of blueprint, so prevent automatic disconnection of wires when it is built
       local tags = entity.tags or {}
@@ -117,6 +117,14 @@ script.on_event(defines.events.on_gui_closed,
   end
 )
 
+script.on_event({"po-auto-connect-poles", defines.events.on_lua_shortcut},
+  function(event)
+    local player = game.get_player(event.player_index)
+    local toggle_on = not player.is_shortcut_toggled("po-auto-connect-poles")
+    player.set_shortcut_toggled("po-auto-connect-poles", toggle_on)
+  end
+)
+
 local function on_dolly_moved_entity(event)
   local transformer = event.moved_entity
   if not transformer.name == "po-transformer" then return end
@@ -200,6 +208,12 @@ local function reset_global_poles()
   global.poles = poles
 end
 
+local function enable_shortcut()
+  for _, player in pairs(game.players) do
+    player.set_shortcut_toggled("po-auto-connect-poles", true)
+  end
+end
+
 script.on_configuration_changed(
   function(changed_data)
     update_global_settings()
@@ -234,11 +248,15 @@ script.on_configuration_changed(
           create_transformer(transformer_parts.transformer, transformer_parts)
         end
       end
-      if old_version[2] < 3 or (old_version[2] == 2 and old_version[3] < 1) then
+      if old_version[2] < 3 or (old_version[2] == 3 and old_version[3] < 1) then
         -- Run on 1.3.1 load
         for _, transformer_parts in pairs(global.transformers) do
           transformer_parts.bucket = transformer_parts.transformer.unit_number % 600
         end
+      end
+      if old_version[2] < 4 or (old_version[2] == 4 and old_version[3] < 6) then
+        -- Run on 1.4.6 load
+        enable_shortcut()
       end
     end
   end
@@ -256,6 +274,7 @@ script.on_init(
     reset_global_poles()
     create_transformer_surfaces()
     handle_picker_dollies()
+    enable_shortcut()
 
     -- Enable transformer recipe
     for _, force in pairs(game.forces) do
@@ -265,3 +284,4 @@ script.on_init(
 )
 
 script.on_load(handle_picker_dollies)
+script.on_event(defines.events.on_cutscene_cancelled, enable_shortcut)
