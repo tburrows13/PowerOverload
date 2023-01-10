@@ -4,6 +4,7 @@
 - Power poles may explode if their network's total consumption goes over the maximum consumption for that power pole type
 - Separate your network into subnetworks using transformers, but ensure that each subnetwork does not get too large!
     - You will usually want your subnetworks to only contain one type of power pole, so power poles of different types no longer automatically connect to each other
+    - Added a new "Toggle automatic pole connections" shortcut (`Alt + P`), useful for temporarily disabling all automatic connections
     - Transformers are only 98% efficient (this can be changed in settings)
 - New 4th tier power pole with very long range, high maximum power consumption, but no supply area
 - High energy interface that only provides electricity on one side for supplying any (primarily modded) buildings with very high power requirements
@@ -21,7 +22,7 @@
     - `Shift + Click` on a power pole to remove all wires
     - 'Connect' two connected poles with copper cable to disconnect them
 - Useful mods:
-    - [Wire Shortcuts](https://mods.factorio.com/mod/WireShortcutshttps://mods.factorio.com/mod/WireShortcuts) for easier connecting and disconnecting of wires
+    - [Wire Shortcut X](https://mods.factorio.com/mod/WireShortcutshttps://mods.factorio.com/mod/WireShortcutX) for easier connecting and disconnecting of wires
     - [Rate Calculator](https://mods.factorio.com/mod/RateCalculator) for ensuring that a subnetworks' power requirements are not too large
 
 ## Compatibility
@@ -39,6 +40,7 @@
     - [FactorioExtended Plus-Power](https://mods.factorio.com/mod/FactorioExtended-Plus-Power)
     - [Factorio Plus Plus](https://mods.factorio.com/mod/fpp)
     - [Large Electric Pole](https://mods.factorio.com/mod/fixLargeElectricPole)
+    - [Lighted Electric Poles +](https://mods.factorio.com/mod/LightedPolesPlus)
     - [Pyanodons Alternative Energy](https://mods.factorio.com/mod/pyalternativeenergy) (also adds a Nexelit fuse)
 - When the following mods are loaded, the default maximum consumptions are increased:
     - [Krastorio 2](https://mods.factorio.com/mod/Krastorio2)

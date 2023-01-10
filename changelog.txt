@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.4.6
+Date: 10 January 2023
+  Features:
+    - Added "Toggle automatic pole connections" shortcut (no behaviour changes until turned off)
+    - Added support for 'Lighted Electric Poles +'
+  Bugfixes:
+    - Fixed crash on load with Space Exploration and Sosciencity together
+---------------------------------------------------------------------------------------------------
 Version: 1.4.5
 Date: 25 December 2022
   Features:
