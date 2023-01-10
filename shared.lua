@@ -155,6 +155,13 @@ local function get_pole_names(mods)
       loaded_pole_names = combine_tables(loaded_pole_names, pole_names)
     end
   end
+  if mods["LightedPolesPlus"] then
+    local lighted_pole_names = {}
+    for pole_name, max_consumption in pairs(loaded_pole_names) do
+      lighted_pole_names["lighted-" .. pole_name] = max_consumption
+    end
+    combine_tables(loaded_pole_names, lighted_pole_names)
+  end
   log(serpent.block(loaded_pole_names))
   return loaded_pole_names
 end
