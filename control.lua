@@ -119,6 +119,7 @@ script.on_event(defines.events.on_gui_closed,
 
 script.on_event({"po-auto-connect-poles", defines.events.on_lua_shortcut},
   function(event)
+    if event.prototype_name and event.prototype_name ~= "po-auto-connect-poles" then return end
     local player = game.get_player(event.player_index)
     local toggle_on = not player.is_shortcut_toggled("po-auto-connect-poles")
     player.set_shortcut_toggled("po-auto-connect-poles", toggle_on)
