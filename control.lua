@@ -196,6 +196,12 @@ local function reset_global_poles()
   global.poles = poles
 end
 
+script.on_event(defines.events.on_player_created,
+  function(event)
+    local player = game.get_player(event.player_index)
+    player.set_shortcut_toggled("po-auto-connect-poles", true)
+  end
+)
 local function enable_shortcut()
   for _, player in pairs(game.players) do
     player.set_shortcut_toggled("po-auto-connect-poles", true)
