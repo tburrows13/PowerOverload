@@ -68,7 +68,7 @@ local hidden_pole_in = {
   maximum_wire_distance = 5,
   supply_area_distance = 0.2,
   placeable_by = {item = "po-hidden-electric-pole", count = 1},
-  collision_mask = {},
+  collision_mask = {layers={}},
   open_sound = big_pole.open_sound,
   close_sound = big_pole.close_sound,
   pictures = util.empty_sprite(),
@@ -110,7 +110,7 @@ local hidden_eei_in = {
   type = "electric-energy-interface",
   name = "po-transformer-interface-hidden-in",
   localised_name = {"entity-name.po-transformer"},
-  collision_mask = {},
+  collision_mask = {layers={}},
   energy_source = {
       type = "electric",
       -- For reference, steam engines produce 15kJ/tick
