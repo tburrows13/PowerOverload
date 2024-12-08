@@ -5,28 +5,10 @@ local shortcut = {
   associated_control_input = "po-auto-connect-poles",
   toggleable = true,
   order = "c[toggles]-f[auto-connect-poles]",
-  icon =
-  {
-    filename = "__PowerOverload__/graphics/shortcuts/wire-x32.png",
-    size = 32,
-    flags = {"gui-icon"}
-  },
-  small_icon = {
-    filename = "__PowerOverload__/graphics/shortcuts/wire-x24.png",
-    size = 24,
-    flags = {"gui-icon"}
-  },
-  disabled_icon = {
-    filename = "__PowerOverload__/graphics/shortcuts/wire-x32-white.png",
-    size = 32,
-    flags = {"gui-icon"}
-  },
-  disabled_small_icon =
-  {
-    filename = "__PowerOverload__/graphics/shortcuts/wire-x24-white.png",
-    size = 24,
-    flags = {"gui-icon"}
-  }
+  icon  = "__PowerOverload__/graphics/shortcuts/wire-x32.png",
+  icon_size = 32,
+  small_icon = "__PowerOverload__/graphics/shortcuts/wire-x24.png",
+  small_icon_size = 24,
 }
 local input = {
 	type = "custom-input",
