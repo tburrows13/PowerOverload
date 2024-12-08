@@ -142,14 +142,14 @@ pylon_item.icon_mipmaps = 1
 pylon_recipe = {
   type = "recipe",
   name = "po-huge-electric-pole",
-  result = "po-huge-electric-pole",
   ingredients =
   {
-    {"iron-stick", 20},
-    {"steel-plate", 15},
-    {"advanced-circuit", 10},
-    {"copper-plate", 15}
+    {type="item", name="iron-stick", amount=20},
+    {type="item", name="steel-plate", amount=15},
+    {type="item", name="advanced-circuit", amount=10},
+    {type="item", name="copper-plate", amount=15}
   },
+  results = {{type="item", name="po-huge-electric-pole", amount=1}},
   energy_required = 1.5,  -- in seconds
   enabled = false
 }

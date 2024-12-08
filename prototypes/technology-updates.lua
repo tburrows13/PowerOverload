@@ -1,18 +1,3 @@
-local function set_recipe_enabled(recipe_name, enabled)
-  local recipe = data.raw.recipe[recipe_name]
-  if recipe.normal or recipe.expensive then
-    if recipe.normal then
-      recipe.normal.enabled = enabled
-    end
-    if recipe.expensive then
-      recipe.expensive.enabled = enabled
-    end
-  else
-    recipe.enabled = enabled
-  end
-end
-
-
 local sizes = {"small", "medium", "big"}
 
 for name, technology in pairs(data.raw.technology) do
@@ -26,7 +11,7 @@ for name, technology in pairs(data.raw.technology) do
               type = "unlock-recipe",
               recipe = recipe_name
             })
-            set_recipe_enabled(recipe_name, false)
+            data.raw.recipe[recipe_name].enabled = false
           end
         end
       end
@@ -34,4 +19,4 @@ for name, technology in pairs(data.raw.technology) do
   end
 end
 
-set_recipe_enabled("po-huge-electric-fuse", false)
+data.raw.recipe["po-huge-electric-fuse"].enabled = false

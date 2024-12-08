@@ -11,11 +11,11 @@ local recipe = {
   enabled = false,
   ingredients =
   {
-    {"steel-plate", 100},
-    {"processing-unit", 50},
-    {"copper-cable", 200},
+    {type="item", name="steel-plate", amount=100},
+    {type="item", name="processing-unit", amount=50},
+    {type="item", name="copper-cable", amount=200},
   },
-  result = "po-interface"
+  results = {{type="item", name="po-interface", amount=1}},
 }
 
 local item = {

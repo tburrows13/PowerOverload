@@ -20,15 +20,15 @@ if mods["pyalternativeenergy"] then
 end
 
 if mods["bzlead"] then
-  table.insert(data.raw.recipe["po-huge-electric-pole"].ingredients, {"lead-plate", 10})
-  table.insert(data.raw.recipe["po-huge-electric-fuse"].ingredients, {"lead-plate", 200})
-  table.insert(data.raw.recipe["po-interface"].ingredients, {"lead-plate", 25})  
+  table.insert(data.raw.recipe["po-huge-electric-pole"].ingredients, {type="item", name="lead-plate", amount=10})
+  table.insert(data.raw.recipe["po-huge-electric-fuse"].ingredients, {type="item", name="lead-plate", amount=200})
+  table.insert(data.raw.recipe["po-interface"].ingredients, {type="item", name="lead-plate", amount=25})  
 end
 
 if mods["bzaluminum"] then
-  table.insert(data.raw.recipe["po-huge-electric-pole"].ingredients, {"acsr-cable", 4})
-  table.insert(data.raw.recipe["po-huge-electric-fuse"].ingredients, {"acsr-cable", 80})
-  table.insert(data.raw.recipe["po-interface"].ingredients, {"acsr-cable", 50})  
+  table.insert(data.raw.recipe["po-huge-electric-pole"].ingredients, {type="item", name="acsr-cable", amount=4})
+  table.insert(data.raw.recipe["po-huge-electric-fuse"].ingredients, {type="item", name="acsr-cable", amount=80})
+  table.insert(data.raw.recipe["po-interface"].ingredients, {type="item", name="acsr-cable", amount=50})
 end
 
 if mods["space-exploration"] then

@@ -1,27 +1,21 @@
 local shared = require "__PowerOverload__/shared"
 
 local function multiply_ingredients(from_recipe, to_recipe, name)
-  to_recipe.result = name
   to_recipe.main_product = nil  -- In case some other mod has set it
-  local result_count
-  if to_recipe.results then
-    result_count = to_recipe.results[1].amount
-    to_recipe.results = nil
-  end
 
-  local ingredient_multiplier = 20 / (result_count or from_recipe.result_count or 1)
+  local ingredient_multiplier = 20 / (from_recipe.results[1].amount)
 
   local new_ingredients = {}
   for _, ingredient in pairs(from_recipe.ingredients) do
-    local ingredient_name = ingredient[1] or ingredient.name
+    local ingredient_name = ingredient.name
     if string.sub(ingredient_name, -13) ~= "electric-pole" then
       -- Don't copy electric poles to fuse recipes
-      table.insert(new_ingredients, {ingredient[1] or ingredient.name, (ingredient[2] or ingredient.amount) * ingredient_multiplier})
+      table.insert(new_ingredients, {type=ingredient.type, name=ingredient.name, amount=ingredient.amount * ingredient_multiplier})
     end
   end
   to_recipe.ingredients = new_ingredients
 
-  to_recipe.result_count = 1
+  to_recipe.results[1].amount = 1
 
   if not mods["pypostprocessing"] then  -- https://mods.factorio.com/mod/PowerOverload/discussion/6371d7602024262b14858736
     to_recipe.enabled = true  -- overridden in technology-updates
@@ -36,16 +30,7 @@ for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do
   local recipe = table.deepcopy(base_recipe)
   recipe.name = name
 
-  if base_recipe.normal or base_recipe.expensive then
-    if base_recipe.normal then
-      multiply_ingredients(base_recipe.normal, recipe.normal, name)
-    end
-    if base_recipe.expensive then
-      multiply_ingredients(base_recipe.expensive, recipe.expensive, name)
-    end
-  else
-    multiply_ingredients(base_recipe, recipe, name)
-  end
+  multiply_ingredients(base_recipe, recipe, name)
 
   data:extend{recipe}
 end

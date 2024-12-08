@@ -29,7 +29,7 @@ transformer_item.icons = table.deepcopy(transformer.icons)
 
 local transformer_recipe = table.deepcopy(data.raw.recipe["power-switch"])
 transformer_recipe.name = "po-transformer"
-transformer_recipe.result = "po-transformer"
+transformer_recipe.results.name = "po-transformer"
 
 local hidden_pole_item = table.deepcopy(data.raw.item["small-electric-pole"])
 hidden_pole_item.name = "po-hidden-electric-pole"
