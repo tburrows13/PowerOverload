@@ -1,10 +1,10 @@
-local recall_shortcut = {
+local shortcut = {
   type = "shortcut",
   name = "po-auto-connect-poles",
   action = "lua",
   associated_control_input = "po-auto-connect-poles",
   toggleable = true,
-  order = "a",
+  order = "c[toggles]-f[auto-connect-poles]",
   icon =
   {
     filename = "__PowerOverload__/graphics/shortcuts/wire-x32.png",
@@ -28,7 +28,7 @@ local recall_shortcut = {
     flags = {"gui-icon"}
   }
 }
-local recall_input = {
+local input = {
 	type = "custom-input",
 	name = "po-auto-connect-poles",
   localised_name = { "shortcut-name.po-auto-connect-poles" },
@@ -37,4 +37,4 @@ local recall_input = {
   order = "a"
 }
 
-data:extend{recall_shortcut, recall_input}
+data:extend{shortcut, input}
