@@ -32,7 +32,7 @@ transformer_recipe.results.name = "po-transformer"
 
 local hidden_pole_item = table.deepcopy(data.raw.item["small-electric-pole"])
 hidden_pole_item.name = "po-hidden-electric-pole"
-hidden_pole_item.flags = {"hidden"}
+hidden_pole_item.hidden = true
 hidden_pole_item.place_result = nil
 hidden_pole_item.icons = {
   transformer_item.icons[1],
@@ -49,10 +49,10 @@ local hidden_pole_in = {
   type = "electric-pole",
   name = "po-hidden-electric-pole-in",
   icons = transformer.icons,
+  hidden = true,
   flags = {"player-creation",
            "not-on-map",
            "not-deconstructable",
-           "hidden",
            "hide-alt-info",
            "not-flammable",
            "not-repairable",
@@ -120,11 +120,11 @@ local hidden_eei_in = {
       output_flow_limit = "0YJ"
     },
   icons = transformer.icons,
+  hidden = true,
   flags = {
     "not-on-map",
     "not-blueprintable",
     "not-deconstructable",
-    "hidden",
     "hide-alt-info",
     "not-flammable",
     "not-repairable",
