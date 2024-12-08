@@ -31,22 +31,22 @@ end
 local function get_pole_names(mods)
   local mod_pole_names = {
     ["base"] = {
-      ["small-electric-pole"] = "20MW",  -- (Just over 40 steam engines-worth)
-      ["medium-electric-pole"] = "100MW",
-      ["big-electric-pole"] = "500MW",
-      ["po-huge-electric-pole"] = "5GW",
-      ["po-small-electric-fuse"] = "16MW",
-      ["po-medium-electric-fuse"] = "80MW",
-      ["po-big-electric-fuse"] = "400MW",
-      ["po-huge-electric-fuse"] = "4GW",
-      ["substation"] = "200MW",
+      ["small-electric-pole"] = "10MW",  -- (20 MW is just over 40 steam engines-worth)
+      ["medium-electric-pole"] = "60MW",
+      ["big-electric-pole"] = "300MW",
+      ["po-huge-electric-pole"] = "3GW",
+      ["po-small-electric-fuse"] = "8MW",
+      ["po-medium-electric-fuse"] = "48MW",
+      ["po-big-electric-fuse"] = "240MW",
+      ["po-huge-electric-fuse"] = "2.4GW",
+      ["substation"] = "120MW",
       ["po-interface"] = "100GW",
       ["po-interface-north"] = "100GW",  -- Hidden from settings
       ["po-interface-east"] = "100GW",  -- Hidden from settings
       ["po-interface-south"] = "100GW",  -- Hidden from settings
     },
     ["aai-industry"] = {
-      ["small-iron-electric-pole"] = "20MW"
+      ["small-iron-electric-pole"] = "10MW"
     },
     ["space-exploration"] = {
       ["se-addon-power-pole"] = "2GW",
@@ -56,18 +56,18 @@ local function get_pole_names(mods)
       ["se-pylon-construction-radar"] = "2GW",
     },
     ["bobpower"] = {
-      ["medium-electric-pole-2"] = "150MW",
-      ["medium-electric-pole-3"] = "200MW",
-      ["medium-electric-pole-4"] = "250MW",
-      ["big-electric-pole-2"] = "600MW",
-      ["big-electric-pole-3"] = "700MW",
-      ["big-electric-pole-4"] = "800MW",
-      ["substation-2"] = "300MW",
-      ["substation-3"] = "400MW",
-      ["substation-4"] = "500MW"
+      ["medium-electric-pole-2"] = "100MW",
+      ["medium-electric-pole-3"] = "140MW",
+      ["medium-electric-pole-4"] = "180MW",
+      ["big-electric-pole-2"] = "400MW",
+      ["big-electric-pole-3"] = "500MW",
+      ["big-electric-pole-4"] = "600MW",
+      ["substation-2"] = "200MW",
+      ["substation-3"] = "280MW",
+      ["substation-4"] = "360MW"
     },
     ["cargo-ships"] = {
-      ["floating-electric-pole"] = "2GW"
+      ["floating-electric-pole"] = "1.5GW"
     },
     ["Bio_Industries"] = {
       ["bi-wooden-pole-big"] = "400MW",
@@ -119,16 +119,6 @@ local function get_pole_names(mods)
     ["omnimatter_energy"] = {
       ["small-iron-electric-pole"] = "25MW",
       ["small-omnium-electric-pole"] = "30MW",
-    },
-    ["IndustrialRevolution"] = {
-      ["small-bronze-pole"] = "25MW",
-      ["small-iron-pole"] = "25MW",
-      ["big-wooden-pole"] = "150MW",
-    },
-    ["IndustrialRevolution3"] = {
-      ["small-bronze-pole"] = "25MW",
-      ["small-iron-pole"] = "25MW",
-      ["big-wooden-pole"] = "150MW",
     },
     ["pycoalprocessing"] = {  -- Py 'base': covers all py combinations, overwrites base limits
       ["small-electric-pole"] = "30MW",
