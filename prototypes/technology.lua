@@ -28,7 +28,7 @@ data:extend{
         recipe = "po-interface"
       }
     },
-    prerequisites = {"electric-energy-distribution-2", "chemical-science-pack", "advanced-electronics-2"},
+    prerequisites = {"electric-energy-distribution-2", "chemical-science-pack", "processing-unit"},
     unit =
     {
       count = 400,
