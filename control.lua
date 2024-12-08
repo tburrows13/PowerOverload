@@ -12,7 +12,7 @@ function is_fuse(pole)
 end
 
 local function on_built(event)
-  local entity = event.created_entity or event.entity
+  local entity = event.entity
   if entity then
     if entity.type == "electric-pole" then
       on_pole_built(entity, event.tags, event.name == defines.events.on_built_entity and game.get_player(event.player_index))
@@ -44,9 +44,9 @@ script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter 
 script.on_event(defines.events.on_robot_pre_mined, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
 script.on_event(defines.events.on_entity_died, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
 script.on_event(defines.events.script_raised_destroy, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.on_entity_destroyed,
+script.on_event(defines.events.on_object_destroyed,
   function(event)
-    local unit_number = event.unit_number
+    local unit_number = event.useful_id
     if unit_number then
       on_transformer_destroyed(unit_number)
     end
@@ -116,7 +116,7 @@ script.on_event({"po-auto-connect-poles", defines.events.on_lua_shortcut},
 local function on_dolly_moved_entity(event)
   local transformer = event.moved_entity
   if not transformer.name == "po-transformer" then return end
-  local transformer_parts = global.transformers[transformer.unit_number]
+  local transformer_parts = storage.transformers[transformer.unit_number]
   if not transformer_parts then return end
 
   check_transformer_interfaces(transformer_parts)
@@ -161,7 +161,7 @@ local function update_global_settings()
   }) do
     global_settings[setting] = settings.global[setting].value
   end
-  global.global_settings = global_settings
+  storage.global_settings = global_settings
 end
 script.on_event(defines.events.on_runtime_mod_setting_changed, update_global_settings)
 
@@ -181,19 +181,19 @@ local function generate_max_consumption_table()
       max_consumptions[pole_name] = max_consumption
     end
   end
-  global.max_consumptions = max_consumptions
+  storage.max_consumptions = max_consumptions
 end
 
 local function reset_global_poles()
   local poles = {}
   for _, surface in pairs(game.surfaces) do
     for _, pole in pairs(surface.find_entities_filtered{type = "electric-pole"}) do
-      if global.max_consumptions[pole.name] then
+      if storage.max_consumptions[pole.name] then
         table.insert(poles, pole)
       end
     end
   end
-  global.poles = poles
+  storage.poles = poles
 end
 
 script.on_event(defines.events.on_player_created,
@@ -215,7 +215,7 @@ script.on_configuration_changed(
     generate_max_consumption_table()
     reset_global_poles()
 
-    global.network_grace_ticks = nil
+    storage.network_grace_ticks = nil
     create_transformer_surfaces()
 
     local old_version
@@ -233,18 +233,18 @@ script.on_configuration_changed(
       if old_version[2] < 2 then
         -- Run on 1.2.0 load
         game.forces["player"].reset_technology_effects()
-        global.fuses = {}
-        global.tick_installed = game.tick
+        storage.fuses = {}
+        storage.tick_installed = game.tick
       end
       if old_version[2] < 2 or (old_version[2] == 2 and old_version[3] < 5) then
         -- Run on 1.2.5 load
-        for _, transformer_parts in pairs(global.transformers) do
+        for _, transformer_parts in pairs(storage.transformers) do
           create_transformer(transformer_parts.transformer, transformer_parts)
         end
       end
       if old_version[2] < 3 or (old_version[2] == 3 and old_version[3] < 1) then
         -- Run on 1.3.1 load
-        for _, transformer_parts in pairs(global.transformers) do
+        for _, transformer_parts in pairs(storage.transformers) do
           transformer_parts.bucket = transformer_parts.transformer.unit_number % 600
         end
       end
@@ -258,10 +258,10 @@ script.on_configuration_changed(
 
 script.on_init(
   function()
-    global.poles = {}
-    global.fuses = {}
-    global.transformers = {}
-    global.tick_installed = game.tick
+    storage.poles = {}
+    storage.fuses = {}
+    storage.transformers = {}
+    storage.tick_installed = game.tick
 
     update_global_settings()
     generate_max_consumption_table()

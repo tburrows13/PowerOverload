@@ -25,17 +25,17 @@ function on_pole_built(pole, tags, player)
         and not (never_disconnect[pole_name] or never_disconnect[neighbour_name])
         and (
           disconnect_all or always_disconnect[pole_name] or always_disconnect[neighbour_name]
-          or (pole_name ~= neighbour_name and global.global_settings["power-overload-disconnect-different-poles"])
+          or (pole_name ~= neighbour_name and storage.global_settings["power-overload-disconnect-different-poles"])
         )
         then
       pole.disconnect_neighbour(neighbour)
     end
   end
-  if global.max_consumptions[pole.name] then
+  if storage.max_consumptions[pole.name] then
     if is_fuse(pole) then
-      table.insert(global.fuses, pole)
+      table.insert(storage.fuses, pole)
     else
-      table.insert(global.poles, pole)
+      table.insert(storage.poles, pole)
     end
   end
 end
@@ -69,15 +69,15 @@ end
 function update_poles(pole_type, consumption_cache)
   local poles
   if pole_type == "pole" then
-    poles = global.poles
+    poles = storage.poles
   elseif pole_type == "fuse" then
-    poles = global.fuses
+    poles = storage.fuses
   end
   local table_size = #poles
   if table_size == 0 then return end
 
-  local max_consumptions = global.max_consumptions
-  local global_settings = global.global_settings
+  local max_consumptions = storage.max_consumptions
+  local global_settings = storage.global_settings
   local log_to_chat = global_settings["power-overload-log-to-chat"]
   local destroy_pole_setting = global_settings["power-overload-on-pole-overload"]
 

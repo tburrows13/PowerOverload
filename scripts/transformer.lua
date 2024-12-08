@@ -22,7 +22,7 @@ function create_transformer(transformer_entity, old_transformer_parts)
     bucket = transformer_entity.unit_number % 600
   }
 
-  global.transformers[transformer_entity.unit_number] = transformer_parts
+  storage.transformers[transformer_entity.unit_number] = transformer_parts
 
   transformer_entity.power_switch_state = true
   script.register_on_entity_destroyed(transformer_entity)
@@ -132,7 +132,7 @@ function check_transformer_interfaces(transformer_parts)
 end
 
 function on_transformer_destroyed(unit_number)
-  local transformer_parts = global.transformers[unit_number]
+  local transformer_parts = storage.transformers[unit_number]
   if transformer_parts then
     -- If the transformer itself is destroyed then the player won't get the item back
     for _, part_name in pairs({"pole_in", "pole_in_alt", "interface_in", "pole_out", "pole_out_alt", "interface_out"}) do
@@ -141,16 +141,16 @@ function on_transformer_destroyed(unit_number)
         part.destroy()
       end
     end
-    global.transformers[unit_number] = nil
+    storage.transformers[unit_number] = nil
   end
 end
 
 
 function update_transformers(tick)
-  local efficiency = global.global_settings["power-overload-transformer-efficiency"]
+  local efficiency = storage.global_settings["power-overload-transformer-efficiency"]
   local current_bucket = tick % 600
 
-  for unit_number, transformer in pairs(global.transformers) do
+  for unit_number, transformer in pairs(storage.transformers) do
     local transformer_entity = transformer.transformer
     if transformer_entity and transformer_entity.valid then
       if transformer_entity.power_switch_state then
