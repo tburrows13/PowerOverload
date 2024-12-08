@@ -7,7 +7,7 @@ local pylon =  {
     name = "po-huge-electric-pole",
     icon = "__PowerOverload__/graphics/icons/huge-electric-pole.png",
     icon_size = 32, icon_mipmaps = 1,
-    flags = {"placeable-neutral", "player-creation", "fast-replaceable-no-build-while-moving"},
+    flags = {"placeable-neutral", "player-creation",},
     minable = {mining_time = 0.1, result = "po-huge-electric-pole"},
     max_health = 250,
     corpse = "big-electric-pole-remnants",
