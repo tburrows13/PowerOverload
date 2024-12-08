@@ -71,7 +71,6 @@ local hidden_pole_in = {
   collision_mask = {layers={}},
   open_sound = big_pole.open_sound,
   close_sound = big_pole.close_sound,
-  pictures = util.empty_sprite(),
   connection_points =
   {
     {
