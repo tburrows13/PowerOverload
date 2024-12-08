@@ -11,8 +11,7 @@ transformer.minable.result = "po-transformer"
 transformer.placeable_by = {item = "po-transformer", count = 1}
 transformer.power_on_animation.layers[1].width = 84
 transformer.power_on_animation.layers[1].height = 69
-transformer.power_on_animation.layers[1].filename = "__PowerOverload__/graphics/transformer.png"
-transformer.power_on_animation.layers[1].hr_version.filename = "__PowerOverload__/graphics/hr-transformer.png"
+transformer.power_on_animation.layers[1].filename = "__PowerOverload__/graphics/hr-transformer.png"
 transformer.icons = {{
   icon = "__PowerOverload__/graphics/icons/transformer.png",
   icon_size = 64,

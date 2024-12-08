@@ -37,16 +37,6 @@ local pylon =  {
       direction_count = 4,
       shift = {1.6*scale, (-1.1 + translate)*scale}, -- {1.6, -1.1},
       scale = scale,
-      --[[hr_version =
-      {
-        filename = "__PowerOverload__/graphics/hr-big-electric-pole.png",
-        priority = "extra-high",
-        width = 168*2,
-        height = 165*2,
-        direction_count = 4,
-        shift = {1.6*scale, -1.1*scale}, -- {1.6, -1.1},
-        scale = scale*0.5
-      }]]
     },
     connection_points =
     {

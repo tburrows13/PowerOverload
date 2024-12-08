@@ -23,14 +23,8 @@ for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do
   }}
   if fuse.pictures.layers then
     fuse.pictures.layers[1].tint = red_tint
-    if fuse.pictures.layers[1].hr_version then
-      fuse.pictures.layers[1].hr_version.tint = red_tint
-    end
   else
     fuse.pictures.tint = red_tint
-    if fuse.pictures.hr_version then
-      fuse.pictures.hr_version.tint = red_tint
-    end
   end
   fuse.localised_description = {"entity-description.po-electric-fuse"}
 

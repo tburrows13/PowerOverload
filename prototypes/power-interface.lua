@@ -71,46 +71,24 @@ local interface = {
     {
 
       {
-        filename = "__base__/graphics/entity/substation/substation.png",
+        filename = "__base__/graphics/entity/substation/hr-substation.png",
         priority = "high",
-        width = 70,
-        height = 136,
+        width = 138,
+        height = 270,
         direction_count = 4,
         shift = util.by_pixel(0, 1-32),
         tint = blue_tint,
-        scale = gfx_scale,
-        hr_version =
-        {
-          filename = "__base__/graphics/entity/substation/hr-substation.png",
-          priority = "high",
-          width = 138,
-          height = 270,
-          direction_count = 4,
-          shift = util.by_pixel(0, 1-32),
-          tint = blue_tint,
-          scale = gfx_scale * 0.5
-        }
+        scale = gfx_scale * 0.5
       },
       {
-        filename = "__base__/graphics/entity/substation/substation-shadow.png",
+        filename = "__base__/graphics/entity/substation/hr-substation-shadow.png",
         priority = "high",
-        width = 186,
-        height = 52,
+        width = 370,
+        height = 104,
         direction_count = 4,
         shift = util.by_pixel(62, 42-32),
         draw_as_shadow = true,
-        scale = gfx_scale,
-        hr_version =
-        {
-          filename = "__base__/graphics/entity/substation/hr-substation-shadow.png",
-          priority = "high",
-          width = 370,
-          height = 104,
-          direction_count = 4,
-          shift = util.by_pixel(62, 42-32),
-          draw_as_shadow = true,
-          scale = gfx_scale * 0.5
-        }
+        scale = gfx_scale * 0.5
       }
     }
   },
@@ -235,9 +213,7 @@ local function translate_interface(interface, scale, gfx_scale, translate)
   translate_box(interface.drawing_box, scale, translate)
 
   translate_pos(interface.pictures.layers[1].shift, gfx_scale, translate)
-  translate_pos(interface.pictures.layers[1].hr_version.shift, gfx_scale, translate)
   translate_pos(interface.pictures.layers[2].shift, gfx_scale, translate)
-  translate_pos(interface.pictures.layers[2].hr_version.shift, gfx_scale, translate)
 
   for _, direction in pairs(interface.connection_points) do
     for wire_type, data in pairs(direction) do
