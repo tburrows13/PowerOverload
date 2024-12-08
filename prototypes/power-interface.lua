@@ -71,7 +71,7 @@ local interface = {
     {
 
       {
-        filename = "__base__/graphics/entity/substation/hr-substation.png",
+        filename = "__base__/graphics/entity/substation/substation.png",
         priority = "high",
         width = 138,
         height = 270,
@@ -81,7 +81,7 @@ local interface = {
         scale = gfx_scale * 0.5
       },
       {
-        filename = "__base__/graphics/entity/substation/hr-substation-shadow.png",
+        filename = "__base__/graphics/entity/substation/substation-shadow.png",
         priority = "high",
         width = 370,
         height = 104,

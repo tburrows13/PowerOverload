@@ -1,6 +1,6 @@
 local small_fuse = data.raw["electric-pole"]["po-small-electric-fuse"]
 small_fuse.pictures.layers[1] = {
-  filename = "__PowerOverload__/graphics/entity/small-electric-fuse/hr-small-fuse.png",
+  filename = "__PowerOverload__/graphics/entity/small-electric-fuse/small-fuse.png",
   priority = "extra-high",
   width = 80,
   height = 207,
@@ -9,7 +9,7 @@ small_fuse.pictures.layers[1] = {
   scale = 0.5
 }
 small_fuse.pictures.layers[2] = {
-  filename = "__PowerOverload__/graphics/entity/small-electric-fuse/hr-small-fuse-shadow.png",
+  filename = "__PowerOverload__/graphics/entity/small-electric-fuse/small-fuse-shadow.png",
   priority = "extra-high",
   width = 266,
   height = 56,
@@ -38,7 +38,7 @@ small_fuse.connection_points =
 
 local medium_fuse = data.raw["electric-pole"]["po-medium-electric-fuse"]
 medium_fuse.pictures.layers[1] = {
-  filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/hr-medium-fuse.png",
+  filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse.png",
   priority = "extra-high",
   width = 67,
   height = 194,
@@ -47,7 +47,7 @@ medium_fuse.pictures.layers[1] = {
   scale = 0.5
 }
 medium_fuse.pictures.layers[2] = {
-  filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/hr-medium-fuse-shadow.png",
+  filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse-shadow.png",
   priority = "extra-high",
   width = 225,
   height = 44,
@@ -88,7 +88,7 @@ medium_fuse.connection_points =
 
 local big_fuse = data.raw["electric-pole"]["po-big-electric-fuse"]
 big_fuse.pictures.layers[1] = {
-  filename = "__PowerOverload__/graphics/entity/big-electric-fuse/hr-big-fuse.png",
+  filename = "__PowerOverload__/graphics/entity/big-electric-fuse/big-fuse.png",
   priority = "extra-high",
   width = 111,
   height = 197,
@@ -97,7 +97,7 @@ big_fuse.pictures.layers[1] = {
   scale = 0.5
 }
 big_fuse.pictures.layers[2] = {
-  filename = "__PowerOverload__/graphics/entity/big-electric-fuse/hr-big-fuse-shadow.png",
+  filename = "__PowerOverload__/graphics/entity/big-electric-fuse/big-fuse-shadow.png",
   priority = "extra-high",
   width = 209,
   height = 78,
