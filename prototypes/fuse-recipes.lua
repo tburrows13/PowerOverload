@@ -1,6 +1,7 @@
 local shared = require "__PowerOverload__/shared"
 
 local function multiply_ingredients(from_recipe, to_recipe, name)
+  to_recipe.results[1].name = name
   to_recipe.main_product = nil  -- In case some other mod has set it
 
   local ingredient_multiplier = 20 / (from_recipe.results[1].amount)

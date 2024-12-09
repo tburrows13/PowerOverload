@@ -3,14 +3,11 @@
 
 local big_pole = data.raw["electric-pole"]["big-electric-pole"]
 
-local transformer_tint = {r=1, g=0.6, b=0.6}
 local transformer = table.deepcopy(data.raw["power-switch"]["power-switch"])
 transformer.name = "po-transformer"
 transformer.wire_max_distance = 0
 transformer.minable.result = "po-transformer"
 transformer.placeable_by = {item = "po-transformer", count = 1}
-transformer.power_on_animation.layers[1].width = 84
-transformer.power_on_animation.layers[1].height = 69
 transformer.power_on_animation.layers[1].filename = "__PowerOverload__/graphics/transformer.png"
 transformer.icons = {{
   icon = "__PowerOverload__/graphics/icons/transformer.png",
