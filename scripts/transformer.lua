@@ -102,7 +102,7 @@ function check_transformer_poles(transformer_parts)
     }  ---@cast pole_in_alt -?
     transformer_parts.pole_in_alt = pole_in_alt
   end
-  pole_in_alt.get_wire_connector(copper, true).connect_to(pole_in_connector)
+  pole_in_alt.get_wire_connector(copper, true).connect_to(pole_in_connector, false, defines.wire_origin.script)
 
   local pole_out = transformer_parts.pole_out
   if not (pole_out and pole_out.valid) then
@@ -126,7 +126,7 @@ function check_transformer_poles(transformer_parts)
     }   ---@cast pole_out_alt -?
     transformer_parts.pole_out_alt = pole_out_alt
   end
-  pole_out_alt.get_wire_connector(copper, true).connect_to(pole_out_connector)
+  pole_out_alt.get_wire_connector(copper, true).connect_to(pole_out_connector, false, defines.wire_origin.script)
 
   pole_in_connector.disconnect_from(pole_out_connector)
 end

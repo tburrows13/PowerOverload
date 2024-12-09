@@ -106,6 +106,7 @@ local hidden_eei_in = {
   type = "electric-energy-interface",
   name = "po-transformer-interface-hidden-in",
   localised_name = {"entity-name.po-transformer"},
+  selection_box = {{-0.75, -0.75}, {0.75, 0.75}},
   collision_mask = {layers={}},
   energy_source = {
       type = "electric",
