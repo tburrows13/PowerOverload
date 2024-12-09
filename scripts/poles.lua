@@ -10,9 +10,15 @@ local never_disconnect = {
   ["factory-circuit-connector"] = true,
 }
 
+---@param pole LuaEntity
+---@param tags Tags?
+---@param player LuaPlayer?
 function on_pole_built(pole, tags, player)
   local pole_name = pole.name
-  for _, neighbour in pairs(pole.neighbours.copper) do
+  local pole_connector = pole.get_wire_connector(copper, true)
+  for _, connection in pairs(pole_connector.real_connections) do
+    local neighbour_connector = connection.target
+    local neighbour = neighbour_connector.owner
     local neighbour_type = neighbour.type
     local neighbour_name = neighbour.name
     if neighbour_type == "entity-ghost" then
@@ -28,7 +34,7 @@ function on_pole_built(pole, tags, player)
           or (pole_name ~= neighbour_name and storage.global_settings["power-overload-disconnect-different-poles"])
         )
         then
-      pole.disconnect_neighbour(neighbour)
+          pole_connector.disconnect_from(neighbour_connector)
     end
   end
   if storage.max_consumptions[pole.name] then
@@ -40,12 +46,14 @@ function on_pole_built(pole, tags, player)
   end
 end
 
+---@param statistics LuaFlowStatistics
+---@return double
 local function get_total_consumption(statistics)
   local total = 0
   for name, _ in pairs(statistics.input_counts) do
     total = total + 60 * statistics.get_flow_count{
       name = name,
-      input = true,
+      category = "input",
       precision_index = defines.flow_precision_index.five_seconds,
       sample_index = 1,
       count = false,
@@ -54,6 +62,9 @@ local function get_total_consumption(statistics)
   return total
 end
 
+---@param pole LuaEntity
+---@param consumption double
+---@param log_to_chat boolean
 local function alert_on_destroyed(pole, consumption, log_to_chat)
   local force = pole.force
   if force then
@@ -66,6 +77,8 @@ local function alert_on_destroyed(pole, consumption, log_to_chat)
   end
 end
 
+---@param pole_type PoleType
+---@param consumption_cache table<ElectricNetworkID, double>
 function update_poles(pole_type, consumption_cache)
   local poles
   if pole_type == "pole" then

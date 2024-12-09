@@ -35,8 +35,9 @@ local function translate_entity_position(position, entity_from, entity_to)
 end
 
 script.on_event({"po-rotate", "po-reverse-rotate"},
-  function(event)
-    local player = game.get_player(event.player_index)
+  function(event )
+    ---@cast event EventData.CustomInputEvent
+    local player = game.get_player(event.player_index)  ---@cast player -?
     local selected = player.selected
     if selected and selected.force == player.force then
       local cycle = event.input_name == "po-rotate" and rotate_cycle or reverse_rotate_cycle

@@ -5,6 +5,10 @@ require "__PowerOverload__/scripts/transformer"
 require "__PowerOverload__/scripts/poles"
 require "__PowerOverload__/scripts/power-interface"
 
+---@alias ElectricNetworkID uint
+---@alias PoleType "pole"|"fuse"
+
+copper = defines.wire_connector_id.pole_copper
 max_consumptions = {}
 
 function is_fuse(pole)
@@ -37,7 +41,7 @@ local function on_destroyed(event)
   if entity and entity.name == "po-transformer" then
     on_transformer_destroyed(entity.unit_number)
   elseif entity and is_fuse(entity) then
-    entity.disconnect_neighbour()
+    entity.get_wire_connector(copper, false).disconnect_all()
   end
 end
 script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
@@ -55,6 +59,7 @@ script.on_event(defines.events.on_object_destroyed,
 
 script.on_event(defines.events.on_tick,
   function(event)
+    ---@type table<ElectricNetworkID, double>
     local consumption_cache = {}
     update_poles("fuse", consumption_cache)
     update_poles("pole", consumption_cache)
@@ -65,14 +70,14 @@ script.on_event(defines.events.on_tick,
 -- Surface changes handling
 script.on_event(defines.events.on_surface_created,
   function(event)
-    local surface = game.get_surface(event.surface_index)
+    local surface = game.get_surface(event.surface_index)  ---@cast surface -?
     create_transformer_surface(surface.name)
   end
 )
 
 script.on_event(defines.events.on_pre_surface_deleted,
   function(event)
-    local surface = game.get_surface(event.surface_index)
+    local surface = game.get_surface(event.surface_index)  ---@cast surface -?
     local transformer_surface_name = surface.name .. "-transformer"
     if game.get_surface(transformer_surface_name) then
       game.delete_surface(transformer_surface_name)
@@ -82,7 +87,7 @@ script.on_event(defines.events.on_pre_surface_deleted,
 
 script.on_event(defines.events.on_surface_cleared,
   function(event)
-    local surface = game.get_surface(event.surface_index)
+    local surface = game.get_surface(event.surface_index)  ---@cast surface -?
     local transformer_surface_name = surface.name .. "-transformer"
     local transformer_surface = game.get_surface(transformer_surface_name)
     if transformer_surface then
@@ -104,12 +109,16 @@ script.on_event(defines.events.on_surface_renamed,
   end
 )
 
-script.on_event({"po-auto-connect-poles", defines.events.on_lua_shortcut},
+local toggle_auto_connect_poles = function(event)
+  local player = game.get_player(event.player_index)  ---@cast player -?
+  local toggle_on = not player.is_shortcut_toggled("po-auto-connect-poles")
+  player.set_shortcut_toggled("po-auto-connect-poles", toggle_on)
+end
+script.on_event("po-auto-connect-poles", toggle_auto_connect_poles)
+script.on_event(defines.events.on_lua_shortcut,
   function(event)
     if event.prototype_name and event.prototype_name ~= "po-auto-connect-poles" then return end
-    local player = game.get_player(event.player_index)
-    local toggle_on = not player.is_shortcut_toggled("po-auto-connect-poles")
-    player.set_shortcut_toggled("po-auto-connect-poles", toggle_on)
+    toggle_auto_connect_poles(event)
   end
 )
 
@@ -198,7 +207,7 @@ end
 
 script.on_event(defines.events.on_player_created,
   function(event)
-    local player = game.get_player(event.player_index)
+    local player = game.get_player(event.player_index)  ---@cast player -?
     player.set_shortcut_toggled("po-auto-connect-poles", true)
   end
 )
@@ -260,6 +269,7 @@ script.on_init(
   function()
     storage.poles = {}
     storage.fuses = {}
+    ---@type table<UnitNumber, TransformerData>
     storage.transformers = {}
     storage.tick_installed = game.tick
 
