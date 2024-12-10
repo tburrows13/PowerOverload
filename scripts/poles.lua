@@ -31,13 +31,14 @@ local function modify_position(local_position, blueprint_data)
   }
 end
 
-local function is_entity_from_blueprint(entity, blueprint_data)
+local function is_ghost_from_blueprint(entity, blueprint_data)
   if not blueprint_data then return false end
+  if entity.type ~= "entity-ghost" then return false end
 
-  local entity_name = entity.name
+  local entity_name = entity.ghost_name
   local entity_position = entity.position
   for _, blueprint_entity in pairs(blueprint_data.blueprint_entities) do
-    if entity_name == blueprint_entity.name and entity_position = modify_position(blueprint_entity.position, blueprint_data) then
+    if entity_name == blueprint_entity.name and entity_position == modify_position(blueprint_entity.position, blueprint_data) then
       return true
     end
   end
@@ -48,7 +49,7 @@ end
 ---@param player LuaPlayer?
 ---@param blueprint_data table?
 function on_pole_built(pole, is_revive, player, blueprint_data)
-  local pole_name = pole.name
+  local pole_name = pole.type == "entity-ghost" and pole.ghost_name or pole.name
   if not is_revive then
     -- If entity was built as part of a revive, don't do any processing, since processing occured when the ghost was placed
     local pole_connector = pole.get_wire_connector(copper, true)
@@ -68,13 +69,13 @@ function on_pole_built(pole, is_revive, player, blueprint_data)
             disconnect_all --or always_disconnect[pole_name] or always_disconnect[neighbour_name]
             or (pole_name ~= neighbour_name and storage.global_settings["power-overload-disconnect-different-poles"])
           )
-          and not is_entity_from_blueprint(neighbour, blueprint_data)
+          and not is_ghost_from_blueprint(neighbour, blueprint_data)
           then
             pole_connector.disconnect_from(neighbour_connector)
       end
     end
   end
-  if storage.max_consumptions[pole_name] then
+  if storage.max_consumptions[pole_name] and pole.type ~= "entity-ghost" then
     if is_fuse(pole) then
       table.insert(storage.fuses, pole)
     else

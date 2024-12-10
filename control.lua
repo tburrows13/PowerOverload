@@ -23,7 +23,7 @@ function is_fuse(pole)
 end
 
 ---@param player LuaPlayer?
----@return blueprint_entities BlueprintEntity[]?
+---@return BlueprintEntity[]?
 local function get_blueprint_entities(player)
   if not player or not player.is_cursor_blueprint() then return end
 
@@ -76,9 +76,12 @@ script.on_event(defines.events.on_pre_build, on_pre_build)
 local function on_built(event)
   local entity = event.entity
   if entity then
-    local player = event.name == defines.events.on_built_entity and game.get_player(event.player_index)
+    local player
+    if event.name == defines.events.on_built_entity then
+      player = game.get_player(event.player_index)
+    end
     if entity.type == "electric-pole" then
-      on_pole_built(entity, event.tags and event.tags["po-pole-ghost"], player)
+      on_pole_built(entity, event.tags and event.tags["po-pole-ghost"] == true, player)
     elseif entity.type == "entity-ghost" then
       local tags = entity.tags or {}
       tags["po-pole-ghost"] = true
@@ -282,7 +285,7 @@ end
 
 script.on_configuration_changed(
   function(changed_data)
-    script.blueprints_this_tick = storage.blueprints_this_tick or {}
+    storage.blueprints_this_tick = storage.blueprints_this_tick or {}
     update_global_settings()
 
     generate_max_consumption_table()
