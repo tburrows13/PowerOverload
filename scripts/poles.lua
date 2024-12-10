@@ -1,6 +1,6 @@
 local always_disconnect = {
-  ["po-hidden-electric-pole-in"] = true,
-  ["po-hidden-electric-pole-out"] = true,
+  --["po-hidden-electric-pole-in"] = true,
+  --["po-hidden-electric-pole-out"] = true,
 }
 
 local never_disconnect = {
@@ -10,34 +10,71 @@ local never_disconnect = {
   ["factory-circuit-connector"] = true,
 }
 
----@param pole LuaEntity
----@param tags Tags?
----@param player LuaPlayer?
-function on_pole_built(pole, tags, player)
-  local pole_name = pole.name
-  local pole_connector = pole.get_wire_connector(copper, true)
-  for _, connection in pairs(pole_connector.real_connections) do
-    local neighbour_connector = connection.target
-    local neighbour = neighbour_connector.owner
-    local neighbour_type = neighbour.type
-    local neighbour_name = neighbour.name
-    if neighbour_type == "entity-ghost" then
-      neighbour_type = neighbour.ghost_type
-      neighbour_name = neighbour.ghost_name
-    end
-    local disconnect_all = player and not player.is_shortcut_toggled("po-auto-connect-poles")
-    if neighbour_type == "electric-pole"
-        and not (tags and tags["po-skip-disconnection"])
-        and not (never_disconnect[pole_name] or never_disconnect[neighbour_name])
-        and (
-          disconnect_all or always_disconnect[pole_name] or always_disconnect[neighbour_name]
-          or (pole_name ~= neighbour_name and storage.global_settings["power-overload-disconnect-different-poles"])
-        )
-        then
-          pole_connector.disconnect_from(neighbour_connector)
+local function modify_position(local_position, blueprint_data)
+  local_position = {
+    x = local_position.x * blueprint_data.flip_horizontal,
+    y = local_position.y * blueprint_data.flip_vertical,
+  }
+
+  if blueprint_data.direction == defines.direction.east then
+    local_position = {x = -local_position.y, y = local_position.x}
+  elseif blueprint_data.direction == defines.direction.south then
+    local_position = {x = -local_position.x, y = -local_position.y}
+  elseif blueprint_data.direction == defines.direction.west then
+    local_position = {x = local_position.y, y = -local_position.x}
+  end
+
+  local global_position = blueprint_data.position
+  return {
+    x = local_position.x + global_position.x,
+    y = local_position.y + global_position.y,
+  }
+end
+
+local function is_entity_from_blueprint(entity, blueprint_data)
+  if not blueprint_data then return false end
+
+  local entity_name = entity.name
+  local entity_position = entity.position
+  for _, blueprint_entity in pairs(blueprint_data.blueprint_entities) do
+    if entity_name == blueprint_entity.name and entity_position = modify_position(blueprint_entity.position, blueprint_data) then
+      return true
     end
   end
-  if storage.max_consumptions[pole.name] then
+end
+
+---@param pole LuaEntity
+---@param is_revive boolean?
+---@param player LuaPlayer?
+---@param blueprint_data table?
+function on_pole_built(pole, is_revive, player, blueprint_data)
+  local pole_name = pole.name
+  if not is_revive then
+    -- If entity was built as part of a revive, don't do any processing, since processing occured when the ghost was placed
+    local pole_connector = pole.get_wire_connector(copper, true)
+    for _, connection in pairs(pole_connector.connections) do
+      local neighbour_connector = connection.target
+      local neighbour = neighbour_connector.owner
+      local neighbour_type = neighbour.type
+      local neighbour_name = neighbour.name
+      if neighbour_type == "entity-ghost" then
+        neighbour_type = neighbour.ghost_type
+        neighbour_name = neighbour.ghost_name
+      end
+      local disconnect_all = player and not player.is_shortcut_toggled("po-auto-connect-poles")
+      if neighbour_type == "electric-pole"
+          and not (never_disconnect[pole_name] or never_disconnect[neighbour_name])
+          and (
+            disconnect_all --or always_disconnect[pole_name] or always_disconnect[neighbour_name]
+            or (pole_name ~= neighbour_name and storage.global_settings["power-overload-disconnect-different-poles"])
+          )
+          and not is_entity_from_blueprint(neighbour, blueprint_data)
+          then
+            pole_connector.disconnect_from(neighbour_connector)
+      end
+    end
+  end
+  if storage.max_consumptions[pole_name] then
     if is_fuse(pole) then
       table.insert(storage.fuses, pole)
     else

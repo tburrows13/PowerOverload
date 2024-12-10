@@ -66,6 +66,7 @@ local hidden_pole_in = {
   collision_mask = {layers={}},
   open_sound = big_pole.open_sound,
   close_sound = big_pole.close_sound,
+  auto_connect_up_to_n_wires = 0,  -- Only connections on-placement are by script, or as part of a blueprint
   connection_points =
   {
     {
