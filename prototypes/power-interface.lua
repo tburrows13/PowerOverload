@@ -49,6 +49,8 @@ local interface = {
     tint = blue_tint
   }},
   flags = {"placeable-neutral", "player-creation"},
+  hidden_in_factoriopedia = true,  -- Set to false by the original variation later
+  deconstruction_alternative = "po-interface",
   placeable_by = {item = "po-interface", count = 1},
   minable = {mining_time = 0.1, result = "po-interface"},
   max_health = 200,
@@ -246,6 +248,7 @@ translate_interface(interface_south, scale, gfx_scale, {x = 0, y = -translate})
 
 local interface_west = table.deepcopy(interface)  -- Keeps original name
 translate_interface(interface_west, scale, gfx_scale, {x = translate, y = 0})
+interface_west.hidden_in_factoriopedia = false
 
 local rotate = {
   type = "custom-input",
