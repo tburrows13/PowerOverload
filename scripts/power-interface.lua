@@ -45,6 +45,7 @@ script.on_event({"po-rotate", "po-reverse-rotate"},
       if next_rotation then
         local entity = player.surface.create_entity{
           name = next_rotation,
+          quality = selected.quality,
           position = translate_entity_position(selected.position, selected.name, next_rotation),
           force = player.force,
           create_build_effect_smoke = false,
