@@ -9,6 +9,13 @@ require "__PowerOverload__/scripts/power-interface"
 ---@alias PoleType "pole"|"fuse"
 
 copper = defines.wire_connector_id.pole_copper
+local quality_prototypes = prototypes.quality
+quality_names = {}
+for name, _ in pairs(quality_prototypes) do
+  quality_names[name] = true
+end
+quality_names["quality-unknown"] = nil
+
 max_consumptions = {}
 
 function is_fuse(pole)

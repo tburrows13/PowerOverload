@@ -51,13 +51,15 @@ end
 local function get_total_consumption(statistics)
   local total = 0
   for name, _ in pairs(statistics.input_counts) do
-    total = total + 60 * statistics.get_flow_count{
-      name = name,
-      category = "input",
-      precision_index = defines.flow_precision_index.five_seconds,
-      sample_index = 1,
-      count = false,
-    }
+    for quality_name, _ in pairs(quality_names) do
+      total = total + 60 * statistics.get_flow_count{
+        name = {name = name, quality = quality_name},
+        category = "input",
+        precision_index = defines.flow_precision_index.five_seconds,
+        sample_index = 1,
+        count = false,
+      }
+    end
   end
   return total
 end
