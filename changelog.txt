@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.5.0
+Date: 10 December 2024
+  Features:
+    - Compatibility with Factorio 2.0 and Space Age
+  Changes:
+    - Reduced default maximum consumptions of all poles and fuses
+---------------------------------------------------------------------------------------------------
 Version: 1.4.8
 Date: 25 February 2023
   Bugfixes:

@@ -8,11 +8,12 @@
     "factorio_version": "2.0",
     "dependencies": [
       "base",
+      "? space-age",
       "(?) bzlead",
       "(?) bzaluminum",
       "(?) bzgas",
       "(?) aai-industry",
-      "(?) pyalternativeenergy >= 1.1.4",
+      "(?) pyalternativeenergy",
       "(?) PickerDollies"
     ],
     "package": {
