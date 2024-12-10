@@ -1,5 +1,7 @@
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
+local item_sounds = require("__base__.prototypes.item_sounds")
+local item_tints = require("__base__.prototypes.item-tints")
 
 
 local blue_tint = {r=0.5, g=0.7, b=1}
@@ -27,13 +29,17 @@ local item = {
   name = "po-interface",
   icons = {{
     icon = "__base__/graphics/icons/substation.png",
-    icon_size = 64, icon_mipmaps = 4,
+    icon_size = 64,
     tint = blue_tint
   }},
   subgroup = "energy-pipe-distribution",
   order = "a[energy]-e[po-interface]",
+  inventory_move_sound = item_sounds.electric_large_inventory_move,
+  pick_sound = item_sounds.electric_large_inventory_pickup,
+  drop_sound = item_sounds.electric_large_inventory_move,
   place_result = "po-interface",
-  stack_size = 50
+  stack_size = 50,
+  random_tint_color = item_tints.iron_rust
 }
 
 local gfx_scale = 2
@@ -45,7 +51,7 @@ local interface = {
   localised_description = {"entity-description.po-interface"},
   icons = {{
     icon = "__base__/graphics/icons/substation.png",
-    icon_size = 64, icon_mipmaps = 4,
+    icon_size = 64,
     tint = blue_tint
   }},
   flags = {"placeable-neutral", "player-creation"},
@@ -53,7 +59,7 @@ local interface = {
   deconstruction_alternative = "po-interface",
   placeable_by = {item = "po-interface", count = 1},
   minable = {mining_time = 0.1, result = "po-interface"},
-  max_health = 200,
+  max_health = 400,
   corpse = "substation-remnants",
   dying_explosion = "substation-explosion",
   track_coverage_during_build_by_moving = true,
@@ -98,7 +104,7 @@ local interface = {
       }
     }
   },
-  vehicle_impact_sound = sounds.generic_impact,
+  impact_category = "metal",
   open_sound = sounds.electric_network_open,
   close_sound = sounds.electric_network_close,
   working_sound =

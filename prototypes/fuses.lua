@@ -18,7 +18,6 @@ for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do
   fuse.icons = {{
     icon = fuse.icon,
     icon_size = fuse.icon_size,
-    icon_mipmaps = fuse.icon_mipmaps,
     tint = red_tint,
   }}
   if fuse.pictures.layers then
@@ -35,7 +34,6 @@ for _, pole_name in pairs(shared.get_poles_to_make_fuses(mods)) do
   item.icons = {{
     icon = item.icon,
     icon_size = item.icon_size,
-    icon_mipmaps = item.icon_mipmaps,
     tint = red_tint,
   }}
 

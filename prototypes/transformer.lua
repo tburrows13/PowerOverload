@@ -12,7 +12,6 @@ transformer.power_on_animation.layers[1].filename = "__PowerOverload__/graphics/
 transformer.icons = {{
   icon = "__PowerOverload__/graphics/icons/transformer.png",
   icon_size = 64,
-  icon_mipmaps = 1,
 }}
 
 
@@ -36,7 +35,6 @@ hidden_pole_item.icons = {
   {
     icon = "__base__/graphics/icons/copper-cable.png",
     icon_size = 64,
-    icon_mipmaps = 4,
     scale = 0.35,
     --tint = transformer_tint
   }

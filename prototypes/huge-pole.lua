@@ -6,7 +6,7 @@ local pylon =  {
     type = "electric-pole",
     name = "po-huge-electric-pole",
     icon = "__PowerOverload__/graphics/icons/huge-electric-pole.png",
-    icon_size = 32, icon_mipmaps = 1,
+    icon_size = 32,
     flags = {"placeable-neutral", "player-creation",},
     minable = {mining_time = 0.1, result = "po-huge-electric-pole"},
     max_health = 250,
@@ -25,7 +25,7 @@ local pylon =  {
     drawing_box = {{-1*scale, -3*scale}, {1*scale, 0.5*scale}},
     maximum_wire_distance = 50,
     supply_area_distance = 0,
-    vehicle_impact_sound =  big_pole.vehicle_impact_sound,
+    impact_category = "metal",
     open_sound = big_pole.open_sound,
     close_sound = big_pole.close_sound,
     pictures =
@@ -126,7 +126,6 @@ pylon_item.name = "po-huge-electric-pole"
 pylon_item.place_result = "po-huge-electric-pole"
 pylon_item.icon = "__PowerOverload__/graphics/icons/huge-electric-pole.png"
 pylon_item.icon_size = 32
-pylon_item.icon_mipmaps = 1
 
 
 pylon_recipe = {
