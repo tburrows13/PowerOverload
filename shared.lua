@@ -31,7 +31,7 @@ end
 local function get_pole_names(mods)
   local mod_pole_names = {
     ["base"] = {
-      ["small-electric-pole"] = "10MW",  -- (20 MW is just over 40 steam engines-worth)
+      ["small-electric-pole"] = "10MW",  -- (10 MW is just over 20 steam engines-worth)
       ["medium-electric-pole"] = "60MW",
       ["big-electric-pole"] = "300MW",
       ["po-huge-electric-pole"] = "3GW",
@@ -39,7 +39,8 @@ local function get_pole_names(mods)
       ["po-medium-electric-fuse"] = "48MW",
       ["po-big-electric-fuse"] = "240MW",
       ["po-huge-electric-fuse"] = "2.4GW",
-      ["substation"] = "120MW",
+      ["substation"] = "125MW",
+      ["po-substation-fuse"] = "100MW"
       ["po-interface"] = "100GW",
       ["po-interface-north"] = "100GW",  -- Hidden from settings
       ["po-interface-east"] = "100GW",  -- Hidden from settings
@@ -63,8 +64,8 @@ local function get_pole_names(mods)
       ["big-electric-pole-3"] = "500MW",
       ["big-electric-pole-4"] = "600MW",
       ["substation-2"] = "200MW",
-      ["substation-3"] = "280MW",
-      ["substation-4"] = "360MW"
+      ["substation-3"] = "275MW",
+      ["substation-4"] = "350MW"
     },
     ["cargo-ships"] = {
       ["floating-electric-pole"] = "1.5GW"
@@ -84,6 +85,7 @@ local function get_pole_names(mods)
       ["po-big-electric-fuse"] = "1.6GW",
       ["po-huge-electric-fuse"] = "8GW",
       ["substation"] = "400MW",
+      ["po-substation-fuse"] = "320MW",
       ["kr-substation-mk2"] = "600MW"
     },
     ["fixLargeElectricPole"] = {
@@ -97,9 +99,9 @@ local function get_pole_names(mods)
       ["big-electric-pole-2"] = "550MW",
       ["big-electric-pole-3"] = "600MW",
       ["big-electric-pole-4"] = "650MW",
-      ["substation-2"] = "220MW",
-      ["substation-3"] = "240MW",
-      ["substation-4"] = "260MW"
+      ["substation-2"] = "150MW",
+      ["substation-3"] = "175MW",
+      ["substation-4"] = "200MW"
     },
     ["AdvancedSubstation"] = {
       ["substation-2"] = "250MW",
@@ -110,8 +112,8 @@ local function get_pole_names(mods)
       ["medium-electric-pole-mk3"] = "140MW",
       ["big-electric-pole-mk2"] = "600MW",
       ["big-electric-pole-mk3"] = "700MW",
-      ["substation-mk2"] = "250MW",
-      ["substation-mk3"] = "300MW",
+      ["substation-mk2"] = "175MW",
+      ["substation-mk3"] = "225MW",
     },
     ["fpp"] = {
       ["long-distance-electric-pole"] = "5GW",
@@ -130,6 +132,7 @@ local function get_pole_names(mods)
       ["po-big-electric-fuse"] = "1.6GW",
       ["po-huge-electric-fuse"] = "8GW",
       ["substation"] = "400MW",
+      ["po-substation-fuse"] = "320MW"
     },
     ["pyalternativeenergy"] = {
       ["nexelit-power-pole"] = "800MW",
@@ -165,9 +168,9 @@ local function get_pole_aliases()
 end
 
 local function get_poles_to_make_fuses(mods)
-  -- Note, this assumes the naming convention always ends in '-pole'.  If this is not true, this and
-  -- other functions will need to be further modified.
-  local pole_names = { "small-electric", "medium-electric", "big-electric", "huge-electric" }
+  -- Note, this assumes the naming convention always ends in '-pole'. If not, then implement a custom override
+  -- in get_name_for_fuse and get_prototype_name_for_pole
+  local pole_names = { "small-electric", "medium-electric", "big-electric", "huge-electric", "substation" }
 
   if mods["pyalternativeenergy"] then
     table.insert(pole_names, "nexelit-power")
@@ -178,6 +181,7 @@ end
 
 -- Returns the name of a fuse for a given pole name, defined in 'get_poles_to_make_fuses'
 local function get_name_for_fuse(pole_name)
+  if pole_name == "substation" then return "po-substation-fuse" end
   local name_prefix = "po-"
   local name_suffix = "-fuse"
   local name = name_prefix .. pole_name .. name_suffix
@@ -186,10 +190,12 @@ end
 
 -- Returns the prototype of the pole used to make a fuse from a given pole name, defined in 'get_poles_to_make_fuses'
 local function get_prototype_name_for_pole(pole_name)
-  local prototype_name = pole_name .. "-pole"
-  if pole_name == "huge-electric" then  -- Huge electric pole is defined as 'po-huge-electric-pole', so we need a special case here.
-    prototype_name = "po-huge-electric-pole"
+  if pole_name == "substation" then return "substation" end
+  if pole_name == "huge-electric" then
+    -- Huge electric pole is defined as 'po-huge-electric-pole', so we need a special case here.
+    return "po-huge-electric-pole"
   end
+  local prototype_name = pole_name .. "-pole"
   return prototype_name
 end
 
