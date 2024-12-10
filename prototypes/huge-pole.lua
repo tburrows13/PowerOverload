@@ -144,4 +144,8 @@ pylon_recipe = {
   enabled = false
 }
 
+if mods["space-age"] then
+  pylon_recipe.category = "electronics"
+end
+
 data:extend{pylon, pylon_item, pylon_recipe}
