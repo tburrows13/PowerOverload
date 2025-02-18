@@ -37,16 +37,16 @@ local function on_built(event)
       local tags = entity.tags or {}
       tags["po-skip-disconnection"] = true
       entity.tags = tags
-    elseif entity.name == "po-transformer" then
+    elseif entity.name == "po-transformer" or entity.name == "po-transformer-high" or entity.name == "po-transformer-low" then
       create_transformer(entity)
     end
   end
 end
 -- Needs to be 4 separate lines so that the filters work
-script.on_event(defines.events.on_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "ghost_type", type = "electric-pole"}})
-script.on_event(defines.events.on_robot_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.script_raised_revive, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.script_raised_built, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
+script.on_event(defines.events.on_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}, {filter = "ghost_type", type = "electric-pole"}})
+script.on_event(defines.events.on_robot_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.script_raised_revive, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.script_raised_built, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
 
 local function on_destroyed(event)
   local entity = event.entity
@@ -56,10 +56,10 @@ local function on_destroyed(event)
     entity.get_wire_connector(copper, false).disconnect_all()
   end
 end
-script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.on_robot_pre_mined, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.on_entity_died, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.script_raised_destroy, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
+script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.on_robot_pre_mined, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.on_entity_died, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.script_raised_destroy, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
 script.on_event(defines.events.on_object_destroyed,
   function(event)
     if event.type ~= defines.target_type.entity then return end
@@ -137,7 +137,7 @@ script.on_event(defines.events.on_lua_shortcut,
 
 local function on_dolly_moved_entity(event)
   local transformer = event.moved_entity
-  if not transformer.name == "po-transformer" then return end
+  if not transformer.name == "po-transformer" and not transformer.name == "po-transformer-high" and not transformer.name == "po-transformer-low" then return end
   local transformer_parts = storage.transformers[transformer.unit_number]
   if not transformer_parts then return end
 
@@ -168,7 +168,8 @@ local function handle_picker_dollies()
     remote.call("PickerDollies", "add_blacklist_name", "po-hidden-electric-pole-alt")
     remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-in")
     remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-out")
-
+    remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-out-high")
+    remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-out-low")
   end
 
 end
