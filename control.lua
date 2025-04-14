@@ -57,6 +57,7 @@ script.on_event(defines.events.on_entity_died, on_destroyed, {{filter = "type", 
 script.on_event(defines.events.script_raised_destroy, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
 script.on_event(defines.events.on_object_destroyed,
   function(event)
+    if event.type ~= defines.target_type.entity then return end
     local unit_number = event.useful_id
     if unit_number then
       on_transformer_destroyed(unit_number)
