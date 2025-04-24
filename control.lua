@@ -22,26 +22,83 @@ function is_fuse(pole)
   return string.sub(pole.name, -5) == "-fuse"
 end
 
+---@param player LuaPlayer?
+---@return BlueprintEntity[]?
+local function get_blueprint_entities(player)
+  if not player or not player.is_cursor_blueprint() then return end
+
+  local blueprint = player.cursor_record
+  if blueprint then
+    if blueprint.type == "blueprint-book" then
+      -- TODO check active_index once added to API
+      return
+    elseif blueprint.type == "blueprint" and not blueprint.is_blueprint_preview then
+      return blueprint.get_blueprint_entities()
+    else
+      return
+    end
+  else
+    -- No library book or blueprint, so check cursor item
+    blueprint = player.cursor_stack
+    if not (blueprint and blueprint.valid_for_read) then
+      return
+    end
+    -- Check item blueprint book recursively
+    while blueprint.is_blueprint_book do
+      -- Get active blueprint from this book item
+      blueprint = blueprint.get_inventory(defines.inventory.item_main)[blueprint.active_index]
+    end
+    if blueprint.is_blueprint then
+      -- Check the blueprint for pumps
+      return blueprint.get_blueprint_entities()
+    end
+    -- Cursor is not a blueprint, or entry from book was not a blueprint
+    return
+  end
+end
+
+local function on_pre_build(event)
+  -- If a blueprint is placed, ensure that we aren't changing connections within the blueprint
+  local player = game.get_player(event.player_index)
+  local blueprint_entities = get_blueprint_entities(player)
+  if not blueprint_entities then return end
+
+  storage.blueprints_this_tick[event.player_index] = {
+    blueprint_entities = blueprint_entities,
+    position = event.position,
+    direction = event.direction,
+    flip_horizontal = event.flip_horizontal and -1 or 1,
+    flip_vertical = event.flip_vertical and -1 or 1,
+  }
+end
+script.on_event(defines.events.on_pre_build, on_pre_build)
+
 local function on_built(event)
   local entity = event.entity
   if entity then
+    local player
+    if event.name == defines.events.on_built_entity then
+      player = game.get_player(event.player_index)
+    end
     if entity.type == "electric-pole" then
-      on_pole_built(entity, event.tags, event.name == defines.events.on_built_entity and game.get_player(event.player_index))
-    elseif entity.type == "entity-ghost" and game.get_player(event.player_index).is_cursor_blueprint() then
-      -- Entity was (probably) built as part of blueprint, so prevent automatic disconnection of wires when it is built
+      on_pole_built(entity, event.tags and event.tags["po-pole-ghost"] == true, player)
+    elseif entity.type == "entity-ghost" then
       local tags = entity.tags or {}
-      tags["po-skip-disconnection"] = true
+      tags["po-pole-ghost"] = true
       entity.tags = tags
-    elseif entity.name == "po-transformer" then
+      local blueprint_data = player and storage.blueprints_this_tick[event.player_index]
+      on_pole_built(entity, false, player, blueprint_data)
+
+    elseif entity.name == "po-transformer" or entity.name == "po-transformer-high" or entity.name == "po-transformer-low" then
       create_transformer(entity)
     end
   end
 end
 -- Needs to be 4 separate lines so that the filters work
-script.on_event(defines.events.on_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "ghost_type", type = "electric-pole"}})
-script.on_event(defines.events.on_robot_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.script_raised_revive, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.script_raised_built, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
+script.on_event(defines.events.on_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}, {filter = "ghost_type", type = "electric-pole"}})
+script.on_event(defines.events.on_robot_built_entity, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.script_raised_revive, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.script_raised_built, on_built, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
 
 local function on_destroyed(event)
   local entity = event.entity
@@ -51,10 +108,10 @@ local function on_destroyed(event)
     entity.get_wire_connector(copper, false).disconnect_all()
   end
 end
-script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.on_robot_pre_mined, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.on_entity_died, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
-script.on_event(defines.events.script_raised_destroy, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}})
+script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.on_robot_pre_mined, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.on_entity_died, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
+script.on_event(defines.events.script_raised_destroy, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
 script.on_event(defines.events.on_object_destroyed,
   function(event)
     if event.type ~= defines.target_type.entity then return end
@@ -72,6 +129,8 @@ script.on_event(defines.events.on_tick,
     update_poles("fuse", consumption_cache)
     update_poles("pole", consumption_cache)
     update_transformers(event.tick)
+
+    storage.blueprints_this_tick = {}
   end
 )
 
@@ -132,7 +191,7 @@ script.on_event(defines.events.on_lua_shortcut,
 
 local function on_dolly_moved_entity(event)
   local transformer = event.moved_entity
-  if not transformer.name == "po-transformer" then return end
+  if not transformer.name == "po-transformer" and not transformer.name == "po-transformer-high" and not transformer.name == "po-transformer-low" then return end
   local transformer_parts = storage.transformers[transformer.unit_number]
   if not transformer_parts then return end
 
@@ -163,7 +222,8 @@ local function handle_picker_dollies()
     remote.call("PickerDollies", "add_blacklist_name", "po-hidden-electric-pole-alt")
     remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-in")
     remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-out")
-
+    remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-out-high")
+    remote.call("PickerDollies", "add_blacklist_name", "po-transformer-interface-hidden-out-low")
   end
 
 end
@@ -227,6 +287,7 @@ end
 
 script.on_configuration_changed(
   function(changed_data)
+    storage.blueprints_this_tick = storage.blueprints_this_tick or {}
     update_global_settings()
 
     generate_max_consumption_table()
@@ -280,6 +341,8 @@ script.on_init(
     ---@type table<UnitNumber, TransformerData>
     storage.transformers = {}
     storage.tick_installed = game.tick
+    ---@type <PlayerIndex, table>
+    storage.blueprints_this_tick = {}
 
     update_global_settings()
     generate_max_consumption_table()

@@ -4,6 +4,14 @@ table.insert(electric_1_effects, {
   type = "unlock-recipe",
   recipe = "po-transformer"
 })
+table.insert(electric_1_effects, {
+  type = "unlock-recipe",
+  recipe = "po-transformer-high"
+})
+table.insert(electric_1_effects, {
+  type = "unlock-recipe",
+  recipe = "po-transformer-low"
+})
 
 data:extend{
   {

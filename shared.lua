@@ -40,7 +40,7 @@ local function get_pole_names(mods)
       ["po-big-electric-fuse"] = "240MW",
       ["po-huge-electric-fuse"] = "2.4GW",
       ["substation"] = "125MW",
-      ["po-substation-fuse"] = "100MW"
+      ["po-substation-fuse"] = "100MW",
       ["po-interface"] = "100GW",
       ["po-interface-north"] = "100GW",  -- Hidden from settings
       ["po-interface-east"] = "100GW",  -- Hidden from settings
