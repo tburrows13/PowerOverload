@@ -14,6 +14,14 @@ for name, technology in pairs(data.raw.technology) do
             data.raw.recipe[recipe_name].enabled = false
           end
         end
+        if effect.recipe == "substation" then
+          local recipe_name = "po-substation-fuse"
+          table.insert(technology.effects, {
+            type = "unlock-recipe",
+            recipe = recipe_name
+          })
+          data.raw.recipe[recipe_name].enabled = false
+        end
       end
     end
   end
