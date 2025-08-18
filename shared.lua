@@ -92,6 +92,19 @@ local function get_pole_names(mods)
       ["po-substation-fuse"] = "320MW",
       ["kr-substation-mk2"] = "600MW"
     },
+    ["Krastorio2-spaced-out"] = {
+      ["small-electric-pole"] = "20MW",
+      ["medium-electric-pole"] = "200MW",
+      ["big-electric-pole"] = "2GW",
+      ["po-huge-electric-pole"] = "10GW",
+      ["po-small-electric-fuse"] = "16MW",
+      ["po-medium-electric-fuse"] = "160MW",
+      ["po-big-electric-fuse"] = "1.6GW",
+      ["po-huge-electric-fuse"] = "8GW",
+      ["substation"] = "400MW",
+      ["po-substation-fuse"] = "320MW",
+      ["kr-substation-mk2"] = "600MW"
+    },
     ["fixLargeElectricPole"] = {
       ["large-electric-pole"] = "16GW"
     },

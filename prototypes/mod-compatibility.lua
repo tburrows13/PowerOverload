@@ -1,17 +1,3 @@
--- data-updates
-if mods["IndustrialRevolution"] then  -- An experiment with leaving the transformer unlock until later with IR3
-  table.insert(data.raw.technology["ir2-steam-power"].effects, {
-    type = "unlock-recipe",
-    recipe = "po-transformer"
-  })
-
-  for i, effect in pairs(data.raw.technology["electric-energy-distribution-1"].effects) do
-    if effect.type == "unlock-recipe" and effect.recipe == "po-transformer" then
-      data.raw.technology["electric-energy-distribution-1"].effects[i] = nil
-    end
-  end
-end
-
 if mods["pyalternativeenergy"] then
   table.insert(data.raw.technology["electric-energy-distribution-3"].effects, {
     type = "unlock-recipe",

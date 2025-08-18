@@ -12,6 +12,7 @@ for pole_name, prototype in pairs(data.raw["electric-pole"]) do
       name = {"description.max-energy-consumption"},
       value = max_consumption_string,
       quality_values = {},
+      order = 150,
     }
     for quality_name, quality_prototype in pairs(data.raw.quality) do
       local default_multiplier = quality_prototype.default_multiplier
