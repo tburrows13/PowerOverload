@@ -4,7 +4,7 @@ local function combine_tables(first_table, second_table)
 end
 
 
-local function validate_and_parse_energy(consumption)
+local function validate_and_parse_energy(consumption, for_tooltips)
   -- Sanitise user-input energy values
   local ending = consumption:sub(consumption:len())
   local status, result
@@ -17,8 +17,12 @@ local function validate_and_parse_energy(consumption)
 
   if status then
     -- 60 undoes parse_energy per-sec to per-tick conversion because we work in per-sec
-    -- 1.01 gives a bit of leeway for the user
-    return result * 60 * 1.01
+    if for_tooltips then
+      return result * 60
+    else
+      -- 1.01 gives a bit of leeway for the user
+      return result * 60 * 1.01
+    end
   else
     log("Parsing energy setting '" .. consumption .. "' failed with error: " .. result)
     return false
@@ -41,10 +45,10 @@ local function get_pole_names(mods)
       ["po-huge-electric-fuse"] = "2.4GW",
       ["substation"] = "125MW",
       ["po-substation-fuse"] = "100MW",
-      ["po-interface"] = "100GW",
-      ["po-interface-north"] = "100GW",  -- Hidden from settings
-      ["po-interface-east"] = "100GW",  -- Hidden from settings
-      ["po-interface-south"] = "100GW",  -- Hidden from settings
+      ["po-interface"] = "100.01GW",
+      ["po-interface-north"] = "100.01GW",  -- Hidden from settings
+      ["po-interface-east"] = "100.01GW",  -- Hidden from settings
+      ["po-interface-south"] = "100.01GW",  -- Hidden from settings
     },
     ["aai-industry"] = {
       ["small-iron-electric-pole"] = "10MW"

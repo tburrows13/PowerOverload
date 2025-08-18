@@ -38,10 +38,15 @@ function on_pole_built(pole, tags, player)
     end
   end
   if storage.max_consumptions[pole.name] then
+    ---@type PoleData
+    local pole_data = {
+      entity = pole,
+      max_consumption = storage.max_consumptions[pole.name][pole.quality.name]
+    }
     if is_fuse(pole) then
-      table.insert(storage.fuses, pole)
+      table.insert(storage.fuses, pole_data)
     else
-      table.insert(storage.poles, pole)
+      table.insert(storage.poles, pole_data)
     end
   end
 end
@@ -91,7 +96,6 @@ function update_poles(pole_type, consumption_cache)
   local table_size = #poles
   if table_size == 0 then return end
 
-  local max_consumptions = storage.max_consumptions
   local global_settings = storage.global_settings
   local log_to_chat = global_settings["power-overload-log-to-chat"]
   local destroy_pole_setting = global_settings["power-overload-on-pole-overload"]
@@ -117,15 +121,16 @@ function update_poles(pole_type, consumption_cache)
   local poles_to_check = math.floor(table_size / average_tick_delay) + 1
   for _ = 1, poles_to_check do
     local i = math.random(table_size)
-    local pole = poles[i]
+    local pole_data = poles[i]
+    local pole = pole_data.entity
     if pole and pole.valid then
-      local electric_network_id = pole.electric_network_id
+      local electric_network_id = pole.electric_network_id  ---@cast electric_network_id -?
       local consumption = consumption_cache[electric_network_id]
       if not consumption then
         consumption = get_total_consumption(pole.electric_network_statistics)
         consumption_cache[electric_network_id] = consumption
       end
-      local max_consumption = max_consumptions[pole.name]
+      local max_consumption = pole_data.max_consumption
       if max_consumption and consumption > max_consumption then
         if destroy_pole_setting == "destroy" then
           --log("Pole being killed at consumption " .. math.ceil(consumption / 1000000) .. "MW which is above max_consumption " .. math.ceil(max_consumption / 1000000) .. "MW")

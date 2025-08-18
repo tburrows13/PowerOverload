@@ -8,6 +8,11 @@ require "__PowerOverload__/scripts/power-interface"
 ---@alias ElectricNetworkID uint
 ---@alias PoleType "pole"|"fuse"
 
+---@class PoleData
+---@field entity LuaEntity
+---@field max_consumption double
+
+
 copper = defines.wire_connector_id.pole_copper
 local quality_prototypes = prototypes.quality
 quality_names = {}
@@ -195,7 +200,12 @@ local function generate_max_consumption_table()
       max_consumption = shared.validate_and_parse_energy(default_consumption)
     end
     if max_consumption then
-      max_consumptions[pole_name] = max_consumption
+      local consumption_per_quality = {}
+      for quality_name, quality_prototype in pairs(prototypes.quality) do
+        local quality_consumption = max_consumption * quality_prototype.default_multiplier
+        consumption_per_quality[quality_name] = quality_consumption
+      end
+      max_consumptions[pole_name] = consumption_per_quality
     end
   end
   storage.max_consumptions = max_consumptions
@@ -206,7 +216,16 @@ local function reset_global_poles()
   for _, surface in pairs(game.surfaces) do
     for _, pole in pairs(surface.find_entities_filtered{type = "electric-pole"}) do
       if storage.max_consumptions[pole.name] then
-        table.insert(poles, pole)
+        ---@type PoleData
+        local pole_data = {
+          entity = pole,
+          max_consumption = storage.max_consumptions[pole.name][pole.quality.name]
+        }
+        if is_fuse(pole) then
+          table.insert(storage.fuses, pole_data)
+        else
+          table.insert(storage.poles, pole_data)
+        end
       end
     end
   end
@@ -242,44 +261,36 @@ script.on_configuration_changed(
     else
       return
     end
-    old_version = util.split(old_version, ".")
-    for i=1, #old_version do
-      old_version[i] = tonumber(old_version[i])
+    if helpers.compare_versions(old_version, "1.2.5") == -1 then
+      -- Run on 1.2.5 load
+      for _, transformer_parts in pairs(storage.transformers) do
+        create_transformer(transformer_parts.transformer, transformer_parts)
+      end
     end
-    if old_version[1] <= 1 then
-      if old_version[2] < 2 then
-        -- Run on 1.2.0 load
-        game.forces["player"].reset_technology_effects()
-        storage.fuses = {}
-        storage.tick_installed = game.tick
+    if helpers.compare_versions(old_version, "1.3.1") == -1 then
+      -- Run on 1.3.1 load
+      for _, transformer_parts in pairs(storage.transformers) do
+        transformer_parts.bucket = transformer_parts.transformer.unit_number % 600
       end
-      if old_version[2] < 2 or (old_version[2] == 2 and old_version[3] < 5) then
-        -- Run on 1.2.5 load
-        for _, transformer_parts in pairs(storage.transformers) do
-          create_transformer(transformer_parts.transformer, transformer_parts)
-        end
-      end
-      if old_version[2] < 3 or (old_version[2] == 3 and old_version[3] < 1) then
-        -- Run on 1.3.1 load
-        for _, transformer_parts in pairs(storage.transformers) do
-          transformer_parts.bucket = transformer_parts.transformer.unit_number % 600
-        end
-      end
-      if old_version[2] < 4 or (old_version[2] == 4 and old_version[3] < 6) then
-        -- Run on 1.4.6 load
-        enable_shortcut()
-      end
+    end
+    if helpers.compare_versions(old_version, "1.4.6") == -1 then
+      -- Run on 1.4.6 load
+      enable_shortcut()
+    end
+    if helpers.compare_versions(old_version, "1.5.1") == -1 then
+      -- Run on 1.5.1 load
     end
   end
 )
 
 script.on_init(
   function()
+    ---@type PoleData[]
     storage.poles = {}
+    ---@type PoleData[]
     storage.fuses = {}
     ---@type table<UnitNumber, TransformerData>
     storage.transformers = {}
-    storage.tick_installed = game.tick
 
     update_global_settings()
     generate_max_consumption_table()
@@ -287,11 +298,6 @@ script.on_init(
     create_transformer_surfaces()
     handle_picker_dollies()
     enable_shortcut()
-
-    -- Enable transformer recipe
-    for _, force in pairs(game.forces) do
-      force.reset_technology_effects()
-    end
   end
 )
 
