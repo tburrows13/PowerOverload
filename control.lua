@@ -214,6 +214,7 @@ end
 
 local function reset_global_poles()
   local poles = {}
+  local fuses = {}
   for _, surface in pairs(game.surfaces) do
     for _, pole in pairs(surface.find_entities_filtered{type = "electric-pole"}) do
       if storage.max_consumptions[pole.name] then
@@ -223,14 +224,15 @@ local function reset_global_poles()
           max_consumption = storage.max_consumptions[pole.name][pole.quality.name]
         }
         if is_fuse(pole) then
-          table.insert(storage.fuses, pole_data)
+          table.insert(fuses, pole_data)
         else
-          table.insert(storage.poles, pole_data)
+          table.insert(poles, pole_data)
         end
       end
     end
   end
   storage.poles = poles
+  storage.fuses = fuses
 end
 
 script.on_event(defines.events.on_player_created,
@@ -277,9 +279,6 @@ script.on_configuration_changed(
     if helpers.compare_versions(old_version, "1.4.6") == -1 then
       -- Run on 1.4.6 load
       enable_shortcut()
-    end
-    if helpers.compare_versions(old_version, "1.5.1") == -1 then
-      -- Run on 1.5.1 load
     end
   end
 )
