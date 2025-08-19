@@ -20,7 +20,7 @@ function update_pole_rendering()
             surface = pole.surface,
             target = {entity = pole, offset = {x = 0, y = 0.7}},
             color = color,
-            scale = 3,
+            scale = 1.5 * player.display_scale,
             alignment = "center",
             scale_with_zoom = true,
             players = {player},
