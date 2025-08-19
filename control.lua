@@ -1,9 +1,10 @@
-local util = require "util"
-local shared = require "__PowerOverload__/shared"
+util = require "util"
+shared = require "__PowerOverload__/shared"
 require "__PowerOverload__/scripts/create-surface"
 require "__PowerOverload__/scripts/transformer"
 require "__PowerOverload__/scripts/poles"
 require "__PowerOverload__/scripts/power-interface"
+require "__PowerOverload__/scripts/pole-info-rendering"
 
 ---@alias ElectricNetworkID uint
 ---@alias PoleType "pole"|"fuse"
@@ -77,6 +78,7 @@ script.on_event(defines.events.on_tick,
     update_poles("fuse", consumption_cache)
     update_poles("pole", consumption_cache)
     update_transformers(event.tick)
+    update_pole_rendering()
   end
 )
 

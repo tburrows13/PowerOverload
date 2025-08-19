@@ -53,7 +53,7 @@ end
 
 ---@param statistics LuaFlowStatistics
 ---@return double
-local function get_total_consumption(statistics)
+function get_total_consumption(statistics)
   local total = 0
   for name, _ in pairs(statistics.input_counts) do
     for quality_name, _ in pairs(quality_names) do

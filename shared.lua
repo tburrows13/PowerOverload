@@ -27,7 +27,12 @@ local function validate_and_parse_energy(consumption, for_tooltips)
     log("Parsing energy setting '" .. consumption .. "' failed with error: " .. result)
     return false
   end
+end
 
+local function format_energy_number(amount)
+  result = util.format_number(amount, true) .. "W"
+  result = result:gsub("B", "G")
+  return result
 end
 
 -- These values are only the default values used in settings so changing them
@@ -220,6 +225,7 @@ return {
   get_pole_names = get_pole_names,
   get_pole_aliases = get_pole_aliases,
   validate_and_parse_energy = validate_and_parse_energy,
+  format_energy_number = format_energy_number,
   get_poles_to_make_fuses = get_poles_to_make_fuses,
   get_name_for_fuse = get_name_for_fuse,
   get_prototype_name_for_pole = get_prototype_name_for_pole
