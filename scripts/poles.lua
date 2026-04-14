@@ -26,12 +26,20 @@ function on_pole_built(pole, tags, player)
       neighbour_name = neighbour.ghost_name
     end
     local disconnect_all = player and not player.is_shortcut_toggled("po-auto-connect-poles")
+
+    -- 'compatibility' defined by being on the same max_consumption scale (supports variants without checking name)
+    -- AND at least neighbour quality to support quality upgrades and safely isolate downgrades.
+    local is_compatible = (
+        storage.max_consumptions[pole_name][pole.quality.name] == storage.max_consumptions[neighbour_name][pole.quality.name]
+        and pole.quality.level >= neighbour.quality.level
+    )
+
     if neighbour_type == "electric-pole"
         and not (tags and tags["po-skip-disconnection"])
         and not (never_disconnect[pole_name] or never_disconnect[neighbour_name])
         and (
           disconnect_all or always_disconnect[pole_name] or always_disconnect[neighbour_name]
-          or (pole_name ~= neighbour_name and storage.global_settings["power-overload-disconnect-different-poles"])
+          or (not is_compatible and storage.global_settings["power-overload-disconnect-different-poles"])
         )
         then
           pole_connector.disconnect_from(neighbour_connector)
