@@ -15,7 +15,7 @@ local never_disconnect = {
 ---@param player LuaPlayer?
 function on_pole_built(pole, tags, player)
   local pole_name = pole.name
-  local pole_connector = pole.get_wire_connector(copper, true)
+  local pole_connector = pole.get_wire_connector(copper, true) ---@cast pole_connector -nil
   for _, connection in pairs(pole_connector.real_connections) do
     local neighbour_connector = connection.target
     local neighbour = neighbour_connector.owner
@@ -29,17 +29,18 @@ function on_pole_built(pole, tags, player)
 
     -- 'compatibility' defined by being on the same max_consumption scale (supports variants without checking name)
     -- AND at least neighbour quality to support quality upgrades and safely isolate downgrades.
-    local is_compatible = (
-        storage.max_consumptions[pole_name][pole.quality.name] == storage.max_consumptions[neighbour_name][pole.quality.name]
-        and pole.quality.level >= neighbour.quality.level
-    )
+    local is_compatible = function () return ( -- function for lazy execution (i.e. after never and always checks).
+          storage.max_consumptions[pole_name][pole.quality.name] == storage.max_consumptions[neighbour_name][pole.quality.name]
+          and pole.quality.level >= neighbour.quality.level
+      )
+    end
 
     if neighbour_type == "electric-pole"
         and not (tags and tags["po-skip-disconnection"])
         and not (never_disconnect[pole_name] or never_disconnect[neighbour_name])
         and (
           disconnect_all or always_disconnect[pole_name] or always_disconnect[neighbour_name]
-          or (not is_compatible and storage.global_settings["power-overload-disconnect-different-poles"])
+          or (not is_compatible() and storage.global_settings["power-overload-disconnect-different-poles"])
         )
         then
           pole_connector.disconnect_from(neighbour_connector)

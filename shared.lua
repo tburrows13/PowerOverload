@@ -202,7 +202,7 @@ local function get_pole_names(mods, registered_poles)
   for pole_name, def in pairs(registered_poles or {}) do
     loaded_pole_names[pole_name] = def.default
   end
-  log(serpent.block(loaded_pole_names))
+  -- log(serpent.block(loaded_pole_names))
   return loaded_pole_names
 end
 
