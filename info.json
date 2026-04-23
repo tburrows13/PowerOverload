@@ -11,13 +11,17 @@
       "? quality",
       "? space-age",
       "(?) aai-industry",
+      "(?) bzaluminum",
+      "(?) bzlead",
+      "(?) bzgas",
+      "(?) PickerDollies",
+      "(?) pyalternativeenergy"
+    ],
+    "--x-known-integrations": [
       "(?) Advanced_Electric",
       "(?) AdvancedSubstation",
       "(?) Bio_Industries",
       "(?) bobpower",
-      "(?) bzaluminum",
-      "(?) bzlead",
-      "(?) bzgas",
       "(?) cargo-ships",
       "(?) FactorioExtended-Plus-Power",
       "(?) fixLargeElectricPole",
@@ -26,9 +30,7 @@
       "(?) Krastorio2-spaced-out",
       "(?) Lighted-Poles-Plus",
       "(?) omnimatter_energy",
-      "(?) PickerDollies",
       "(?) pycoalprocessing",
-      "(?) pyalternativeenergy",
       "(?) space-exploration"
     ],
     "package": {
