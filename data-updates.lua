@@ -1,5 +1,5 @@
-shared = require "__PowerOverload__/shared"
-require "__PowerOverload__/prototypes/fuse-recipes"
+shared = require "__PowerOverload-fork__/shared"
+require "__PowerOverload-fork__/prototypes/fuse-recipes"
 
-require "__PowerOverload__/prototypes/technology-updates"
-require "__PowerOverload__/prototypes/mod-compatibility"
+require "__PowerOverload-fork__/prototypes/technology-updates"
+require "__PowerOverload-fork__/prototypes/mod-compatibility"

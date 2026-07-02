@@ -20,7 +20,7 @@ data:extend{
     localised_name = {"", {"technology-name.electric-energy-distribution"}, " 3"},
     localised_description = {"technology-description.electric-energy-distribution"},
     icon_size = 165,
-    icon = "__PowerOverload__/graphics/huge-electric-pole-tech.png",
+    icon = "__PowerOverload-fork__/graphics/huge-electric-pole-tech.png",
     effects =
     {
       {

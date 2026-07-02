@@ -1,6 +1,6 @@
 local small_fuse = data.raw["electric-pole"]["po-small-electric-fuse"]
 small_fuse.pictures.layers[1] = {
-  filename = "__PowerOverload__/graphics/entity/small-electric-fuse/small-fuse.png",
+  filename = "__PowerOverload-fork__/graphics/entity/small-electric-fuse/small-fuse.png",
   priority = "extra-high",
   width = 80,
   height = 207,
@@ -9,7 +9,7 @@ small_fuse.pictures.layers[1] = {
   scale = 0.5
 }
 small_fuse.pictures.layers[2] = {
-  filename = "__PowerOverload__/graphics/entity/small-electric-fuse/small-fuse-shadow.png",
+  filename = "__PowerOverload-fork__/graphics/entity/small-electric-fuse/small-fuse-shadow.png",
   priority = "extra-high",
   width = 266,
   height = 56,
@@ -18,7 +18,7 @@ small_fuse.pictures.layers[2] = {
   draw_as_shadow = true,
   scale = 0.5
 }
-small_fuse.water_reflection.pictures.filename = "__PowerOverload__/graphics/entity/small-electric-fuse/small-fuse-reflection.png"
+small_fuse.water_reflection.pictures.filename = "__PowerOverload-fork__/graphics/entity/small-electric-fuse/small-fuse-reflection.png"
 small_fuse.water_reflection.pictures.variation_count = 1
 small_fuse.water_reflection.orientation_to_variation = false
 
@@ -38,7 +38,7 @@ small_fuse.connection_points =
 
 local medium_fuse = data.raw["electric-pole"]["po-medium-electric-fuse"]
 medium_fuse.pictures.layers[1] = {
-  filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse.png",
+  filename = "__PowerOverload-fork__/graphics/entity/medium-electric-fuse/medium-fuse.png",
   priority = "extra-high",
   width = 67,
   height = 194,
@@ -47,7 +47,7 @@ medium_fuse.pictures.layers[1] = {
   scale = 0.5
 }
 medium_fuse.pictures.layers[2] = {
-  filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse-shadow.png",
+  filename = "__PowerOverload-fork__/graphics/entity/medium-electric-fuse/medium-fuse-shadow.png",
   priority = "extra-high",
   width = 225,
   height = 44,
@@ -60,7 +60,7 @@ medium_fuse.water_reflection =  -- Defined here because IR3 removes the water re
 {
   pictures =
   {
-    filename = "__PowerOverload__/graphics/entity/medium-electric-fuse/medium-fuse-reflection.png",
+    filename = "__PowerOverload-fork__/graphics/entity/medium-electric-fuse/medium-fuse-reflection.png",
     priority = "extra-high",
     width = 12,
     height = 28,
@@ -88,7 +88,7 @@ medium_fuse.connection_points =
 
 local big_fuse = data.raw["electric-pole"]["po-big-electric-fuse"]
 big_fuse.pictures.layers[1] = {
-  filename = "__PowerOverload__/graphics/entity/big-electric-fuse/big-fuse.png",
+  filename = "__PowerOverload-fork__/graphics/entity/big-electric-fuse/big-fuse.png",
   priority = "extra-high",
   width = 111,
   height = 197,
@@ -97,7 +97,7 @@ big_fuse.pictures.layers[1] = {
   scale = 0.5
 }
 big_fuse.pictures.layers[2] = {
-  filename = "__PowerOverload__/graphics/entity/big-electric-fuse/big-fuse-shadow.png",
+  filename = "__PowerOverload-fork__/graphics/entity/big-electric-fuse/big-fuse-shadow.png",
   priority = "extra-high",
   width = 209,
   height = 78,
@@ -106,7 +106,7 @@ big_fuse.pictures.layers[2] = {
   draw_as_shadow = true,
   scale = 0.5
 }
-big_fuse.water_reflection.pictures.filename = "__PowerOverload__/graphics/entity/big-electric-fuse/big-fuse-reflection.png"
+big_fuse.water_reflection.pictures.filename = "__PowerOverload-fork__/graphics/entity/big-electric-fuse/big-fuse-reflection.png"
 big_fuse.connection_points =
 {
   {
@@ -125,7 +125,7 @@ big_fuse.connection_points =
 -- Icons
 
 local small_fuse_icon = {{
-  icon = "__PowerOverload__/graphics/icons/small-electric-fuse.png",
+  icon = "__PowerOverload-fork__/graphics/icons/small-electric-fuse.png",
   icon_size = 64,
 }}
 small_fuse.icons = small_fuse_icon
@@ -133,7 +133,7 @@ data.raw.item["po-small-electric-fuse"].icons = small_fuse_icon
 data.raw.corpse["po-small-electric-fuse-remnants"].icons = small_fuse_icon
 
 local medium_fuse_icon = {{
-  icon = "__PowerOverload__/graphics/icons/medium-electric-fuse.png",
+  icon = "__PowerOverload-fork__/graphics/icons/medium-electric-fuse.png",
   icon_size = 64,
 }}
 medium_fuse.icons = medium_fuse_icon
@@ -141,7 +141,7 @@ data.raw.item["po-medium-electric-fuse"].icons = medium_fuse_icon
 data.raw.corpse["po-medium-electric-fuse-remnants"].icons = medium_fuse_icon
 
 local big_fuse_icon = {{
-  icon = "__PowerOverload__/graphics/icons/big-electric-fuse.png",
+  icon = "__PowerOverload-fork__/graphics/icons/big-electric-fuse.png",
   icon_size = 64,
 }}
 big_fuse.icons = big_fuse_icon
