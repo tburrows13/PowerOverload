@@ -1,4 +1,4 @@
-# Power Overload
+# Power Overload Fork
 ## Features
 - Power poles may explode if their network's total consumption goes over the maximum consumption for that power pole type
 - Separate your network into subnetworks using transformers, but ensure that each subnetwork does not get too large!
