@@ -144,7 +144,7 @@ pylon_recipe = {
 }
 
 if mods["space-age"] then
-  pylon_recipe.category = "electronics"
+  pylon_recipe.categories = {"electromagnetics"}
 end
 
 data:extend{pylon, pylon_item, pylon_recipe}
