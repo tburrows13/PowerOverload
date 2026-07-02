@@ -1,6 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 2.1.0
 Date: 02 July 2026
+  Features:
+    - Added a tips and tricks overview demonstration simulation
   Compatibility:
     - Updated for Factorio 2.1
 ---------------------------------------------------------------------------------------------------
