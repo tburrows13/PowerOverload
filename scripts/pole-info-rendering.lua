@@ -1,5 +1,5 @@
 function update_pole_rendering()
-  rendering.clear()
+  rendering.clear(script.mod_name)
 
   for _, player in pairs(game.players) do
     if player.valid and player.connected then
