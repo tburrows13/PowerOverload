@@ -22,7 +22,7 @@
     - `Shift + Click` on a power pole to remove all wires
     - 'Connect' two connected poles with copper cable to disconnect them
 - Useful mods:
-    - [Wire Shortcut X](https://mods.factorio.com/mod/WireShortcutshttps://mods.factorio.com/mod/WireShortcutX) for easier connecting and disconnecting of wires
+    - [Wire Shortcut X](https://mods.factorio.com/mod/WireShortcutX) for easier connecting and disconnecting of wires
     - [Rate Calculator](https://mods.factorio.com/mod/RateCalculator) for ensuring that a subnetworks' power requirements are not too large
 
 ## Compatibility
