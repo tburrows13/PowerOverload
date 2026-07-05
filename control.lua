@@ -193,6 +193,7 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, update_global_set
 
 local function generate_max_consumption_table()
   local pole_names = shared.get_pole_names(script.active_mods)
+  pole_names = shared.get_pole_names_from_settings(pole_names, prototypes.entity, settings.startup)
   local max_consumptions = {}
   for pole_name, default_consumption in pairs(pole_names) do
     local setting_pole_name = shared.get_pole_aliases()[pole_name] or pole_name

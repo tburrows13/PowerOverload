@@ -37,7 +37,7 @@ end
 
 -- These values are only the default values used in settings so changing them
 -- won't change the actual values: use mod settings for that
-local function get_pole_names(mods)
+local function get_pole_names(mods, registered_poles)
   local mod_pole_names = {
     ["base"] = {
       ["small-electric-pole"] = "10MW",  -- (10 MW is just over 20 steam engines-worth)
@@ -177,6 +177,9 @@ local function get_pole_names(mods)
     end
     combine_tables(loaded_pole_names, lighted_pole_names)
   end
+  for pole_name, def in pairs(registered_poles or {}) do
+    loaded_pole_names[pole_name] = def.default
+  end
   log(serpent.block(loaded_pole_names))
   return loaded_pole_names
 end
@@ -187,6 +190,28 @@ local function get_pole_aliases()
     ["po-interface-east"] = "po-interface",
     ["po-interface-south"] = "po-interface",
   }
+end
+
+local function is_electric_pole(electric_poles, pole_name)
+  local prototype = electric_poles[pole_name]
+  return prototype and prototype.type == "electric-pole"
+end
+
+local function get_pole_names_from_settings(pole_names, electric_poles, startup_settings)
+  local prefix = "power-overload-max-power-"
+
+  for setting_name, setting in pairs(startup_settings) do
+    if string.sub(setting_name, 1, string.len(prefix)) == prefix then
+      local pole_name = string.sub(setting_name, string.len(prefix) + 1)
+      if is_electric_pole(electric_poles, pole_name) then
+        pole_names[pole_name] = setting.value
+      elseif not get_pole_aliases()[pole_name] then
+        log("Power Overload setting found for unknown electric pole " .. pole_name)
+      end
+    end
+  end
+
+  return pole_names
 end
 
 local function get_poles_to_make_fuses(mods)
@@ -223,6 +248,7 @@ end
 
 return {
   get_pole_names = get_pole_names,
+  get_pole_names_from_settings = get_pole_names_from_settings,
   get_pole_aliases = get_pole_aliases,
   validate_and_parse_energy = validate_and_parse_energy,
   format_energy_number = format_energy_number,

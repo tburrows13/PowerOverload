@@ -48,6 +48,22 @@
 - Angel's and 248k do not add any extra power poles, so should work. Nullius and 5Dim's are not supported
 - If you would like support for a particular mod, let me know. Since I haven't played many other mods, balance suggestions would be helpful
 
+## For modders
+Other mods can register electric poles for Power Overload to manage without needing direct compatibility changes here. Add an optional dependency on Power Overload, then register poles during `settings.lua` or `settings-updates.lua`:
+
+```lua
+if mods["PowerOverload"] then
+  require("__PowerOverload__/registry")
+
+  PowerOverload.register_pole{
+    name = "my-electric-pole",
+    default = "4GW"
+  }
+end
+```
+
+Power Overload will create a startup setting named `power-overload-max-power-my-electric-pole` and use that setting for tooltips and runtime overload handling if the prototype exists.
+
 ## Performance
 At the current level of optimisation, you should expect to be able to maintain 60UPS well into the hundreds of science-per-minute.
 As such, it works particularly well with smaller overhaul mods like Krastorio 2 and Industrial Revolution 2. Late-game Space Exploration or Pyanodons will likely run into UPS issues, although I do have future plans for further optimisation.
