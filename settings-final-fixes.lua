@@ -1,10 +1,12 @@
+-- shared.validate_and_parse_energy() (below) relies on the global `util`, which
+-- is not set up automatically during the settings stage, so load it here.
 util = require "__core__/lualib/util"
 local shared = require "shared"
 require "__PowerOverload__/registry"
 
 local pole_names = shared.get_pole_names(mods, PowerOverload.get_registered_poles())
 
-order = 0
+local order = 0
 for pole_name, default_power in pairs(pole_names) do
   if not shared.get_pole_aliases()[pole_name] then
     if shared.validate_and_parse_energy(default_power) then
@@ -16,7 +18,7 @@ for pole_name, default_power in pairs(pole_names) do
 
           setting_type = "startup",
           default_value = default_power,
-          order = string.format("%03d", tostring(order))
+          order = string.format("%03d", order)
         }
       }
       order = order + 1

@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.1.7
+Date: 09 July 2026
+  Features:
+    - Added a modding API (PowerOverload.register_pole) so other mods can register their electric poles for Power Overload's overload handling and tooltips (thanks to Calvinxc1)
+---------------------------------------------------------------------------------------------------
 Version: 2.1.6
 Date: 09 July 2026
   Changes:

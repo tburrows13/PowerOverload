@@ -204,7 +204,10 @@ local function get_pole_names_from_settings(pole_names, electric_poles, startup_
     if string.sub(setting_name, 1, string.len(prefix)) == prefix then
       local pole_name = string.sub(setting_name, string.len(prefix) + 1)
       if is_electric_pole(electric_poles, pole_name) then
-        pole_names[pole_name] = setting.value
+        -- Keep any hardcoded default so it can act as a fallback if the setting
+        -- value is invalid; only settings-backed poles (e.g. externally
+        -- registered ones) fall back to the setting value itself.
+        pole_names[pole_name] = pole_names[pole_name] or setting.value
       elseif not get_pole_aliases()[pole_name] then
         log("Power Overload setting found for unknown electric pole " .. pole_name)
       end
