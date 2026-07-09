@@ -1,2 +1,2 @@
-shared = require "__PowerOverload__/shared"
-require "__PowerOverload__/prototypes/poles"
+shared = require "__PowerOverload-fork__/shared"
+require "__PowerOverload-fork__/prototypes/poles"

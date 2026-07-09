@@ -1,5 +1,4 @@
-# Power Overload
-
+# Power Overload Fork
 ## Features
 - Power poles may explode if their network's total consumption goes over the maximum consumption for that power pole type
 - Separate your network into subnetworks using transformers, but ensure that each subnetwork does not get too large!
@@ -60,4 +59,4 @@ Thanks to busdriver4 for creating the amazing fuse and transformer graphics!
 
 You can help by translating this mod into your language using [CrowdIn](https://crowdin.com/project/factorio-mods-localization). Any translations made will be included in the next release.
 If you've been using this mod, I'd love to see some screenshots or saves from your playthrough.
-If you have any bug reports, feedback, or balance suggestions, please let me know through the [Discussion page](https://mods.factorio.com/mod/PowerOverload/discussion).
+If you have any bug reports, feedback, or balance suggestions, please let me know through the [Discussion page](https://mods.factorio.com/mod/PowerOverload-fork/discussion) or by [opening an issue](https://github.com/enrik-0/PowerOverload/issues) on GitHub.

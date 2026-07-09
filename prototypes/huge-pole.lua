@@ -5,7 +5,7 @@ translate = -0.2
 local pylon =  {
     type = "electric-pole",
     name = "po-huge-electric-pole",
-    icon = "__PowerOverload__/graphics/icons/huge-electric-pole.png",
+    icon = "__PowerOverload-fork__/graphics/icons/huge-electric-pole.png",
     icon_size = 32,
     flags = {"placeable-neutral", "player-creation",},
     minable = {mining_time = 0.1, result = "po-huge-electric-pole"},
@@ -30,7 +30,7 @@ local pylon =  {
     close_sound = big_pole.close_sound,
     pictures =
     {
-      filename = "__PowerOverload__/graphics/huge-electric-pole.png",
+      filename = "__PowerOverload-fork__/graphics/huge-electric-pole.png",
       priority = "extra-high",
       width = 168,
       height = 165,
@@ -124,7 +124,7 @@ local pylon =  {
 local pylon_item = table.deepcopy(data.raw.item["big-electric-pole"])
 pylon_item.name = "po-huge-electric-pole"
 pylon_item.place_result = "po-huge-electric-pole"
-pylon_item.icon = "__PowerOverload__/graphics/icons/huge-electric-pole.png"
+pylon_item.icon = "__PowerOverload-fork__/graphics/icons/huge-electric-pole.png"
 pylon_item.icon_size = 32
 
 
@@ -144,7 +144,7 @@ pylon_recipe = {
 }
 
 if mods["space-age"] then
-  pylon_recipe.category = "electronics"
+  pylon_recipe.categories = {"electromagnetics"}
 end
 
 data:extend{pylon, pylon_item, pylon_recipe}

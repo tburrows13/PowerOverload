@@ -20,7 +20,7 @@ local recipe = {
   results = {{type="item", name="po-interface", amount=1}},
 }
 if mods["space-age"] then
-  recipe.category = "electronics"
+  recipe.categories = {"electromagnetics"}
 end
 
 

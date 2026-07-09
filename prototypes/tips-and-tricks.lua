@@ -1,3 +1,5 @@
+local simulations = require "__PowerOverload-fork__/prototypes/tips-and-tricks-simulations"
+
 data:extend{
   {
     type = "tips-and-tricks-item-category",
@@ -12,7 +14,8 @@ data:extend{
     is_title = true,
     order = "a",
     starting_status = "unlocked",
-    trigger = {type = "build-entity", entity = "small-electric-pole", match_type_only = true}
+    trigger = {type = "build-entity", entity = "small-electric-pole", match_type_only = true},
+    simulation = simulations.po_main
   },
   {
     type = "tips-and-tricks-item",

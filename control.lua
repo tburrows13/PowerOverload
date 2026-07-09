@@ -1,10 +1,10 @@
 util = require "util"
-shared = require "__PowerOverload__/shared"
-require "__PowerOverload__/scripts/create-surface"
-require "__PowerOverload__/scripts/transformer"
-require "__PowerOverload__/scripts/poles"
-require "__PowerOverload__/scripts/power-interface"
-require "__PowerOverload__/scripts/pole-info-rendering"
+shared = require "__PowerOverload-fork__/shared"
+require "__PowerOverload-fork__/scripts/create-surface"
+require "__PowerOverload-fork__/scripts/transformer"
+require "__PowerOverload-fork__/scripts/poles"
+require "__PowerOverload-fork__/scripts/power-interface"
+require "__PowerOverload-fork__/scripts/pole-info-rendering"
 
 ---@alias ElectricNetworkID uint
 ---@alias PoleType "pole"|"fuse"
