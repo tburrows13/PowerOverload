@@ -8,9 +8,9 @@ transformer.name = "po-transformer"
 transformer.wire_max_distance = 0
 transformer.minable.result = "po-transformer"
 transformer.placeable_by = {item = "po-transformer", count = 1}
-transformer.power_on_animation.layers[1].filename = "__PowerOverload-fork__/graphics/transformer.png"
+transformer.power_on_animation.layers[1].filename = "__PowerOverload__/graphics/transformer.png"
 transformer.icons = {{
-  icon = "__PowerOverload-fork__/graphics/icons/transformer.png",
+  icon = "__PowerOverload__/graphics/icons/transformer.png",
   icon_size = 64,
 }}
 local transformer_high = table.deepcopy(transformer)

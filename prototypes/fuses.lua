@@ -1,4 +1,4 @@
-local shared = require "__PowerOverload-fork__/shared"
+local shared = require "__PowerOverload__/shared"
 
 -- Fuse custom graphics are specified in fuse-graphics.lua
 

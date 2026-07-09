@@ -1,4 +1,4 @@
-local simulations = require "__PowerOverload-fork__/prototypes/tips-and-tricks-simulations"
+local simulations = require "__PowerOverload__/prototypes/tips-and-tricks-simulations"
 
 data:extend{
   {

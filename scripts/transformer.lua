@@ -20,7 +20,7 @@ function create_transformer(transformer_entity, old_transformer_parts)
   local surface = transformer_entity.surface
   local transformer_surface = game.get_surface(surface.name .. "-transformer")
   if not transformer_surface then
-    game.print("Transformer surface missing. Please report this at https://mods.factorio.com/mod/PowerOverload-fork/discussion")
+    game.print("Transformer surface missing. Please report this at https://mods.factorio.com/mod/PowerOverload/discussion")
     return
   end
 

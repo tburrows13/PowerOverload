@@ -1,4 +1,4 @@
-local shared = require "__PowerOverload-fork__/shared"
+local shared = require "__PowerOverload__/shared"
 
 local function multiply_ingredients(from_recipe, to_recipe, name)
   to_recipe.results[1].name = name
