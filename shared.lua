@@ -66,15 +66,15 @@ local function get_pole_names(mods)
       ["se-pylon-construction-radar"] = "2GW",
     },
     ["bobpower"] = {
-      ["medium-electric-pole-2"] = "100MW",
-      ["medium-electric-pole-3"] = "140MW",
-      ["medium-electric-pole-4"] = "180MW",
-      ["big-electric-pole-2"] = "400MW",
-      ["big-electric-pole-3"] = "500MW",
-      ["big-electric-pole-4"] = "600MW",
-      ["substation-2"] = "200MW",
-      ["substation-3"] = "275MW",
-      ["substation-4"] = "350MW"
+      ["bob-medium-electric-pole-2"] = "100MW",
+      ["bob-medium-electric-pole-3"] = "140MW",
+      ["bob-medium-electric-pole-4"] = "180MW",
+      ["bob-big-electric-pole-2"] = "400MW",
+      ["bob-big-electric-pole-3"] = "500MW",
+      ["bob-big-electric-pole-4"] = "600MW",
+      ["bob-substation-2"] = "200MW",
+      ["bob-substation-3"] = "275MW",
+      ["bob-substation-4"] = "350MW"
     },
     ["cargo-ships"] = {
       ["floating-electric-pole"] = "1.5GW"
