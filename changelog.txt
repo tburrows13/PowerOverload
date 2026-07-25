@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.2.0
+Date: 25 July 2026
+  Features:
+    - Transformers can now be given a name and a colour: open a transformer to set them in the new panel (colour is chosen with RGB sliders, previewed live)
+    - The transformer's output (downstream) network is now drawn on the map: the network's wires and poles are tinted with the transformer's colour, with the network name shown as a persistent label like a train stop
+    - Added a shortcut-bar toggle (also bindable to a key) to show/hide the network name labels on the map; the colours stay visible
+    - New transformers get an automatic name (from the same pool used by train stops) and colour; existing transformers in older saves are backfilled automatically so nothing breaks
+  Changes:
+    - Increased the transformer's input/output wire connection range from 5 to 9, matching the medium electric pole
+---------------------------------------------------------------------------------------------------
 Version: 2.1.7
 Date: 09 July 2026
   Features:
