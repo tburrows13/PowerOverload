@@ -1,5 +1,3 @@
-local shared = require "shared"
-
 data:extend{
   {
     type = "bool-setting",
@@ -33,21 +31,3 @@ data:extend{
     order = "d"
   },
 }
-
-order = 0
-for pole_name, default_power in pairs(shared.get_pole_names(mods)) do
-  if not shared.get_pole_aliases()[pole_name] then
-    data:extend{
-      {
-        type = "string-setting",
-        name = "power-overload-max-power-" .. pole_name,
-        localised_name = {"", {"description.max-energy-consumption"}, ": [entity=" .. pole_name .. "] ", pole_name},
-
-        setting_type = "startup",
-        default_value = default_power,
-        order = string.format("%03d", tostring(order))
-      }
-    }
-    order = order + 1
-  end
-end

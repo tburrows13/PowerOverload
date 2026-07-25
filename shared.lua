@@ -35,9 +35,31 @@ local function format_energy_number(amount)
   return result
 end
 
+-- Distinct, map-legible colours (0-1 floats) used both for auto-assigning a
+-- colour to new transformers and as the starting point in the transformer GUI.
+-- Kept as plain data so it is safe to require at the data stage.
+local network_color_palette = {
+  {r = 0.90, g = 0.20, b = 0.20},  -- red
+  {r = 0.95, g = 0.55, b = 0.15},  -- orange
+  {r = 0.95, g = 0.85, b = 0.20},  -- yellow
+  {r = 0.55, g = 0.85, b = 0.25},  -- lime
+  {r = 0.25, g = 0.75, b = 0.35},  -- green
+  {r = 0.20, g = 0.80, b = 0.65},  -- teal
+  {r = 0.25, g = 0.70, b = 0.95},  -- sky blue
+  {r = 0.30, g = 0.45, b = 0.95},  -- blue
+  {r = 0.55, g = 0.35, b = 0.95},  -- indigo
+  {r = 0.75, g = 0.35, b = 0.90},  -- purple
+  {r = 0.95, g = 0.40, b = 0.75},  -- pink
+  {r = 0.85, g = 0.55, b = 0.45},  -- salmon
+  {r = 0.60, g = 0.80, b = 0.90},  -- pale blue
+  {r = 0.80, g = 0.80, b = 0.55},  -- khaki
+  {r = 0.70, g = 0.70, b = 0.75},  -- grey
+  {r = 0.55, g = 0.40, b = 0.30},  -- brown
+}
+
 -- These values are only the default values used in settings so changing them
 -- won't change the actual values: use mod settings for that
-local function get_pole_names(mods)
+local function get_pole_names(mods, registered_poles)
   local mod_pole_names = {
     ["base"] = {
       ["small-electric-pole"] = "10MW",  -- (10 MW is just over 20 steam engines-worth)
@@ -177,6 +199,9 @@ local function get_pole_names(mods)
     end
     combine_tables(loaded_pole_names, lighted_pole_names)
   end
+  for pole_name, def in pairs(registered_poles or {}) do
+    loaded_pole_names[pole_name] = def.default
+  end
   log(serpent.block(loaded_pole_names))
   return loaded_pole_names
 end
@@ -187,6 +212,31 @@ local function get_pole_aliases()
     ["po-interface-east"] = "po-interface",
     ["po-interface-south"] = "po-interface",
   }
+end
+
+local function is_electric_pole(electric_poles, pole_name)
+  local prototype = electric_poles[pole_name]
+  return prototype and prototype.type == "electric-pole"
+end
+
+local function get_pole_names_from_settings(pole_names, electric_poles, startup_settings)
+  local prefix = "power-overload-max-power-"
+
+  for setting_name, setting in pairs(startup_settings) do
+    if string.sub(setting_name, 1, string.len(prefix)) == prefix then
+      local pole_name = string.sub(setting_name, string.len(prefix) + 1)
+      if is_electric_pole(electric_poles, pole_name) then
+        -- Keep any hardcoded default so it can act as a fallback if the setting
+        -- value is invalid; only settings-backed poles (e.g. externally
+        -- registered ones) fall back to the setting value itself.
+        pole_names[pole_name] = pole_names[pole_name] or setting.value
+      elseif not get_pole_aliases()[pole_name] then
+        log("Power Overload setting found for unknown electric pole " .. pole_name)
+      end
+    end
+  end
+
+  return pole_names
 end
 
 local function get_poles_to_make_fuses(mods)
@@ -223,10 +273,12 @@ end
 
 return {
   get_pole_names = get_pole_names,
+  get_pole_names_from_settings = get_pole_names_from_settings,
   get_pole_aliases = get_pole_aliases,
   validate_and_parse_energy = validate_and_parse_energy,
   format_energy_number = format_energy_number,
   get_poles_to_make_fuses = get_poles_to_make_fuses,
   get_name_for_fuse = get_name_for_fuse,
-  get_prototype_name_for_pole = get_prototype_name_for_pole
+  get_prototype_name_for_pole = get_prototype_name_for_pole,
+  network_color_palette = network_color_palette
 }
