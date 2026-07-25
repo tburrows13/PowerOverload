@@ -95,6 +95,7 @@ function open_transformer_gui(player, transformer_entity)
     type = "textfield",
     name = NAME_FIELD,
     text = transformer_parts.name,
+    icon_selector = true,
   }
   name_field.style.horizontally_stretchable = true
 

@@ -174,6 +174,7 @@ function rebuild_network_overlay()
         alignment = "center",
         vertical_alignment = "middle",
         render_mode = "chart",
+        use_rich_text = true,
         players = players,
       }.id
     end
