@@ -5,6 +5,8 @@ require "__PowerOverload__/scripts/transformer"
 require "__PowerOverload__/scripts/poles"
 require "__PowerOverload__/scripts/power-interface"
 require "__PowerOverload__/scripts/pole-info-rendering"
+require "__PowerOverload__/scripts/network-rendering"
+require "__PowerOverload__/scripts/transformer-gui"
 
 ---@alias ElectricNetworkID uint
 ---@alias PoleType "pole"|"fuse"
@@ -41,6 +43,7 @@ local function on_built(event)
     elseif entity.name == "po-transformer" or entity.name == "po-transformer-high" or entity.name == "po-transformer-low" then
       create_transformer(entity)
     end
+    mark_overlay_dirty()
   end
 end
 -- Needs to be 4 separate lines so that the filters work
@@ -56,6 +59,7 @@ local function on_destroyed(event)
   elseif entity and is_fuse(entity) then
     entity.get_wire_connector(copper, false).disconnect_all()
   end
+  mark_overlay_dirty()
 end
 script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
 script.on_event(defines.events.on_robot_pre_mined, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
@@ -67,6 +71,7 @@ script.on_event(defines.events.on_object_destroyed,
     local unit_number = event.useful_id
     if unit_number then
       on_transformer_destroyed(unit_number)
+      mark_overlay_dirty()
     end
   end
 )
@@ -79,6 +84,7 @@ script.on_event(defines.events.on_tick,
     update_poles("pole", consumption_cache)
     update_transformers(event.tick)
     update_pole_rendering()
+    update_network_overlay(event.tick)
   end
 )
 
@@ -129,13 +135,29 @@ local toggle_auto_connect_poles = function(event)
   local toggle_on = not player.is_shortcut_toggled("po-auto-connect-poles")
   player.set_shortcut_toggled("po-auto-connect-poles", toggle_on)
 end
+local toggle_network_names = function(event)
+  local player = game.get_player(event.player_index)  ---@cast player -?
+  local toggle_on = not player.is_shortcut_toggled("po-toggle-network-names")
+  player.set_shortcut_toggled("po-toggle-network-names", toggle_on)
+  set_network_names_visible(player, toggle_on)
+end
 script.on_event("po-auto-connect-poles", toggle_auto_connect_poles)
+script.on_event("po-toggle-network-names", toggle_network_names)
 script.on_event(defines.events.on_lua_shortcut,
   function(event)
-    if event.prototype_name and event.prototype_name ~= "po-auto-connect-poles" then return end
-    toggle_auto_connect_poles(event)
+    if event.prototype_name == "po-auto-connect-poles" then
+      toggle_auto_connect_poles(event)
+    elseif event.prototype_name == "po-toggle-network-names" then
+      toggle_network_names(event)
+    end
   end
 )
+
+-- Transformer network GUI
+script.on_event(defines.events.on_gui_opened, transformer_gui_on_opened)
+script.on_event(defines.events.on_gui_closed, transformer_gui_on_closed)
+script.on_event(defines.events.on_gui_text_changed, transformer_gui_on_text_changed)
+script.on_event(defines.events.on_gui_value_changed, transformer_gui_on_value_changed)
 
 local function on_dolly_moved_entity(event)
   local transformer = event.moved_entity
@@ -159,6 +181,8 @@ local function on_dolly_moved_entity(event)
   transformer_parts.pole_out.teleport(position_out)
   transformer_parts.pole_out_alt.teleport(position_out)
   transformer_parts.interface_out.teleport(position_out)
+
+  mark_overlay_dirty()
 end
 
 local function handle_picker_dollies()
@@ -242,11 +266,14 @@ script.on_event(defines.events.on_player_created,
   function(event)
     local player = game.get_player(event.player_index)  ---@cast player -?
     player.set_shortcut_toggled("po-auto-connect-poles", true)
+    player.set_shortcut_toggled("po-toggle-network-names", true)
+    mark_overlay_dirty()
   end
 )
 local function enable_shortcut()
   for _, player in pairs(game.players) do
     player.set_shortcut_toggled("po-auto-connect-poles", true)
+    player.set_shortcut_toggled("po-toggle-network-names", true)
   end
 end
 
@@ -259,6 +286,16 @@ script.on_configuration_changed(
 
     storage.network_grace_ticks = nil
     create_transformer_surfaces()
+
+    -- Network name/colour overlay state (added in the transformer-orchestration
+    -- update). Backfill identity so saves from before this feature don't break.
+    storage.network_overlay_object_ids = storage.network_overlay_object_ids or {}
+    storage.pole_info_object_ids = storage.pole_info_object_ids or {}
+    storage.show_network_names = storage.show_network_names or {}
+    storage.overlay_dirty = true
+    for unit_number, transformer_parts in pairs(storage.transformers) do
+      ensure_transformer_identity(transformer_parts, unit_number)
+    end
 
     local old_version
     local mod_changes = changed_data.mod_changes
@@ -294,6 +331,13 @@ script.on_init(
     storage.fuses = {}
     ---@type table<UnitNumber, TransformerData>
     storage.transformers = {}
+    ---@type uint64[]
+    storage.network_overlay_object_ids = {}
+    ---@type uint64[]
+    storage.pole_info_object_ids = {}
+    ---@type table<uint, boolean>
+    storage.show_network_names = {}
+    storage.overlay_dirty = true
 
     update_global_settings()
     generate_max_consumption_table()

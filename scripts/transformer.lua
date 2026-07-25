@@ -12,6 +12,55 @@
 ---@field pole_out_alt LuaEntity?
 ---@field interface_out LuaEntity?
 ---@field bucket number
+---@field name string  -- Player-facing name of the output (downstream) network
+---@field color Color  -- Colour used to draw the output network on the map
+
+-- Picks a random name from the same backer-name pool the game uses for train
+-- stops, locomotives, radars, etc.
+---@return string
+function pick_network_name()
+  local backer_names = game.backer_names
+  local count = #backer_names
+  if count > 0 then
+    return backer_names[math.random(count)]
+  end
+  return "Network"
+end
+
+-- Deterministic colour from the transformer's unit_number so adjacent
+-- transformers tend to differ and the colour is stable across reloads.
+---@param unit_number UnitNumber
+---@return Color
+function pick_network_color(unit_number)
+  local palette = shared.network_color_palette
+  local entry = palette[(unit_number % #palette) + 1]
+  return {r = entry.r, g = entry.g, b = entry.b, a = 1}
+end
+
+-- Ensures a transformer entry has a name and colour (used for new transformers
+-- and to backfill saves created before this feature existed).
+---@param transformer_parts TransformerData
+---@param unit_number UnitNumber
+function ensure_transformer_identity(transformer_parts, unit_number)
+  if not transformer_parts.name then
+    transformer_parts.name = pick_network_name()
+  end
+  if not transformer_parts.color then
+    transformer_parts.color = pick_network_color(unit_number)
+  end
+end
+
+-- Returns the electric_network_id of the transformer's output (downstream)
+-- network, or nil if the output pole is not currently valid.
+---@param transformer_parts TransformerData
+---@return ElectricNetworkID?
+function get_transformer_output_network_id(transformer_parts)
+  local pole_out = transformer_parts.pole_out
+  if pole_out and pole_out.valid then
+    return pole_out.electric_network_id
+  end
+  return nil
+end
 
 ---@param transformer_entity LuaEntity
 ---@param old_transformer_parts table?  -- For migration only
@@ -50,7 +99,11 @@ function create_transformer(transformer_entity, old_transformer_parts)
     transformer_parts.pole_out = old_transformer_parts.pole_out
     transformer_parts.pole_out_alt = old_transformer_parts.pole_out_alt
     transformer_parts.interface_out = old_transformer_parts.interface_out
+    transformer_parts.name = old_transformer_parts.name
+    transformer_parts.color = old_transformer_parts.color
   end
+
+  ensure_transformer_identity(transformer_parts, transformer_entity.unit_number)
 
   -- Creates all the extra entities
   revive_ghost_poles(transformer_parts)

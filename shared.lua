@@ -35,6 +35,28 @@ local function format_energy_number(amount)
   return result
 end
 
+-- Distinct, map-legible colours (0-1 floats) used both for auto-assigning a
+-- colour to new transformers and as the starting point in the transformer GUI.
+-- Kept as plain data so it is safe to require at the data stage.
+local network_color_palette = {
+  {r = 0.90, g = 0.20, b = 0.20},  -- red
+  {r = 0.95, g = 0.55, b = 0.15},  -- orange
+  {r = 0.95, g = 0.85, b = 0.20},  -- yellow
+  {r = 0.55, g = 0.85, b = 0.25},  -- lime
+  {r = 0.25, g = 0.75, b = 0.35},  -- green
+  {r = 0.20, g = 0.80, b = 0.65},  -- teal
+  {r = 0.25, g = 0.70, b = 0.95},  -- sky blue
+  {r = 0.30, g = 0.45, b = 0.95},  -- blue
+  {r = 0.55, g = 0.35, b = 0.95},  -- indigo
+  {r = 0.75, g = 0.35, b = 0.90},  -- purple
+  {r = 0.95, g = 0.40, b = 0.75},  -- pink
+  {r = 0.85, g = 0.55, b = 0.45},  -- salmon
+  {r = 0.60, g = 0.80, b = 0.90},  -- pale blue
+  {r = 0.80, g = 0.80, b = 0.55},  -- khaki
+  {r = 0.70, g = 0.70, b = 0.75},  -- grey
+  {r = 0.55, g = 0.40, b = 0.30},  -- brown
+}
+
 -- These values are only the default values used in settings so changing them
 -- won't change the actual values: use mod settings for that
 local function get_pole_names(mods, registered_poles)
@@ -257,5 +279,6 @@ return {
   format_energy_number = format_energy_number,
   get_poles_to_make_fuses = get_poles_to_make_fuses,
   get_name_for_fuse = get_name_for_fuse,
-  get_prototype_name_for_pole = get_prototype_name_for_pole
+  get_prototype_name_for_pole = get_prototype_name_for_pole,
+  network_color_palette = network_color_palette
 }
