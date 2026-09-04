@@ -13,6 +13,7 @@ require "__PowerOverload__/scripts/transformer-gui"
 
 ---@class PoleData
 ---@field entity LuaEntity
+---@field unit_number UnitNumber
 ---@field max_consumption double
 
 
@@ -32,18 +33,19 @@ end
 
 local function on_built(event)
   local entity = event.entity
-  if entity then
-    if entity.type == "electric-pole" then
-      on_pole_built(entity, event.tags, event.name == defines.events.on_built_entity and game.get_player(event.player_index))
-    elseif entity.type == "entity-ghost" and game.get_player(event.player_index).is_cursor_blueprint() then
-      -- Entity was (probably) built as part of blueprint, so prevent automatic disconnection of wires when it is built
-      local tags = entity.tags or {}
-      tags["po-skip-disconnection"] = true
-      entity.tags = tags
-    elseif entity.name == "po-transformer" or entity.name == "po-transformer-high" or entity.name == "po-transformer-low" then
-      create_transformer(entity)
-    end
-    mark_overlay_dirty()
+  if not entity then return end
+  if entity.type == "electric-pole" then
+    on_pole_built(entity, event.tags, event.name == defines.events.on_built_entity and game.get_player(event.player_index))
+    -- Only this pole and its neighbours need redrawing, not the whole overlay
+    mark_pole_and_neighbours_dirty(entity)
+  elseif entity.type == "entity-ghost" and game.get_player(event.player_index).is_cursor_blueprint() then
+    -- Entity was (probably) built as part of blueprint, so prevent automatic disconnection of wires when it is built
+    local tags = entity.tags or {}
+    tags["po-skip-disconnection"] = true
+    entity.tags = tags
+  elseif entity.name == "po-transformer" or entity.name == "po-transformer-high" or entity.name == "po-transformer-low" then
+    create_transformer(entity)
+    mark_identity_dirty(true)
   end
 end
 -- Needs to be 4 separate lines so that the filters work
@@ -54,12 +56,20 @@ script.on_event(defines.events.script_raised_built, on_built, {{filter = "type",
 
 local function on_destroyed(event)
   local entity = event.entity
-  if entity and entity.name == "po-transformer" then
+  if not entity then return end
+  if entity.name == "po-transformer" then
     on_transformer_destroyed(entity.unit_number)
-  elseif entity and is_fuse(entity) then
-    entity.get_wire_connector(copper, false).disconnect_all()
+    mark_identity_dirty(true)
+  elseif entity.type == "electric-pole" then
+    if is_fuse(entity) then
+      local connector = entity.get_wire_connector(copper, false)
+      if connector then
+        connector.disconnect_all()
+      end
+    end
+    -- Called while the pole is still wired up so its neighbours can be found
+    on_pole_removed(entity)
   end
-  mark_overlay_dirty()
 end
 script.on_event(defines.events.on_pre_player_mined_item, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
 script.on_event(defines.events.on_robot_pre_mined, on_destroyed, {{filter = "type", type = "electric-pole"}, {filter = "name", name = "po-transformer"}, {filter = "name", name = "po-transformer-high"}, {filter = "name", name = "po-transformer-low"}})
@@ -71,20 +81,20 @@ script.on_event(defines.events.on_object_destroyed,
     local unit_number = event.useful_id
     if unit_number then
       on_transformer_destroyed(unit_number)
-      mark_overlay_dirty()
+      mark_identity_dirty(true)
     end
   end
 )
 
 script.on_event(defines.events.on_tick,
   function(event)
-    ---@type table<ElectricNetworkID, double>
-    local consumption_cache = {}
-    update_poles("fuse", consumption_cache)
-    update_poles("pole", consumption_cache)
-    update_transformers(event.tick)
-    update_pole_rendering()
-    update_network_overlay(event.tick)
+    local tick = event.tick
+    update_poles("fuse", tick)
+    update_poles("pole", tick)
+    update_transformers(tick)
+    update_pole_rendering(tick)
+    update_network_overlay(tick)
+    purge_consumption_cache(tick)
   end
 )
 
@@ -161,7 +171,15 @@ script.on_event(defines.events.on_gui_value_changed, transformer_gui_on_value_ch
 
 local function on_dolly_moved_entity(event)
   local transformer = event.moved_entity
-  if not transformer.name == "po-transformer" and not transformer.name == "po-transformer-high" and not transformer.name == "po-transformer-low" then return end
+  if not (transformer and transformer.valid) then return end
+
+  if transformer.type == "electric-pole" then
+    -- A moved pole drags its dot and wires with it, but the wires drawn by its
+    -- neighbours also need to follow.
+    mark_pole_and_neighbours_dirty(transformer)
+    return
+  end
+
   local transformer_parts = storage.transformers[transformer.unit_number]
   if not transformer_parts then return end
 
@@ -182,7 +200,7 @@ local function on_dolly_moved_entity(event)
   transformer_parts.pole_out_alt.teleport(position_out)
   transformer_parts.interface_out.teleport(position_out)
 
-  mark_overlay_dirty()
+  mark_identity_dirty(true)
 end
 
 local function handle_picker_dollies()
@@ -242,14 +260,11 @@ end
 local function reset_global_poles()
   local poles = {}
   local fuses = {}
+  storage.pole_index = {}
   for _, surface in pairs(game.surfaces) do
     for _, pole in pairs(surface.find_entities_filtered{type = "electric-pole"}) do
       if storage.max_consumptions[pole.name] then
-        ---@type PoleData
-        local pole_data = {
-          entity = pole,
-          max_consumption = storage.max_consumptions[pole.name][pole.quality.name]
-        }
+        local pole_data = make_pole_data(pole, storage.max_consumptions[pole.name][pole.quality.name])
         if is_fuse(pole) then
           table.insert(fuses, pole_data)
         else
@@ -267,9 +282,17 @@ script.on_event(defines.events.on_player_created,
     local player = game.get_player(event.player_index)  ---@cast player -?
     player.set_shortcut_toggled("po-auto-connect-poles", true)
     player.set_shortcut_toggled("po-toggle-network-names", true)
-    mark_overlay_dirty()
+    mark_names_dirty()
   end
 )
+
+-- Name labels are drawn for a fixed list of players, so the list has to be
+-- rebuilt whenever who is connected changes.
+local function on_player_connection_changed()
+  mark_names_dirty()
+end
+script.on_event(defines.events.on_player_joined_game, on_player_connection_changed)
+script.on_event(defines.events.on_player_left_game, on_player_connection_changed)
 local function enable_shortcut()
   for _, player in pairs(game.players) do
     player.set_shortcut_toggled("po-auto-connect-poles", true)
@@ -289,13 +312,19 @@ script.on_configuration_changed(
 
     -- Network name/colour overlay state (added in the transformer-orchestration
     -- update). Backfill identity so saves from before this feature don't break.
-    storage.network_overlay_object_ids = storage.network_overlay_object_ids or {}
-    storage.pole_info_object_ids = storage.pole_info_object_ids or {}
     storage.show_network_names = storage.show_network_names or {}
-    storage.overlay_dirty = true
     for unit_number, transformer_parts in pairs(storage.transformers) do
       ensure_transformer_identity(transformer_parts, unit_number)
     end
+
+    -- The overlay used to be a flat list of render object ids rebuilt from
+    -- scratch; it is now indexed per pole and maintained incrementally.
+    -- init_network_overlay destroys whatever the old version had drawn, and the
+    -- incremental scan redraws everything over the next second or so.
+    storage.overlay_dirty = nil
+    init_network_overlay()
+    reset_pole_info_rendering()
+    storage.consumption_cache = {}
 
     local old_version
     local mod_changes = changed_data.mod_changes
@@ -329,15 +358,16 @@ script.on_init(
     storage.poles = {}
     ---@type PoleData[]
     storage.fuses = {}
+    ---@type table<UnitNumber, PoleData>
+    storage.pole_index = {}
     ---@type table<UnitNumber, TransformerData>
     storage.transformers = {}
-    ---@type uint64[]
-    storage.network_overlay_object_ids = {}
-    ---@type uint64[]
-    storage.pole_info_object_ids = {}
     ---@type table<uint, boolean>
     storage.show_network_names = {}
-    storage.overlay_dirty = true
+    ---@type table<ElectricNetworkID, {tick: GameTick, value: double}>
+    storage.consumption_cache = {}
+    init_network_overlay()
+    reset_pole_info_rendering()
 
     update_global_settings()
     generate_max_consumption_table()

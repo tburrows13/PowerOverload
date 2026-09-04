@@ -184,6 +184,12 @@ function check_transformer_poles(transformer_parts)
   pole_in_connector.disconnect_from(pole_out_connector)
 end
 
+local transformer_to_interface = {
+  ["po-transformer"] = "po-transformer-interface-hidden-out",
+  ["po-transformer-high"] = "po-transformer-interface-hidden-out-high",
+  ["po-transformer-low"] = "po-transformer-interface-hidden-out-low"
+}
+
 ---@param transformer_parts TransformerData
 function check_transformer_interfaces(transformer_parts)
   -- Called every tick
@@ -197,11 +203,6 @@ function check_transformer_interfaces(transformer_parts)
   end
 
   if not (transformer_parts.interface_out and transformer_parts.interface_out.valid) then
-    local transformer_to_interface = {
-      ["po-transformer"] = "po-transformer-interface-hidden-out",
-      ["po-transformer-high"] = "po-transformer-interface-hidden-out-high",
-      ["po-transformer-low"] = "po-transformer-interface-hidden-out-low"
-    }
     local interface_out = transformer_parts.transformer_surface.create_entity{
       name = transformer_to_interface[transformer_parts.transformer.name],
       position = transformer_parts.position_out,
@@ -274,6 +275,7 @@ function update_transformers(tick)
       end
     else
       on_transformer_destroyed(unit_number)
+      mark_identity_dirty(true)
     end
   end
 end

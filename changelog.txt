@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.3.0
+Date: 04 September 2026
+  Optimisations:
+    - The map overlay of transformer networks is now maintained incrementally instead of being redrawn from scratch every few seconds, so its cost is proportional to what actually changed rather than to the size of the base. In a 10,000 pole test base this cut the mod's average update from 2.7ms to 0.7ms and its worst tick from 780ms to 15ms; while building continuously, from 50ms average and a 1013ms worst tick to 0.8ms and 12ms.
+    - Network consumption is now sampled at most once per network every 20 ticks instead of once per tick, and only for the item qualities that a network actually consumes. The underlying sample is a five-second average, so overload detection is unaffected.
+    - The "consumption / max" text shown above a hovered pole is now updated in place instead of being destroyed and recreated every tick.
+  Bugfixes:
+    - A pole moved with Picker Dollies no longer leaves its map overlay behind.
+---------------------------------------------------------------------------------------------------
 Version: 2.2.0
 Date: 25 July 2026
   Features:
