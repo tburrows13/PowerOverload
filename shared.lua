@@ -30,10 +30,19 @@ local function validate_and_parse_energy(consumption, for_tooltips)
 end
 
 local function format_energy_number(amount)
-  result = util.format_number(amount, true) .. "W"
+  local result = util.format_number(amount, true) .. "W"
   result = result:gsub("B", "G")
   return result
 end
+
+-- Colours for the "consumption / max" text drawn above a hovered pole. Kept as
+-- shared constants so the text object can be reused between ticks and only
+-- recoloured when the band actually changes.
+local pole_info_colours = {
+  ok = {0, 1, 0},
+  near = {1, 1, 0},
+  over = {1, 0, 0},
+}
 
 -- Distinct, map-legible colours (0-1 floats) used both for auto-assigning a
 -- colour to new transformers and as the starting point in the transformer GUI.
@@ -280,5 +289,6 @@ return {
   get_poles_to_make_fuses = get_poles_to_make_fuses,
   get_name_for_fuse = get_name_for_fuse,
   get_prototype_name_for_pole = get_prototype_name_for_pole,
-  network_color_palette = network_color_palette
+  network_color_palette = network_color_palette,
+  pole_info_colours = pole_info_colours
 }

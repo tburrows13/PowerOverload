@@ -154,9 +154,9 @@ local function apply_color_from_sliders(player, transformer_entity)
   local preview = find_child(frame, PREVIEW_NAME)
   if preview then preview.style.color = {r = color.r, g = color.g, b = color.b} end
 
-  -- Refresh the map overlay via the throttled dirty flag so dragging a slider
-  -- doesn't trigger a full rebuild on every value change.
-  mark_overlay_dirty()
+  -- The overlay picks the new colour up on its next identity diff and only
+  -- redraws the poles of this one network, so dragging a slider is cheap.
+  mark_identity_dirty()
 end
 
 -- Event entry points, wired up in control.lua --------------------------------
@@ -188,7 +188,7 @@ function transformer_gui_on_text_changed(event)
   local transformer_parts = storage.transformers[transformer_entity.unit_number]
   if not transformer_parts then return end
   transformer_parts.name = event.element.text
-  mark_overlay_dirty()
+  mark_identity_dirty()
 end
 
 ---@param event EventData.on_gui_value_changed
