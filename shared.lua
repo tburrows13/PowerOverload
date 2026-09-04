@@ -201,7 +201,7 @@ local function get_pole_names(mods, registered_poles)
       loaded_pole_names = combine_tables(loaded_pole_names, pole_names)
     end
   end
-  if mods["LightedPolesPlus"] then
+  if mods["Lighted-Poles-Plus"] then
     local lighted_pole_names = {}
     for pole_name, max_consumption in pairs(loaded_pole_names) do
       lighted_pole_names["lighted-" .. pole_name] = max_consumption
@@ -211,7 +211,7 @@ local function get_pole_names(mods, registered_poles)
   for pole_name, def in pairs(registered_poles or {}) do
     loaded_pole_names[pole_name] = def.default
   end
-  log(serpent.block(loaded_pole_names))
+  -- log(serpent.block(loaded_pole_names))
   return loaded_pole_names
 end
 
