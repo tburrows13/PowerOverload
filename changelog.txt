@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.3.1
+Date: 06 October 2026
+  Bugfixes:
+    - Fixed a crash when building a transformer if one of its hidden poles could not be created (e.g. it was removed by another mod). The missing part is now retried periodically instead.
+  Compatibility:
+    - Added compatibility with Bob's power poles (thanks to erikvanderwerf)
+    - Added compatibility with Lighted Electric Poles + (thanks to erikvanderwerf)
+---------------------------------------------------------------------------------------------------
 Version: 2.3.0
 Date: 04 September 2026
   Optimisations:

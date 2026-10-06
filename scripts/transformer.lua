@@ -119,18 +119,26 @@ function revive_ghost_poles(transformer_parts)
 
   local pole_in_ghost = surface.find_entities_filtered{area = bounding_box, ghost_name = "po-hidden-electric-pole-in", limit = 1}[1]
   if pole_in_ghost then
-    _, transformer_parts.pole_in = pole_in_ghost.revive()
-    transformer_parts.pole_in.teleport(transformer_parts.position_in)
+    local _, pole_in = pole_in_ghost.revive()
+    if pole_in and pole_in.valid then
+      transformer_parts.pole_in = pole_in
+      pole_in.teleport(transformer_parts.position_in)
+    end
   end
 
   local pole_out_ghost = surface.find_entities_filtered{area = bounding_box, ghost_name = "po-hidden-electric-pole-out", limit = 1}[1]
   if pole_out_ghost then
-    _, transformer_parts.pole_out = pole_out_ghost.revive()
-    transformer_parts.pole_out.teleport(transformer_parts.position_out)
+    local _, pole_out = pole_out_ghost.revive()
+    if pole_out and pole_out.valid then
+      transformer_parts.pole_out = pole_out
+      pole_out.teleport(transformer_parts.position_out)
+    end
   end
 end
 
+-- Returns false if a pole could not be created; it will be retried on the next check
 ---@param transformer_parts TransformerData
+---@return boolean
 function check_transformer_poles(transformer_parts)
   -- Called occasionally to fix breakages
   local pole_in = transformer_parts.pole_in
@@ -140,7 +148,9 @@ function check_transformer_poles(transformer_parts)
       position = transformer_parts.position_in,
       force = transformer_parts.force,
       raise_built = true
-    }  ---@cast pole_in -?
+    }
+    -- create_entity can return nil, and another mod's on-built handler can destroy the entity
+    if not (pole_in and pole_in.valid) then return false end
     transformer_parts.pole_in = pole_in
   end
   local pole_in_connector = pole_in.get_wire_connector(copper, true)
@@ -152,7 +162,8 @@ function check_transformer_poles(transformer_parts)
       position = transformer_parts.position_in,
       force = transformer_parts.force,
       raise_built = true
-    }  ---@cast pole_in_alt -?
+    }
+    if not (pole_in_alt and pole_in_alt.valid) then return false end
     transformer_parts.pole_in_alt = pole_in_alt
   end
   pole_in_alt.get_wire_connector(copper, true).connect_to(pole_in_connector, false, defines.wire_origin.script)
@@ -164,7 +175,8 @@ function check_transformer_poles(transformer_parts)
       position = transformer_parts.position_out,
       force = transformer_parts.force,
       raise_built = true
-    }  ---@cast pole_out -?
+    }
+    if not (pole_out and pole_out.valid) then return false end
     transformer_parts.pole_out = pole_out
   end
   local pole_out_connector = pole_out.get_wire_connector(copper, true)
@@ -176,12 +188,14 @@ function check_transformer_poles(transformer_parts)
       position = transformer_parts.position_out,
       force = transformer_parts.force,
       raise_built = true
-    }   ---@cast pole_out_alt -?
+    }
+    if not (pole_out_alt and pole_out_alt.valid) then return false end
     transformer_parts.pole_out_alt = pole_out_alt
   end
   pole_out_alt.get_wire_connector(copper, true).connect_to(pole_out_connector, false, defines.wire_origin.script)
 
   pole_in_connector.disconnect_from(pole_out_connector)
+  return true
 end
 
 local transformer_to_interface = {
@@ -190,7 +204,9 @@ local transformer_to_interface = {
   ["po-transformer-low"] = "po-transformer-interface-hidden-out-low"
 }
 
+-- Returns false if an interface could not be created; it will be retried on the next check
 ---@param transformer_parts TransformerData
+---@return boolean
 function check_transformer_interfaces(transformer_parts)
   -- Called every tick
   if not (transformer_parts.interface_in and transformer_parts.interface_in.valid) then
@@ -199,6 +215,7 @@ function check_transformer_interfaces(transformer_parts)
       position = transformer_parts.position_in,
       force = transformer_parts.force
     }
+    if not interface_in then return false end
     transformer_parts.interface_in = interface_in
   end
 
@@ -208,8 +225,10 @@ function check_transformer_interfaces(transformer_parts)
       position = transformer_parts.position_out,
       force = transformer_parts.force
     }
+    if not interface_out then return false end
     transformer_parts.interface_out = interface_out
   end
+  return true
 end
 
 ---@param unit_number UnitNumber
@@ -235,8 +254,7 @@ function update_transformers(tick)
   for unit_number, transformer in pairs(storage.transformers) do
     local transformer_entity = transformer.transformer
     if transformer_entity and transformer_entity.valid then
-      if transformer_entity.power_switch_state then
-        check_transformer_interfaces(transformer)
+      if transformer_entity.power_switch_state and check_transformer_interfaces(transformer) then
         if transformer.bucket == current_bucket then
           --log("Checking poles")
           check_transformer_poles(transformer)
