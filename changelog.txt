@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.3.2
+Date: 08 October 2026
+  Bugfixes:
+    - Fixed a bug where a pole built from a blueprint ghost could stay connected to poles of a different type (for example a huge pole to small poles), so the smaller poles were destroyed by overload (thanks to femoral2)
+---------------------------------------------------------------------------------------------------
 Version: 2.3.1
 Date: 06 October 2026
   Bugfixes:
