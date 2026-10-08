@@ -55,11 +55,15 @@ function on_pole_built(pole, tags, player)
       )
     end
 
+    -- Poles built from a blueprint keep the wires the player asked for, but the
+    -- engine also auto-connects them to nearby poles that were not in the
+    -- blueprint, so incompatible connections must still be removed.
+    local skip_disconnect_all = tags and tags["po-skip-disconnection"]
     if neighbour_type == "electric-pole"
-        and not (tags and tags["po-skip-disconnection"])
         and not (never_disconnect[pole_name] or never_disconnect[neighbour_name])
         and (
-          disconnect_all or always_disconnect[pole_name] or always_disconnect[neighbour_name]
+          (disconnect_all and not skip_disconnect_all)
+          or always_disconnect[pole_name] or always_disconnect[neighbour_name]
           or (not is_compatible() and storage.global_settings["power-overload-disconnect-different-poles"])
         )
         then
