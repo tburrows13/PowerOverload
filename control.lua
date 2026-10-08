@@ -183,9 +183,6 @@ local function on_dolly_moved_entity(event)
   local transformer_parts = storage.transformers[transformer.unit_number]
   if not transformer_parts then return end
 
-  check_transformer_interfaces(transformer_parts)
-  check_transformer_poles(transformer_parts)
-
   local position = transformer.position
   local position_in = {position.x - 0.6, position.y}
   local position_out = {position.x + 0.6, position.y}
@@ -193,12 +190,17 @@ local function on_dolly_moved_entity(event)
   transformer_parts.position_in = position_in
   transformer_parts.position_out = position_out
 
-  transformer_parts.pole_in.teleport(position_in)
-  transformer_parts.pole_in_alt.teleport(position_in)
-  transformer_parts.interface_in.teleport(position_in)
-  transformer_parts.pole_out.teleport(position_out)
-  transformer_parts.pole_out_alt.teleport(position_out)
-  transformer_parts.interface_out.teleport(position_out)
+  -- Missing parts get recreated at the new position; existing ones are moved there
+  check_transformer_interfaces(transformer_parts)
+  check_transformer_poles(transformer_parts)
+  for _, part_name in pairs({"pole_in", "pole_in_alt", "interface_in"}) do
+    local part = transformer_parts[part_name]
+    if part and part.valid then part.teleport(position_in) end
+  end
+  for _, part_name in pairs({"pole_out", "pole_out_alt", "interface_out"}) do
+    local part = transformer_parts[part_name]
+    if part and part.valid then part.teleport(position_out) end
+  end
 
   mark_identity_dirty(true)
 end
