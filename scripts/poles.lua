@@ -49,10 +49,15 @@ function on_pole_built(pole, tags, player)
 
     -- 'compatibility' defined by being on the same max_consumption scale (supports variants without checking name)
     -- AND at least neighbour quality to support quality upgrades and safely isolate downgrades.
-    local is_compatible = function () return ( -- function for lazy execution (i.e. after never and always checks).
-          storage.max_consumptions[pole_name][pole.quality.name] == storage.max_consumptions[neighbour_name][pole.quality.name]
-          and pole.quality.level >= neighbour.quality.level
-      )
+    -- Poles without a max_consumption (e.g. from mods that are not registered) are only compatible with the same prototype.
+    local is_compatible = function () -- function for lazy execution (i.e. after never and always checks).
+      local own = storage.max_consumptions[pole_name]
+      local other = storage.max_consumptions[neighbour_name]
+      if not (own and other) then
+        return pole_name == neighbour_name
+      end
+      return own[pole.quality.name] == other[pole.quality.name]
+        and pole.quality.level >= neighbour.quality.level
     end
 
     -- Poles built from a blueprint keep the wires the player asked for, but the
