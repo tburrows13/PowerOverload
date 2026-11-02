@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.3.3
+Date: 02 November 2026
+  Bugfixes:
+    - Fixed a crash when building a pole next to a pole from another mod that has no registered maximum consumption
+---------------------------------------------------------------------------------------------------
 Version: 2.3.2
 Date: 08 October 2026
   Bugfixes:
