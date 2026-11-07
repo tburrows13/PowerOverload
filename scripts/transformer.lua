@@ -14,6 +14,14 @@
 ---@field bucket number
 ---@field name string  -- Player-facing name of the output (downstream) network
 ---@field color Color  -- Colour used to draw the output network on the map
+---@field line_distance number?  -- Load-weighted wire distance to the output network's consumers (line-losses.lua)
+---@field line_sinks {unit: UnitNumber, d: number}[]?  -- Downstream transformers on the output network and their distances
+---@field line_sum_d number?  -- Sum of distances to the output network's real poles
+---@field line_n integer?  -- Number of real poles on the output network
+---@field e_in number?  -- Energy taken from the input network since the last 60-tick sample (J)
+---@field e_out number?  -- Energy given to the output network since the last 60-tick sample (J)
+---@field p_in number?  -- Average power taken from the input network over the last 60 ticks (W)
+---@field p_out number?  -- Average power given to the output network over the last 60 ticks (W)
 
 -- Picks a random name from the same backer-name pool the game uses for train
 -- stops, locomotives, radars, etc.
@@ -248,7 +256,7 @@ end
 
 ---@param tick GameTick
 function update_transformers(tick)
-  local efficiency = storage.global_settings["power-overload-transformer-efficiency"]
+  local base_efficiency = storage.global_settings["power-overload-transformer-efficiency"]
   local current_bucket = tick % 600
 
   for unit_number, transformer in pairs(storage.transformers) do
@@ -261,6 +269,7 @@ function update_transformers(tick)
         end
         local interface_in = transformer.interface_in
         local interface_out = transformer.interface_out
+        local efficiency = base_efficiency * get_line_factor(transformer)
         local buffer_size = interface_in.electric_buffer_size
         local energy_in = interface_in.energy
         local energy_out = interface_out.energy
@@ -290,6 +299,20 @@ function update_transformers(tick)
 
         interface_in.energy = energy_in - actual_input_used
         interface_out.energy = energy_out + actual_output_gained
+
+        -- Energy moved, summed for the 60-tick power average used by line losses
+        transformer.e_in = (transformer.e_in or 0) + actual_input_used
+        transformer.e_out = (transformer.e_out or 0) + actual_output_gained
+      end
+      -- Every 60 ticks per transformer (staggered): 60 ticks of energy in J is
+      -- the average power in W. Runs even when switched off so a stopped
+      -- transformer reports 0 to the transformers upstream of it.
+      if (tick + unit_number) % 60 == 0 then
+        transformer.p_in = transformer.e_in or 0
+        transformer.p_out = transformer.e_out or 0
+        transformer.e_in = 0
+        transformer.e_out = 0
+        update_line_distance(transformer, tick)
       end
     else
       on_transformer_destroyed(unit_number)

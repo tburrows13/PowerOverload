@@ -99,6 +99,17 @@ function open_transformer_gui(player, transformer_entity)
   }
   name_field.style.horizontally_stretchable = true
 
+  if storage.global_settings["power-overload-line-losses"] then
+    local caption
+    local loss, distance = get_upstream_line_loss(transformer_entity.unit_number)
+    if loss then
+      caption = {"po-gui.line-loss", string.format("%.1f", loss * 100), string.format("%d", math.floor(distance + 0.5))}
+    else
+      caption = {"po-gui.line-loss-none"}
+    end
+    content.add{type = "label", caption = caption}
+  end
+
   content.add{type = "line", direction = "horizontal"}
 
   -- Colour preview (progressbar is the only element that takes a runtime colour)
