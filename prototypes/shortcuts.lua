@@ -41,3 +41,27 @@ local network_names_input = {
 }
 
 data:extend{shortcut, input, network_names_shortcut, network_names_input}
+
+-- grid-diagram (optional, see scripts/grid-diagram.lua): shortcut-bar toggle
+data:extend{
+  {
+    type = "shortcut",
+    name = "po-toggle-grid-diagram",
+    action = "lua",
+    associated_control_input = "po-toggle-grid-diagram",
+    toggleable = true,
+    order = "c[toggles]-h[grid-diagram]",
+    icon = "__PowerOverload__/graphics/shortcuts/grid-diagram-x32.png",
+    icon_size = 32,
+    small_icon = "__PowerOverload__/graphics/shortcuts/grid-diagram-x24.png",
+    small_icon_size = 24,
+  },
+  {
+    type = "custom-input",
+    name = "po-toggle-grid-diagram",
+    localised_name = {"shortcut-name.po-toggle-grid-diagram"},
+    key_sequence = "",
+    consuming = "none",
+    order = "c",
+  },
+}
