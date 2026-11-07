@@ -17,7 +17,7 @@
 
 ## Line losses (optional)
 Off by default: enable "Line losses" in the map settings. Transformers then lose extra energy depending on how far their power has to travel to reach its consumers.
-- Distance is measured along the copper wires and weighted by pole type. Each pole's line resistance comes from its maximum consumption setting, `r = sqrt(P_big / P_pole)`: small 5.5×, medium 2.2×, substation 1.5×, big 1×, huge 0.32× per tile. Fuses count as their pole
+- Distance is measured along the copper wires and weighted by pole type. Each pole's line resistance comes from its maximum consumption setting, `r = sqrt(P_big / P_pole)`: small 5.5×, medium 2.2×, substation 1.5×, big 1×, huge 0.32× per tile. Fuses count as their pole. Each pole's tooltip shows its line resistance
 - Each wire costs `length × (r_A + r_B) / 2`. For every transformer, the cheapest wire route to each consumer of its output network gives the distance `D`
 - `D` is weighted by load: downstream transformers count by the power they actually draw, and the rest of the network's consumption (machines) is spread over its poles
 - The transformer's efficiency becomes `efficiency × (1 − loss per tile × D)`, with the loss capped at 75%. "Line loss per tile (%)" defaults to 0.05, so `D = 100` loses 5%
