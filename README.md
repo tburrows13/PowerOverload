@@ -20,7 +20,7 @@ Off by default: enable "Line losses" in the map settings. Transformers then lose
 - Distance is measured along the copper wires and weighted by pole type. Each pole's line resistance comes from its maximum consumption setting, `r = sqrt(P_big / P_pole)`: small 5.5×, medium 2.2×, substation 1.5×, big 1×, huge 0.32× per tile. Fuses count as their pole
 - Each wire costs `length × (r_A + r_B) / 2`. For every transformer, the cheapest wire route to each consumer of its output network gives the distance `D`
 - `D` is weighted by load: downstream transformers count by the power they actually draw, and the rest of the network's consumption (machines) is spread over its poles
-- The transformer's efficiency becomes `efficiency × (1 − loss per tile × D)`, with the loss capped at 75%. "Line loss per tile (%)" defaults to 0.01, so `D = 100` loses 1%
+- The transformer's efficiency becomes `efficiency × (1 − loss per tile × D)`, with the loss capped at 75%. "Line loss per tile (%)" defaults to 0.05, so `D = 100` loses 5%
 - Each transformer applies its own loss to the energy it actually moves, so a network fed by several transformers loses in proportion to how much power each delivers and over how far
 - Hovering a transformer shows the line loss of the power arriving at it (green below 10%, yellow below 50%, red above); the transformer window also shows the distance
 - To lose less: use big or huge poles for long runs, place transformers close to what they power, and keep distribution networks compact
