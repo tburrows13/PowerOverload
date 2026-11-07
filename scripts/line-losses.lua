@@ -297,6 +297,9 @@ function update_line_distance(transformer_parts, tick)
     if p_rest < 0 then p_rest = 0 end
   end
   local mean_pole_d = n > 0 and transformer_parts.line_sum_d / n or 0
+  -- Total load on the output network, used to split this transformer's
+  -- output among its consumers (grid-diagram.lua)
+  transformer_parts.line_load_total = den + p_rest
 
   if den + p_rest > 0 then
     transformer_parts.line_distance = (num + p_rest * mean_pole_d) / (den + p_rest)
@@ -310,6 +313,15 @@ function update_line_distance(transformer_parts, tick)
   else
     transformer_parts.line_distance = 0
   end
+end
+
+-- Line loss for a single route of the given distance (capped).
+---@param distance number
+---@return number
+function get_route_line_loss(distance)
+  local loss = distance * storage.global_settings["power-overload-line-loss-per-tile"] / 100
+  if loss > LINE_LOSS_MAX then loss = LINE_LOSS_MAX end
+  return loss
 end
 
 -- Line loss of the power arriving at a transformer from upstream (display

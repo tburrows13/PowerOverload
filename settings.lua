@@ -46,4 +46,11 @@ data:extend{
     maximum_value = 1,
     order = "f"
   },
+  {
+    type = "bool-setting",
+    name = "power-overload-show-grid-diagram",
+    setting_type = "runtime-per-user",
+    default_value = false,
+    order = "g"
+  },
 }
