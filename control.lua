@@ -157,12 +157,17 @@ local toggle_network_names = function(event)
 end
 script.on_event("po-auto-connect-poles", toggle_auto_connect_poles)
 script.on_event("po-toggle-network-names", toggle_network_names)
+script.on_event("po-toggle-grid-diagram", function(event)  -- grid-diagram (optional)
+  toggle_grid_diagram(game.get_player(event.player_index), event.tick)
+end)
 script.on_event(defines.events.on_lua_shortcut,
   function(event)
     if event.prototype_name == "po-auto-connect-poles" then
       toggle_auto_connect_poles(event)
     elseif event.prototype_name == "po-toggle-network-names" then
       toggle_network_names(event)
+    elseif event.prototype_name == "po-toggle-grid-diagram" then  -- grid-diagram (optional)
+      toggle_grid_diagram(game.get_player(event.player_index), event.tick)
     end
   end
 )

@@ -7,18 +7,19 @@
 --   colour = line loss on the route: green < 10%, yellow < 50%, red above;
 --            grey when no power flows
 --   label  = "power · loss" at the midpoint, dot at the downstream end
--- Map view only, and only for players with the per-player setting
--- "power-overload-show-grid-diagram" switched on (off by default).
+-- Map view only, and only for players who switched it on with the
+-- "Toggle grid diagram" shortcut (off by default, per player).
 --
 -- Self-contained so it is easy to disable or remove:
---   * disable: leave the per-player setting off. When no connected player
---     has it on, nothing is computed and every drawing is removed.
---   * remove:  switch the setting off for everyone (clears the drawings),
---     then delete this file, the two lines marked "grid-diagram" in
---     control.lua, the setting in settings.lua and its two locale strings.
+--   * disable: leave the shortcut off. When no connected player has it on,
+--     nothing is computed and every drawing is removed.
+--   * remove:  switch it off for everyone (clears the drawings), then delete
+--     this file and every block marked "grid-diagram" (control.lua,
+--     prototypes/shortcuts.lua, locale), plus the two grid-diagram icons in
+--     graphics/shortcuts.
 
 local UPDATE_INTERVAL = 60
-local SETTING = "power-overload-show-grid-diagram"
+local SHORTCUT = "po-toggle-grid-diagram"
 
 local COLOURS = {
   ok = {r = 0.2, g = 0.9, b = 0.2},
@@ -53,8 +54,7 @@ end
 local function viewers()
   local list, parts = {}, {}
   for _, player in pairs(game.connected_players) do
-    local setting = settings.get_player_settings(player)[SETTING]
-    if setting and setting.value then
+    if player.is_shortcut_toggled(SHORTCUT) then
       list[#list + 1] = player.index
       parts[#parts + 1] = player.index
     end
@@ -81,9 +81,19 @@ local function midpoint(a, b)
   return {x = (a.x + b.x) / 2, y = (a.y + b.y) / 2}
 end
 
+-- Flips the shortcut for a player and redraws straight away rather than
+-- waiting for the next 60-tick update.
+---@param player LuaPlayer
 ---@param tick GameTick
-function update_grid_diagram(tick)
-  if tick % UPDATE_INTERVAL ~= 0 then return end
+function toggle_grid_diagram(player, tick)
+  player.set_shortcut_toggled(SHORTCUT, not player.is_shortcut_toggled(SHORTCUT))
+  update_grid_diagram(tick, true)
+end
+
+---@param tick GameTick
+---@param force boolean?  update now regardless of the interval
+function update_grid_diagram(tick, force)
+  if not force and tick % UPDATE_INTERVAL ~= 0 then return end
   local players, players_key = viewers()
   if #players == 0 or not storage.global_settings["power-overload-line-losses"] then
     grid_diagram_clear()
