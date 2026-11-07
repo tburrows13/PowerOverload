@@ -26,6 +26,12 @@ Off by default: enable "Line losses" in the map settings. Transformers then lose
 - To lose less: use big or huge poles for long runs, place transformers close to what they power, and keep distribution networks compact
 - Performance: distances are computed in the background, at most 100 poles per tick across all transformers, and refreshed as you build. Per tick, each transformer only adds a couple of arithmetic operations
 
+### Grid diagram
+A map overlay of the transformer grid, toggled per player with the "Toggle grid diagram" shortcut (off by default; a hotkey can be set in Controls). Requires line losses to be enabled.
+- One line from each transformer to each transformer it feeds, with a dot at the receiving end
+- Width shows the power on that route; colour shows its line loss (green below 10%, yellow below 50%, red above, grey when idle); a label shows both, e.g. `1.0MW · 0.4%`
+- Only drawn in map view, only for players who switched it on, and updated once a second
+
 ## Tips
 - You'll want to have a central 'spine' of higher tier poles. Use transformers to branch off it into subnetworks containing lower tier poles
 - Don't forget the vanilla methods of removing wires:
