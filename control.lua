@@ -7,6 +7,8 @@ require "__PowerOverload__/scripts/power-interface"
 require "__PowerOverload__/scripts/pole-info-rendering"
 require "__PowerOverload__/scripts/network-rendering"
 require "__PowerOverload__/scripts/transformer-gui"
+require "__PowerOverload__/scripts/line-losses"
+require "__PowerOverload__/scripts/grid-diagram"  -- grid-diagram (optional, see file header)
 
 ---@alias ElectricNetworkID uint
 ---@alias PoleType "pole"|"fuse"
@@ -91,6 +93,8 @@ script.on_event(defines.events.on_tick,
     local tick = event.tick
     update_poles("fuse", tick)
     update_poles("pole", tick)
+    update_line_losses(tick)
+    update_grid_diagram(tick)  -- grid-diagram (optional, see file header)
     update_transformers(tick)
     update_pole_rendering(tick)
     update_network_overlay(tick)
@@ -153,12 +157,17 @@ local toggle_network_names = function(event)
 end
 script.on_event("po-auto-connect-poles", toggle_auto_connect_poles)
 script.on_event("po-toggle-network-names", toggle_network_names)
+script.on_event("po-toggle-grid-diagram", function(event)  -- grid-diagram (optional)
+  toggle_grid_diagram(game.get_player(event.player_index), event.tick)
+end)
 script.on_event(defines.events.on_lua_shortcut,
   function(event)
     if event.prototype_name == "po-auto-connect-poles" then
       toggle_auto_connect_poles(event)
     elseif event.prototype_name == "po-toggle-network-names" then
       toggle_network_names(event)
+    elseif event.prototype_name == "po-toggle-grid-diagram" then  -- grid-diagram (optional)
+      toggle_grid_diagram(game.get_player(event.player_index), event.tick)
     end
   end
 )
@@ -227,6 +236,8 @@ local function update_global_settings()
     "power-overload-on-pole-overload",
     "power-overload-log-to-chat",
     "power-overload-transformer-efficiency",
+    "power-overload-line-losses",
+    "power-overload-line-loss-per-tile",
   }) do
     global_settings[setting] = settings.global[setting].value
   end
@@ -327,6 +338,8 @@ script.on_configuration_changed(
     init_network_overlay()
     reset_pole_info_rendering()
     storage.consumption_cache = {}
+    -- Pole ratings may have changed; distances are recomputed in the background
+    init_line_losses()
 
     local old_version
     local mod_changes = changed_data.mod_changes
@@ -370,6 +383,7 @@ script.on_init(
     storage.consumption_cache = {}
     init_network_overlay()
     reset_pole_info_rendering()
+    init_line_losses()
 
     update_global_settings()
     generate_max_consumption_table()

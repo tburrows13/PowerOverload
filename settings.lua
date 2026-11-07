@@ -30,4 +30,20 @@ data:extend{
     maximum_value = 1,
     order = "d"
   },
+  {
+    type = "bool-setting",
+    name = "power-overload-line-losses",
+    setting_type = "runtime-global",
+    default_value = false,
+    order = "e"
+  },
+  {
+    type = "double-setting",
+    name = "power-overload-line-loss-per-tile",
+    setting_type = "runtime-global",
+    default_value = 0.01,
+    minimum_value = 0,
+    maximum_value = 1,
+    order = "f"
+  },
 }
