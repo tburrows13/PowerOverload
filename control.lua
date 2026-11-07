@@ -7,6 +7,7 @@ require "__PowerOverload__/scripts/power-interface"
 require "__PowerOverload__/scripts/pole-info-rendering"
 require "__PowerOverload__/scripts/network-rendering"
 require "__PowerOverload__/scripts/transformer-gui"
+require "__PowerOverload__/scripts/line-losses"
 
 ---@alias ElectricNetworkID uint
 ---@alias PoleType "pole"|"fuse"
@@ -91,6 +92,7 @@ script.on_event(defines.events.on_tick,
     local tick = event.tick
     update_poles("fuse", tick)
     update_poles("pole", tick)
+    update_line_losses(tick)
     update_transformers(tick)
     update_pole_rendering(tick)
     update_network_overlay(tick)
@@ -227,6 +229,8 @@ local function update_global_settings()
     "power-overload-on-pole-overload",
     "power-overload-log-to-chat",
     "power-overload-transformer-efficiency",
+    "power-overload-line-losses",
+    "power-overload-line-loss-per-tile",
   }) do
     global_settings[setting] = settings.global[setting].value
   end
@@ -327,6 +331,8 @@ script.on_configuration_changed(
     init_network_overlay()
     reset_pole_info_rendering()
     storage.consumption_cache = {}
+    -- Pole ratings may have changed; distances are recomputed in the background
+    init_line_losses()
 
     local old_version
     local mod_changes = changed_data.mod_changes
@@ -370,6 +376,7 @@ script.on_init(
     storage.consumption_cache = {}
     init_network_overlay()
     reset_pole_info_rendering()
+    init_line_losses()
 
     update_global_settings()
     generate_max_consumption_table()
