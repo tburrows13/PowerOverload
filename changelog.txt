@@ -5,6 +5,7 @@ Version: 2.4.0
     - The distance is weighted by load: downstream transformers count by the power they actually draw, and the rest of the network's consumption is spread over its poles. A transmission line feeding a single transformer is therefore measured to that transformer, and a network fed by several transformers loses in proportion to how much power each one delivers over how far.
     - Power poles and fuses show their line resistance (relative to the big electric pole) in their tooltip and Factoriopedia entry.
     - Hovering over a transformer shows the line loss of the power arriving at it, like the consumption text on poles; the transformer panel also shows the distance.
+    - Optional grid diagram on the map (per-player setting, off by default): one line from each transformer to each transformer it feeds, with width showing the power on that route and colour its line loss.
   Optimisations:
     - Distances are computed by a background job limited to 100 poles per tick across all transformers, so the cost per tick does not grow with base size.
 ---------------------------------------------------------------------------------------------------

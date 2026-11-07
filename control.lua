@@ -8,6 +8,7 @@ require "__PowerOverload__/scripts/pole-info-rendering"
 require "__PowerOverload__/scripts/network-rendering"
 require "__PowerOverload__/scripts/transformer-gui"
 require "__PowerOverload__/scripts/line-losses"
+require "__PowerOverload__/scripts/grid-diagram"  -- grid-diagram (optional, see file header)
 
 ---@alias ElectricNetworkID uint
 ---@alias PoleType "pole"|"fuse"
@@ -93,6 +94,7 @@ script.on_event(defines.events.on_tick,
     update_poles("fuse", tick)
     update_poles("pole", tick)
     update_line_losses(tick)
+    update_grid_diagram(tick)  -- grid-diagram (optional, see file header)
     update_transformers(tick)
     update_pole_rendering(tick)
     update_network_overlay(tick)
