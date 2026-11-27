@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 2.3.4
+Date: 27 November 2026
+  Bugfixes:
+    - Fixed a crash when a transformer network contained a wire between two surfaces, for example a pole supplying a Factorissimo building
+---------------------------------------------------------------------------------------------------
 Version: 2.3.3
 Date: 02 November 2026
   Bugfixes:
