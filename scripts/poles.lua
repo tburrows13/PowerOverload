@@ -10,11 +10,32 @@ local never_disconnect = {
   ["factory-circuit-connector"] = true,
 }
 
--- How long a sampled network consumption stays usable. The underlying sample is
--- already a five-second average, so re-reading it every tick buys nothing while
--- costing one API call per consuming prototype in the network.
+-- How long a sampled network consumption stays usable. Re-reading it every tick
+-- would cost one API call per consuming prototype in the network, while poles are
+-- only checked now and then anyway.
 local CONSUMPTION_TTL = 20
 local CONSUMPTION_PURGE_INTERVAL = 600
+
+-- Transformers refill their buffer in short bursts when demand jumps behind them,
+-- so their draw is averaged instead of read from the latest sample
+local AVERAGED_CONSUMERS = {
+  ["po-transformer-interface-hidden-in"] = true,
+}
+
+---@param statistics LuaFlowStatistics
+---@param name string
+---@param quality string
+---@return double
+local function get_consumption_of(statistics, name, quality)
+  return 60 * statistics.get_flow_count{
+    name = {name = name, quality = quality},
+    category = "input",
+    precision_index = defines.flow_precision_index.five_seconds,
+    -- Without a sample index the result is the average over the whole five seconds
+    sample_index = not AVERAGED_CONSUMERS[name] and 1 or nil,
+    count = false,
+  }
+end
 
 ---@param pole LuaEntity
 ---@param max_consumption double
@@ -101,24 +122,12 @@ function get_total_consumption(statistics)
       if type(inner) == "table" then
         if quality_names[outer] then
           for name, _ in pairs(inner) do
-            total = total + 60 * statistics.get_flow_count{
-              name = {name = name, quality = outer},
-              category = "input",
-              precision_index = defines.flow_precision_index.five_seconds,
-              sample_index = 1,
-              count = false,
-            }
+            total = total + get_consumption_of(statistics, name, outer)
           end
         else
           for quality_name, _ in pairs(inner) do
             if quality_names[quality_name] then
-              total = total + 60 * statistics.get_flow_count{
-                name = {name = outer, quality = quality_name},
-                category = "input",
-                precision_index = defines.flow_precision_index.five_seconds,
-                sample_index = 1,
-                count = false,
-              }
+              total = total + get_consumption_of(statistics, outer, quality_name)
             end
           end
         end
@@ -129,13 +138,7 @@ function get_total_consumption(statistics)
 
   for name, _ in pairs(statistics.input_counts) do
     for quality_name, _ in pairs(quality_names) do
-      total = total + 60 * statistics.get_flow_count{
-        name = {name = name, quality = quality_name},
-        category = "input",
-        precision_index = defines.flow_precision_index.five_seconds,
-        sample_index = 1,
-        count = false,
-      }
+      total = total + get_consumption_of(statistics, name, quality_name)
     end
   end
   return total

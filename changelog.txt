@@ -4,6 +4,8 @@ Date: 27 November 2026
   Bugfixes:
     - Fixed a crash when a transformer network contained a wire between two surfaces, for example a pole supplying a Factorissimo building
     - Transformers now keep up with sudden jumps in demand, so a rocket silo moving its doors no longer cuts power to the rest of the network for up to a second
+  Changes:
+    - The power drawn by transformers is now averaged over five seconds when checking for overload, so brief surges while they adjust to demand do not destroy poles
 ---------------------------------------------------------------------------------------------------
 Version: 2.3.3
 Date: 02 November 2026
