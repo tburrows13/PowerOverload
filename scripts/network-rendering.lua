@@ -284,7 +284,10 @@ local function refresh_pole(unit_number)
     for _, connection in pairs(connector.connections) do
       local other = connection.target and connection.target.owner
       local other_unit_number = other and other.valid and other.unit_number
-      if other_unit_number and owns_edge(unit_number, other_unit_number) then
+      -- Scripts can wire poles across surfaces (e.g. Factorissimo buildings), and
+      -- a line cannot be drawn between two surfaces.
+      if other_unit_number and other.surface_index == surface.index
+          and owns_edge(unit_number, other_unit_number) then
         seen = seen or {}
         seen[other_unit_number] = true
         local line = lines[other_unit_number] and rendering.get_object_by_id(lines[other_unit_number])
