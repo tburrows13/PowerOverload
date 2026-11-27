@@ -12,6 +12,7 @@
 ---@field pole_out_alt LuaEntity?
 ---@field interface_out LuaEntity?
 ---@field bucket number
+---@field saturated_delivery double?  -- Energy given to the output on the last transfer, if it had run dry
 ---@field name string  -- Player-facing name of the output (downstream) network
 ---@field color Color  -- Colour used to draw the output network on the map
 
@@ -267,10 +268,19 @@ function update_transformers(tick)
         -- Double buffer size if necessary
         -- Due to effiency calculations we don't always empty the buffer when we need more energy
         local effective_energy_out = (energy_out - buffer_size) / efficiency + buffer_size
-        if energy_in == buffer_size and effective_energy_out <= 0 then
+        local saturated = energy_in == buffer_size and effective_energy_out <= 0
+        if saturated then
           buffer_size = buffer_size * 1.01 + 1666.667
           -- Add a constant amount so that networks with low consumption and high variance can spin up in time
           -- 100kW = 100,000 / 60 = 1666.667
+          if transformer.saturated_delivery then
+            -- Saturated on consecutive ticks means demand jumped well above the buffer
+            -- (e.g. a rocket silo moving its doors), so grow exponentially. This is based
+            -- on what the output actually used up, which lags a tick behind the buffer
+            -- size: doubling the buffer itself would overshoot and cause a large spike
+            -- of consumption on the input network
+            buffer_size = math.max(buffer_size, 2 * transformer.saturated_delivery)
+          end
           --log("Increasing buffer size to support " .. math.floor(buffer_size * 60 / 1000000) .. "MW")
           interface_in.electric_buffer_size = buffer_size
           interface_out.electric_buffer_size = buffer_size
@@ -290,6 +300,7 @@ function update_transformers(tick)
 
         interface_in.energy = energy_in - actual_input_used
         interface_out.energy = energy_out + actual_output_gained
+        transformer.saturated_delivery = saturated and energy_out + actual_output_gained or nil
       end
     else
       on_transformer_destroyed(unit_number)
